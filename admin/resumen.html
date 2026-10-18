@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resumen · Panel Kartooti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin">
+  <div class="admin-layout">
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <div class="admin-main">
+      <header class="topbar" id="topbar"></header>
+
+      <main class="content">
+        <h1 class="page-title">Bienvenido de nuevo 👋</h1>
+        <p class="page-sub">Esto es lo que está pasando en tu campus hoy.</p>
+
+        <section class="kpis" aria-label="Indicadores">
+          <article class="kpi kpi--teal">
+            <div class="kpi__top"><span aria-hidden="true">👥</span><span class="kpi__badge">+12 esta semana</span></div>
+            <p class="kpi__value">1,248</p>
+            <p class="kpi__label">Usuarios activos</p>
+          </article>
+          <article class="kpi kpi--amber">
+            <div class="kpi__top"><span aria-hidden="true">📅</span><span class="kpi__badge">5 próximos</span></div>
+            <p class="kpi__value">34</p>
+            <p class="kpi__label">Eventos publicados</p>
+          </article>
+          <article class="kpi kpi--violet">
+            <div class="kpi__top"><span aria-hidden="true">📍</span><span class="kpi__badge">3 sin verificar</span></div>
+            <p class="kpi__value">89</p>
+            <p class="kpi__label">Puntos de interés</p>
+          </article>
+          <article class="kpi kpi--green">
+            <div class="kpi__top"><span aria-hidden="true">🔗</span><span class="kpi__badge">18 esta semana</span></div>
+            <p class="kpi__value">67</p>
+            <p class="kpi__label">Invitados activos</p>
+          </article>
+        </section>
+
+        <div class="dash-grid">
+          <section class="panel">
+            <div class="panel__head">
+              <h2 class="panel__title">Actividad reciente</h2>
+              <span class="panel__meta">Hoy</span>
+            </div>
+            <ul class="activity">
+              <li>
+                <span class="activity__icon" style="background:#d9f0f4">👤</span>
+                <div class="activity__body"><p class="activity__title">Nuevo usuario registrado</p><p class="activity__desc">carlos.mejia@uni.edu</p></div>
+                <span class="activity__time">Hace 5 min</span>
+              </li>
+              <li>
+                <span class="activity__icon" style="background:#fef3c6">📅</span>
+                <div class="activity__body"><p class="activity__title">Evento publicado</p><p class="activity__desc">Feria de Innovación Tecnológica</p></div>
+                <span class="activity__time">Hace 22 min</span>
+              </li>
+              <li>
+                <span class="activity__icon" style="background:#ede9fe">📍</span>
+                <div class="activity__body"><p class="activity__title">Punto de interés actualizado</p><p class="activity__desc">Bloque D — Sala de Cómputo</p></div>
+                <span class="activity__time">Hace 1 hora</span>
+              </li>
+              <li>
+                <span class="activity__icon" style="background:#d0fae5">🔗</span>
+                <div class="activity__body"><p class="activity__title">Invitado con acceso limitado</p><p class="activity__desc">visitante_ext@gmail.com</p></div>
+                <span class="activity__time">Hace 2 horas</span>
+              </li>
+              <li>
+                <span class="activity__icon" style="background:#fef3c6">📅</span>
+                <div class="activity__body"><p class="activity__title">Evento modificado</p><p class="activity__desc">Torneo de Fútbol — Cancha Norte</p></div>
+                <span class="activity__time">Hace 3 horas</span>
+              </li>
+              <li>
+                <span class="activity__icon" style="background:#d9f0f4">👤</span>
+                <div class="activity__body"><p class="activity__title">Usuario suspendido</p><p class="activity__desc">juan.perez@uni.edu</p></div>
+                <span class="activity__time">Hace 4 horas</span>
+              </li>
+            </ul>
+          </section>
+
+          <section class="panel quick">
+            <h2 class="panel__title">Acciones rápidas</h2>
+            <div class="quick__list">
+              <a class="quick__item" href="datos.html">
+                <span class="quick__emoji" aria-hidden="true">🗺️</span>
+                <span><span class="quick__title">Actualizar Datos</span><br><span class="quick__desc">Editar mapa y puntos de interés</span></span>
+                <img src="../assets/icons/chevron-right-16.svg" width="16" height="16" alt="">
+              </a>
+              <a class="quick__item quick__item--teal" href="usuarios.html">
+                <span class="quick__emoji" aria-hidden="true">👥</span>
+                <span><span class="quick__title">Gestión de Usuarios</span><br><span class="quick__desc">Administrar cuentas y permisos</span></span>
+                <img src="../assets/icons/chevron-right-16.svg" width="16" height="16" alt="">
+              </a>
+              <a class="quick__item quick__item--amber" href="eventos.html">
+                <span class="quick__emoji" aria-hidden="true">📅</span>
+                <span><span class="quick__title">Gestión de Eventos</span><br><span class="quick__desc">Publicar y editar eventos</span></span>
+                <img src="../assets/icons/chevron-right-16.svg" width="16" height="16" alt="">
+              </a>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/admin/comun.js"></script>
+  <script>Kartooti.renderLayout('resumen');</script>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kartooti · Contigo desde el primer semestre</title>
+  <meta name="description" content="Kartooti es tu guía digital del campus universitario: mapa interactivo, eventos, servicios de comida y búsqueda de ubicaciones.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/inicio.css">
+</head>
+<body>
+
+  <!-- ============ Navegación ============ -->
+  <header class="nav">
+    <div class="container nav__inner">
+      <a href="#inicio" class="brand">
+        <span class="brand__icon" aria-hidden="true">🐢</span>
+        <span class="brand__name">Kartooti</span>
+      </a>
+
+      <nav class="nav__links" id="menu" aria-label="Principal">
+        <a href="#que-es">¿Qué es?</a>
+        <a href="#funciones">Funciones</a>
+        <a href="#como-usarla">Cómo usarla</a>
+        <a href="#acceso">Acceso</a>
+      </nav>
+
+      <div class="nav__actions">
+        <a href="#acceso" class="btn btn--outline">Iniciar sesión</a>
+        <a href="#acceso" class="btn btn--primary">Crear cuenta</a>
+      </div>
+
+      <button class="nav__toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="inicio">
+
+    <!-- ============ Hero ============ -->
+    <section class="hero" id="que-es">
+      <div class="hero__blob hero__blob--teal" aria-hidden="true"></div>
+      <div class="hero__blob hero__blob--amber" aria-hidden="true"></div>
+
+      <div class="container hero__grid">
+        <div class="hero__text">
+          <span class="pill">
+            <span aria-hidden="true">🐢</span>
+            Hecho por estudiantes, para estudiantes
+          </span>
+          <h1 class="hero__title">Contigo desde el primer semestre</h1>
+          <p class="hero__lead">
+            Kartooti es tu guía digital del campus universitario. Localiza salones, descubre eventos,
+            encuentra dónde comer y nunca más llegues tarde por no saber dónde está el bloque D.
+          </p>
+          <div class="hero__cta">
+            <a href="#acceso" class="btn btn--primary btn--lg">Crear cuenta estudiantil</a>
+            <a href="#funciones" class="btn btn--soft btn--lg">Ver funciones →</a>
+          </div>
+        </div>
+
+        <div class="hero__mock">
+          <div class="phone">
+            <span class="phone__badge">¡Bienvenido al campus! 🎉</span>
+
+            <div class="phone__card">
+              <div class="phone__bar">
+                <span class="phone__logo" aria-hidden="true">🐢</span>
+                <span class="phone__brand">Kartooti</span>
+                <span class="phone__status"><i></i>Visitante</span>
+              </div>
+
+              <div class="phone__body">
+                <p class="phone__hello">Bienvenido a Kartooti</p>
+                <p class="phone__hint">Selecciona una función para continuar</p>
+
+                <ul class="phone__list">
+                  <li>
+                    <a href="#funciones" class="phone__item">
+                      <span class="phone__ico phone__ico--teal" aria-hidden="true">🗺️</span>
+                      <span class="phone__txt"><b>Mapa Interactivo</b><small>Explora el campus</small></span>
+                      <img src="assets/icons/chevron-right.svg" width="14" height="14" alt="">
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#funciones" class="phone__item">
+                      <span class="phone__ico phone__ico--sky" aria-hidden="true">🔍</span>
+                      <span class="phone__txt"><b>Buscar Ubicación</b><small>Salones y espacios</small></span>
+                      <img src="assets/icons/chevron-right.svg" width="14" height="14" alt="">
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#funciones" class="phone__item">
+                      <span class="phone__ico phone__ico--amber" aria-hidden="true">📅</span>
+                      <span class="phone__txt"><b>Eventos</b><small>Próximos eventos</small></span>
+                      <img src="assets/icons/chevron-right.svg" width="14" height="14" alt="">
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#funciones" class="phone__item">
+                      <span class="phone__ico phone__ico--green" aria-hidden="true">🍽️</span>
+                      <span class="phone__txt"><b>Comida</b><small>Cafeterías</small></span>
+                      <img src="assets/icons/chevron-right.svg" width="14" height="14" alt="">
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="phone__map">
+                <img src="assets/img/mapa-preview.jpg" alt="Vista previa del mapa interactivo de Kartooti" onerror="this.style.visibility='hidden'">
+                <span class="phone__map-label">Vista previa del mapa</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Funciones ============ -->
+    <section class="section" id="funciones">
+      <div class="container">
+        <header class="section__head">
+          <p class="eyebrow">Funciones principales</p>
+          <h2 class="section__title">Todo lo que necesitas en un solo lugar</h2>
+          <p class="section__lead">Kartooti integra las herramientas más útiles para que navegues el campus con confianza desde el primer día.</p>
+        </header>
+
+        <div class="features">
+          <article class="feature feature--teal">
+            <span class="feature__icon"><img src="assets/icons/map.svg" width="28" height="28" alt=""></span>
+            <p class="feature__tag">Navegación</p>
+            <h3 class="feature__title">Mapa Interactivo</h3>
+            <p class="feature__text">Explora el campus en un mapa detallado. Localiza salones, auditorios, laboratorios, bibliotecas y cualquier punto de interés con un solo toque.</p>
+          </article>
+
+          <article class="feature feature--amber">
+            <span class="feature__icon"><img src="assets/icons/calendar.svg" width="28" height="28" alt=""></span>
+            <p class="feature__tag">Campus</p>
+            <h3 class="feature__title">Eventos y Actividades</h3>
+            <p class="feature__text">Mantente al día con charlas académicas, torneos deportivos, ferias de innovación y todos los eventos que animan la vida universitaria.</p>
+          </article>
+
+          <article class="feature feature--green">
+            <span class="feature__icon"><img src="assets/icons/cart.svg" width="28" height="28" alt=""></span>
+            <p class="feature__tag">Servicios</p>
+            <h3 class="feature__title">Servicios de Comida</h3>
+            <p class="feature__text">Consulta cafeterías, restaurantes y puntos de venta del campus. Conoce horarios, ubicaciones y encuentra dónde comer sin dar vueltas.</p>
+          </article>
+
+          <article class="feature feature--violet">
+            <span class="feature__icon"><img src="assets/icons/search.svg" width="28" height="28" alt=""></span>
+            <p class="feature__tag">Búsqueda</p>
+            <h3 class="feature__title">Buscar Ubicación</h3>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Paso a paso ============ -->
+    <section class="section section--tint" id="como-usarla">
+      <div class="container">
+        <header class="section__head">
+          <p class="eyebrow">Paso a paso</p>
+          <h2 class="section__title">Empieza en menos de 2 minutos</h2>
+          <p class="section__lead">Sin tutoriales largos. Kartooti está diseñada para ser intuitiva desde el primer uso.</p>
+        </header>
+
+        <ol class="steps">
+          <li class="step">
+            <span class="step__circle"><span aria-hidden="true">🎓</span><b>1</b></span>
+            <h3 class="step__title">Crea tu cuenta estudiantil</h3>
+            <p class="step__text">Regístrate con tu correo institucional. En segundos tendrás acceso completo a todas las funciones del campus.</p>
+          </li>
+          <li class="step">
+            <span class="step__circle"><span aria-hidden="true">🗺️</span><b>2</b></span>
+            <h3 class="step__title">Explora el mapa del campus</h3>
+            <p class="step__text">Abre el mapa interactivo y familiarízate con el campus. Filtra por tipo de espacio para encontrar lo que necesitas.</p>
+          </li>
+          <li class="step">
+            <span class="step__circle"><span aria-hidden="true">📍</span><b>3</b></span>
+            <h3 class="step__title">Busca tu destino</h3>
+            <p class="step__text">Escribe el salón, edificio o servicio que buscas. Kartooti te guía directamente hasta allí.</p>
+          </li>
+          <li class="step">
+            <span class="step__circle"><span aria-hidden="true">🎉</span><b>4</b></span>
+            <h3 class="step__title">Descubre eventos y más</h3>
+            <p class="step__text">Revisa la agenda de eventos del campus, consulta servicios de comida y mantente conectado con la vida universitaria.</p>
+          </li>
+        </ol>
+
+        <div class="tips">
+          <p class="tips__title">💡 Consejos rápidos</p>
+          <ul class="tips__list check-list">
+            <li>Usa el mapa interactivo para explorar el campus antes de llegar</li>
+            <li>Busca ubicaciones con la función de búsqueda para llegar directo al lugar</li>
+            <li>Consulta Eventos para saber qué actividades hay disponibles esta semana</li>
+            <li>Encuentra cafeterías y restaurantes con sus horarios en Servicios de Comida</li>
+            <li>Dale zoom al mapa para ver detalles de cada edificio y sus dependencias</li>
+            <li>Guarda ubicaciones frecuentes para encontrarlas más rápido la próxima vez</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Tipos de acceso ============ -->
+    <section class="section" id="acceso">
+      <div class="container">
+        <header class="section__head">
+          <p class="eyebrow">Tipos de acceso</p>
+          <h2 class="section__title">¿Cómo quieres entrar?</h2>
+          <p class="section__lead">Kartooti está diseñada principalmente para estudiantes universitarios. Pero también tenemos acceso para visitantes e invitados.</p>
+        </header>
+
+        <div class="access">
+          <article class="access-card access-card--student">
+            <div class="access-card__head">
+              <span class="access-card__icon" aria-hidden="true">🎓</span>
+              <div>
+                <h3 class="access-card__title">Estudiante</h3>
+                <span class="access-card__tag">Acceso completo</span>
+              </div>
+            </div>
+            <ul class="check-list access-card__list">
+              <li>Mapa interactivo completo</li>
+              <li>Búsqueda avanzada de ubicaciones</li>
+              <li>Agenda de eventos del campus</li>
+              <li>Servicios de comida y horarios</li>
+              <li>Perfil y preferencias personalizadas</li>
+            </ul>
+            <a href="#" class="access-card__btn">Iniciar sesión</a>
+            <p class="access-card__note">Requiere correo institucional universitario</p>
+          </article>
+
+          <article class="access-card access-card--guest">
+            <div class="access-card__head">
+              <span class="access-card__icon" aria-hidden="true">👤</span>
+              <div>
+                <h3 class="access-card__title">Invitado</h3>
+                <span class="access-card__tag">Acceso limitado</span>
+              </div>
+            </div>
+            <ul class="check-list access-card__list">
+              <li>Vista básica del mapa del campus</li>
+              <li>Consulta de eventos públicos</li>
+              <li>Información general de servicios</li>
+            </ul>
+            <a href="#" class="access-card__btn">Acceder como invitado</a>
+            <p class="access-card__note">Requiere código de invitación válido</p>
+          </article>
+
+          <article class="access-card access-card--admin">
+            <div class="access-card__head">
+              <span class="access-card__icon" aria-hidden="true">🛡️</span>
+              <div>
+                <h3 class="access-card__title">Administrador</h3>
+                <span class="access-card__tag">Gestión total</span>
+              </div>
+            </div>
+            <ul class="check-list access-card__list">
+              <li>Panel de administración completo</li>
+              <li>Gestión de usuarios y permisos</li>
+              <li>Edición de mapas y puntos de interés</li>
+              <li>Publicación y gestión de eventos</li>
+            </ul>
+            <a href="admin/resumen.html" class="access-card__btn">Acceso administrativo</a>
+            <p class="access-card__note">Solo para personal autorizado de la universidad</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ Pie de página ============ -->
+  <footer class="site-footer">
+    <div class="site-footer__line" aria-hidden="true"></div>
+    <div class="container site-footer__inner">
+      <div class="site-footer__grid">
+        <div class="site-footer__col">
+          <div class="site-footer__brand">
+            <span class="site-footer__logo" aria-hidden="true">🐢</span>
+            <div>
+              <p class="site-footer__name">Kartooti</p>
+              <p class="site-footer__sub">UMNG</p>
+            </div>
+          </div>
+          <p class="site-footer__about">Tu guía dentro de la UMNG. Encuentra todo lo que necesitas en tu vida universitaria, desde el primer semestre.</p>
+          <div class="site-footer__social">
+            <a href="#" aria-label="Instagram"><img src="assets/icons/instagram.svg" width="20" height="20" alt=""></a>
+            <a href="#" aria-label="Facebook"><img src="assets/icons/facebook.svg" width="20" height="20" alt=""></a>
+          </div>
+        </div>
+
+        <div class="site-footer__col">
+          <h3 class="site-footer__heading">Navegación</h3>
+          <ul class="site-footer__links">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#funciones">Mapa</a></li>
+            <li><a href="#funciones">Servicios</a></li>
+            <li><a href="#funciones">Eventos</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div class="site-footer__col" id="contacto">
+          <h3 class="site-footer__heading">Contacto</h3>
+          <ul class="site-footer__contact">
+            <li><img src="assets/icons/mail.svg" width="16" height="16" alt=""><a href="mailto:kartooti@unimilitar.edu.co">kartooti@unimilitar.edu.co</a></li>
+            <li><img src="assets/icons/phone.svg" width="16" height="16" alt=""><a href="tel:+576016500000">+57 (601) 650-0000</a></li>
+            <li><img src="assets/icons/location.svg" width="16" height="16" alt=""><span>Calle 100 No. 11A-65, Bogotá</span></li>
+          </ul>
+        </div>
+
+        <div class="site-footer__col">
+          <h3 class="site-footer__heading">Institución</h3>
+          <p class="site-footer__uni">Universidad Militar Nueva Granada</p>
+          <p class="site-footer__project">Proyecto estudiantil de integración universitaria para la comunidad UMNG — Sede Calle 100.</p>
+          <span class="site-footer__badge"><i></i>App disponible</span>
+        </div>
+      </div>
+
+      <div class="site-footer__bottom">
+        <p>© 2026 <b>Kartooti</b> — Universidad Militar Nueva Granada</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/inicio.js"></script>
+</body>
+</html>

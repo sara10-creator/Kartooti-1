@@ -1,0 +1,120 @@
+/* ==========================================================
+   Kartooti — estilos base compartidos (colores, fuentes, reset)
+   ========================================================== */
+
+:root {
+  /* Marca */
+  --teal-900: #0f4a58;
+  --teal-800: #155f6e;
+  --teal-700: #1a7080;
+  --teal-600: #1e87a0;
+  --teal-500: #2a9db5;
+  --teal-300: #a8dde6;
+  --teal-200: #d9f0f4;
+  --teal-100: #f0f9fb;
+
+  --amber-500: #ffb900;
+  --amber-200: #fee685;
+  --amber-100: #fef3c6;
+  --amber-ink: #7b3306;
+  --amber-ink-2: #973c00;
+
+  --green-500: #00bc7d;
+  --green-200: #a4f4cf;
+  --violet-500: #8e51ff;
+  --violet-200: #ddd6ff;
+
+  /* Neutros */
+  --slate-900: #1d293d;
+  --slate-700: #314158;
+  --slate-600: #45556c;
+  --slate-500: #62748e;
+  --slate-400: #90a1b9;
+  --slate-300: #cad5e2;
+  --slate-100: #f1f5f9;
+  --white: #ffffff;
+
+  /* Tipografía */
+  --font-main: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-alt: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Radios y sombras */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 1.5px rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 3px rgba(0, 0, 0, 0.1), 0 2px 2px rgba(0, 0, 0, 0.1);
+  --shadow-nav: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
+
+  --container: 1152px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-main);
+  color: var(--slate-900);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, p, ul {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+img {
+  display: block;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}

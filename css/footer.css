@@ -1,0 +1,187 @@
+/* ==========================================================
+   Kartooti — Pie de página del sitio
+   ========================================================== */
+
+.site-footer {
+  font-family: var(--font-alt);
+  background: linear-gradient(168.94deg, #0d3341 0%, #155566 60%, #1a6b7c 100%);
+  color: #b8dde6;
+}
+
+.site-footer__line {
+  height: 3px;
+  background: linear-gradient(to right, #f0c14b, #1a6b7c, #f0c14b);
+}
+
+.site-footer__inner {
+  padding-top: 48px;
+  padding-bottom: 32px;
+}
+
+.site-footer__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+.site-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.site-footer__logo {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.site-footer__name {
+  font-size: 21.6px;
+  line-height: 23.76px;
+  font-weight: 700;
+  letter-spacing: -0.216px;
+  color: #f0c14b;
+}
+
+.site-footer__sub {
+  font-size: 10.88px;
+  line-height: 16.32px;
+  letter-spacing: 0.4352px;
+  text-transform: uppercase;
+  color: #a8d4de;
+}
+
+.site-footer__about {
+  margin-top: 16px;
+  max-width: 240px;
+  font-size: 14px;
+  line-height: 23.1px;
+}
+
+.site-footer__social {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+.site-footer__social a {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 0.8px solid rgba(240, 193, 75, 0.3);
+  border-radius: 10px;
+  transition: background-color .2s, border-color .2s;
+}
+.site-footer__social a:hover {
+  background: rgba(240, 193, 75, 0.1);
+  border-color: rgba(240, 193, 75, 0.6);
+}
+
+.site-footer__heading {
+  font-size: 12.8px;
+  line-height: 19.2px;
+  font-weight: 600;
+  letter-spacing: 1.28px;
+  text-transform: uppercase;
+  color: #f0c14b;
+}
+
+.site-footer__links {
+  display: flex;
+  flex-direction: column;
+  gap: 9.6px;
+  margin-top: 17.6px;
+}
+.site-footer__links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14.4px;
+  line-height: 21.6px;
+  transition: color .2s;
+}
+.site-footer__links a::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 2.5px;
+  background: #1a6b7c;
+  transition: background-color .2s;
+}
+.site-footer__links a:hover { color: #ffffff; }
+.site-footer__links a:hover::before { background: #f0c14b; }
+
+.site-footer__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 13.6px;
+  margin-top: 17.6px;
+}
+.site-footer__contact li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10.4px;
+  font-size: 14px;
+  line-height: 21px;
+}
+.site-footer__contact img { margin-top: 2px; flex-shrink: 0; }
+.site-footer__contact a:hover { color: #ffffff; }
+
+.site-footer__uni {
+  margin-top: 17.6px;
+  font-size: 14px;
+  line-height: 23.1px;
+}
+
+.site-footer__project {
+  margin-top: 13.6px;
+  font-size: 12.8px;
+  line-height: 20.48px;
+  color: #7aafbe;
+}
+
+.site-footer__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6.4px;
+  margin-top: 16px;
+  padding: 5.6px 12px;
+  border-radius: 20px;
+  background: rgba(240, 193, 75, 0.1);
+  border: 0.8px solid rgba(240, 193, 75, 0.25);
+  font-size: 11.52px;
+  line-height: 17.28px;
+  font-weight: 500;
+}
+.site-footer__badge i {
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background: #4ade80;
+}
+
+.site-footer__bottom {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(168, 212, 222, 0.15);
+  font-size: 12.8px;
+  line-height: 19.2px;
+  color: #7aafbe;
+}
+.site-footer__bottom b {
+  font-weight: 600;
+  color: #f0c14b;
+}
+
+@media (max-width: 860px) {
+  .site-footer__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 560px) {
+  .site-footer__grid { grid-template-columns: 1fr; gap: 32px; }
+}
