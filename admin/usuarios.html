@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Usuarios · Panel Kartooti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin">
+  <div class="admin-layout">
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <div class="admin-main">
+      <header class="topbar" id="topbar"></header>
+
+      <main class="content">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Gestión de Usuarios</h1>
+            <p class="page-sub">Administra cuentas, roles y permisos de acceso.</p>
+          </div>
+          <button class="a-btn a-btn--amber" type="button" id="btn-invitar">
+            <img src="../assets/icons/plus-amber.svg" width="16" height="16" alt="">Invitar usuario
+          </button>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><p class="stat__value" id="s-total">0</p><p class="stat__label">Total</p></div>
+          <div class="stat"><p class="stat__value c-teal" id="s-estudiantes">0</p><p class="stat__label">Estudiantes</p></div>
+          <div class="stat"><p class="stat__value c-orange" id="s-pendientes">0</p><p class="stat__label">Pendientes</p></div>
+          <div class="stat"><p class="stat__value c-red" id="s-suspendidos">0</p><p class="stat__label">Suspendidos</p></div>
+        </div>
+
+        <div class="filters" style="margin-top:24px">
+          <label class="search">
+            <span class="sr-only">Buscar</span>
+            <img src="../assets/icons/search-small.svg" width="16" height="16" alt="">
+            <input type="search" id="f-buscar" placeholder="Buscar por nombre o correo...">
+          </label>
+          <select class="select" id="f-rol" aria-label="Filtrar por rol">
+            <option value="">Todos los roles</option>
+            <option>Estudiante</option>
+            <option>Invitado</option>
+            <option>Admin</option>
+          </select>
+          <select class="select" id="f-estado" aria-label="Filtrar por estado">
+            <option value="">Todos los estados</option>
+            <option>Activo</option>
+            <option>Pendiente</option>
+            <option>Suspendido</option>
+          </select>
+        </div>
+
+        <div class="table-card" style="margin-top:16px">
+          <div class="table-scroll">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="col-check"><input type="checkbox" class="check" id="check-todos" aria-label="Seleccionar todos"></th>
+                  <th>Usuario</th>
+                  <th>Rol</th>
+                  <th>Estado</th>
+                  <th>Último acceso</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tabla"></tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Ventana: detalle de usuario -->
+  <div class="modal" id="modal-usuario" role="dialog" aria-modal="true" aria-labelledby="modal-usuario-titulo" aria-hidden="true">
+    <div class="modal__box">
+      <div class="modal__head">
+        <h2 class="modal__title" id="modal-usuario-titulo">Detalle de usuario</h2>
+        <button class="icon-btn" type="button" data-close aria-label="Cerrar"><img src="../assets/icons/close.svg" width="16" height="16" alt=""></button>
+      </div>
+      <div class="modal__body">
+        <div class="profile">
+          <span class="profile__avatar" id="u-avatar">V</span>
+          <div>
+            <p class="profile__name" id="u-nombre"></p>
+            <p class="profile__mail" id="u-correo"></p>
+          </div>
+        </div>
+        <div class="field-row" style="margin-top:8px">
+          <div class="info-box"><p class="info-box__label">Registrado</p><p class="info-box__value" id="u-registro"></p></div>
+          <div class="info-box"><p class="info-box__label">Último acceso</p><p class="info-box__value" id="u-acceso"></p></div>
+        </div>
+        <div class="field" style="margin-top:8px">
+          <label for="u-rol">Rol</label>
+          <select id="u-rol">
+            <option>Estudiante</option>
+            <option>Invitado</option>
+            <option>Admin</option>
+          </select>
+        </div>
+        <div class="field" style="margin-top:-4px">
+          <span class="field__label">Estado</span>
+          <div class="segmented" id="u-estado" role="group" aria-label="Estado">
+            <button type="button" data-value="Activo">Activo</button>
+            <button type="button" data-value="Suspendido">Suspendido</button>
+            <button type="button" data-value="Pendiente">Pendiente</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal__foot">
+        <button class="a-btn a-btn--primary a-btn--sm a-btn--block" type="button" data-close>Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ventana: invitar usuario -->
+  <div class="modal" id="modal-invitar" role="dialog" aria-modal="true" aria-labelledby="modal-invitar-titulo" aria-hidden="true">
+    <form class="modal__box" id="form-invitar" novalidate>
+      <div class="modal__head">
+        <h2 class="modal__title" id="modal-invitar-titulo">Invitar usuario</h2>
+        <button class="icon-btn" type="button" data-close aria-label="Cerrar"><img src="../assets/icons/close.svg" width="16" height="16" alt=""></button>
+      </div>
+      <div class="modal__body">
+        <div class="field">
+          <label for="i-nombre">Nombre completo *</label>
+          <input id="i-nombre" name="nombre" required>
+        </div>
+        <div class="field">
+          <label for="i-correo">Correo *</label>
+          <input id="i-correo" name="correo" type="email" required placeholder=" ">
+        </div>
+        <div class="field">
+          <label for="i-rol">Rol</label>
+          <select id="i-rol" name="rol">
+            <option>Estudiante</option>
+            <option>Invitado</option>
+            <option>Admin</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal__foot">
+        <button class="a-btn a-btn--ghost" type="button" data-close>Cancelar</button>
+        <button class="a-btn a-btn--primary a-btn--sm" type="submit">Enviar invitación</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="../js/admin/comun.js"></script>
+  <script src="../js/admin/datos-ejemplo.js"></script>
+  <script src="../js/admin/usuarios.js"></script>
+</body>
+</html>

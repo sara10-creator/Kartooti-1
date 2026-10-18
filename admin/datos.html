@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Actualizar Datos · Panel Kartooti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin">
+  <div class="admin-layout">
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <div class="admin-main">
+      <header class="topbar" id="topbar"></header>
+
+      <main class="content">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Actualizar Datos</h1>
+            <p class="page-sub">Gestiona los puntos de interés y ubicaciones del campus.</p>
+          </div>
+          <button class="a-btn a-btn--primary" type="button" id="btn-nuevo">
+            <img src="../assets/icons/plus-white.svg" width="16" height="16" alt="">Nuevo punto de interés
+          </button>
+        </div>
+
+        <div class="filters" style="margin-top:32px">
+          <label class="search">
+            <span class="sr-only">Buscar</span>
+            <img src="../assets/icons/search-small.svg" width="16" height="16" alt="">
+            <input type="search" id="f-buscar" placeholder="Buscar por nombre o edificio...">
+          </label>
+          <select class="select" id="f-tipo" aria-label="Filtrar por tipo">
+            <option value="">Todos los tipos</option>
+            <option>Salón</option>
+            <option>Laboratorio</option>
+            <option>Biblioteca</option>
+            <option>Cafetería</option>
+            <option>Auditorio</option>
+          </select>
+          <select class="select" id="f-estado" aria-label="Filtrar por estado">
+            <option value="">Todos los estados</option>
+            <option>Activo</option>
+            <option>Pendiente</option>
+            <option>Inactivo</option>
+          </select>
+        </div>
+
+        <div class="stats stats--3">
+          <div class="stat"><p class="stat__value" id="s-total">0</p><p class="stat__label">Total</p></div>
+          <div class="stat"><p class="stat__value c-green" id="s-activos">0</p><p class="stat__label">Activos</p></div>
+          <div class="stat"><p class="stat__value c-orange" id="s-pendientes">0</p><p class="stat__label">Pendientes</p></div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-scroll">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Tipo</th>
+                  <th>Edificio / Piso</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tabla"></tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Ventana: crear / editar punto de interés -->
+  <div class="modal" id="modal-punto" role="dialog" aria-modal="true" aria-labelledby="modal-punto-titulo" aria-hidden="true">
+    <form class="modal__box" id="form-punto" novalidate>
+      <div class="modal__head">
+        <h2 class="modal__title" id="modal-punto-titulo">Editar punto de interés</h2>
+        <button class="icon-btn" type="button" data-close aria-label="Cerrar"><img src="../assets/icons/close.svg" width="16" height="16" alt=""></button>
+      </div>
+      <div class="modal__body">
+        <div class="field">
+          <label for="p-nombre">Nombre *</label>
+          <input id="p-nombre" name="nombre" required>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="p-tipo">Tipo *</label>
+            <select id="p-tipo" name="tipo" required>
+              <option>Salón</option>
+              <option>Laboratorio</option>
+              <option>Biblioteca</option>
+              <option>Cafetería</option>
+              <option>Auditorio</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="p-estado">Estado</label>
+            <select id="p-estado" name="estado">
+              <option>Activo</option>
+              <option>Pendiente</option>
+              <option>Inactivo</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="p-edificio">Edificio *</label>
+            <input id="p-edificio" name="edificio" required>
+          </div>
+          <div class="field">
+            <label for="p-piso">Piso</label>
+            <input id="p-piso" name="piso" inputmode="numeric">
+          </div>
+        </div>
+        <div class="field">
+          <label for="p-desc">Descripción</label>
+          <textarea id="p-desc" name="descripcion"></textarea>
+        </div>
+      </div>
+      <div class="modal__foot">
+        <button class="a-btn a-btn--ghost" type="button" data-close>Cancelar</button>
+        <button class="a-btn a-btn--primary a-btn--sm" type="submit">Guardar cambios</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="../js/admin/comun.js"></script>
+  <script src="../js/admin/datos-ejemplo.js"></script>
+  <script src="../js/admin/datos.js"></script>
+</body>
+</html>
