@@ -1,4 +1,4 @@
-Para Completar por grupo
+
 
 🌐 Nombre del Proyecto
 
