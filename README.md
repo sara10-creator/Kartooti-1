@@ -1,23 +1,26 @@
-Para Completar por grupo
+Kartooti
 
-🌐 Nombre del Proyecto
+Este proyecto, Kartooti, tiene un enfoque académico, no solo porque esta hecho como parte de un entregable para una asignatura, sino porque su principal función funcionar como una herramienta para estudiantes y otros miembros de la comunidad académica de la sede calle 100 de la Universidad Militar Nueva Granada. Desde kartooti te será posible encontrar las ubicaciones de salones y demás espacios, mantenerte al día con eventos y novedades, e informarte sobre los menus y disponibilidad de las distintas zonas de comida y cafes de la universidad.
 
-Escribe aquí una descripción corta del proyecto.
+Mediante Kartooti, buscamos ayudar a tantas personas como se pueda, ya sean estudiantes nuevos, visitantes o miembros ya establecidos de la comunidad que busquen estar siempre al día con todo lo relacionado al campus. Esperamos este proyecto te haga la navegación por la U más sencilla y que te facilite un poco la vida.
 
-👥 Integrantes
+Integrantes
 
-Nombre completo – Código
-Nombre completo – Código
+Sara Alejandra Jara - 1202829
+David Sánchez García – 1202831
+Daniel Díaz – Código
 
-🎯 1. Objetivo General
+1. Objetivo General
 
-Escribir un solo párrafo donde expliquen:
-Qué quieren lograr con el sistema.
-Qué problema buscan solucionar.
+Kartooti funciona como una herramienta que busca facilitar la vida universitaria ayudando a sus usuarios a ubicarse mejor en la sede calle 100 de una UMNG y a estar mejor informados sobre distintas dinámicas y eventos realizados en este espacio.
 
-🌍 2. Contexto de Uso
+La app busca evitar que los estudiantes y demás miembros de la comunidad pierdan tiempo en desplazamientos, evitando llegadas tardías y facilitando el entendimiento de los espacios.
 
-¿Quién va a usar el sistema?
+De igual forma, kartooti tiene como propósito brindarle a sus usuarios una mejor forma de informarse de eventos y dinámicas realizadas en las instalaciones. Usualmente esta información se pierde en el mar de correos institucionales que llegan a las cuentas de los estudiantes, utilizando Kartooti, se podrá revisar cuales eventos se están llevando a cabo en la universidad en el momento, facilitando el acceso a esta información.
+
+2. Contexto de Uso
+
+El sistema será utilizado mayormente por estudiantes de la Universidad Militar Nueva granada, con un énfasis en estudiantes de nuevo ingreso que recién se están a adaptando al entorno universitario, al igual que cualquier miembro de la comunidad universitaria que desee facilitar sus desplazamientos y acceder a información relevante más facilmente
 ¿Cómo se va a utilizar el sistema?
 
 📋 3. Requerimientos del Sistema
