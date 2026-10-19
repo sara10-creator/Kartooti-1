@@ -39,22 +39,55 @@ RF-05. Consulta de eventos: El sistema debe permitir que los estudiantes consult
 
 RF-06. Notificaciones de eventos: El sistema debe enviar notificaciones a los usuarios para informarles sobre eventos, actividades y dinámicas universitarias.
 
+RF-07. Gestión de eventos: El sistema debe permitir que los administradores registrados publiquen, actualicen y eliminen información relacionada con los eventos universitarios.
+
 3.2 Requerimientos No Funcionales
 
-Escriban cómo debe comportarse el sistema.
+RNF-01. Usabilidad: La aplicación debe contar con una interfaz intuitiva que permita a los estudiantes acceder fácilmente al mapa y consultar los eventos universitarios.
 
-Ejemplo:
-RNF01: La página debe ser responsive.
+RNF-02. Rendimiento: La aplicación debe cargar la pantalla principal en un máximo de 3 segundos bajo condiciones normales de conexión.
+
+RNF-03. Seguridad: El sistema debe proteger las cuentas de los usuarios mediante el almacenamiento seguro de contraseñas y mecanismos de autenticación.
+
+RNF-04. Privacidad: El sistema debe proteger los datos personales de los estudiantes y evitar que sean accesibles para personas no autorizadas.
+
+RNF-05. Compatibilidad: La aplicación debe funcionar correctamente en los dispositivos móviles y las versiones de los sistemas operativos definidos como compatibles con el proyecto.
+
+RNF-06. Disponibilidad: El sistema debe mantener una disponibilidad mínima del 99 % mensual, excluyendo los periodos de mantenimiento programado.
+
+RNF-07. Accesibilidad: La aplicación debe utilizar textos legibles, contraste adecuado y controles accesibles para facilitar su uso por personas con diferentes capacidades.
 
 🧠 4. Diagramas UML
 
-Diagrama de Casos de Uso
+DIAGRAMA DE CASOS DE USO:
 
-Explicar brevemente qué muestra el diagrama.
+<img width="1209" height="1600" alt="image" src="https://github.com/user-attachments/assets/dffeff5b-e1d2-48a3-babb-74cef32577a1" />
+
+Actores del sistema
+
+- Usuario: es el estudiante o usuario general que accede a la aplicación para consultar información.
+- Administrador: es la persona encargada de mantener actualizada la información de la universidad, como las ubicaciones y los eventos.
+  
+Funcionalidades del usuario
+
+1. Iniciar sesión: permite acceder a la aplicación. El diagrama incluye el ingreso de un correo o código temporal como parte de este proceso.
+2. Cerrar sesión: permite finalizar la sesión activa del usuario.
+3. Visualizar mapa interactivo: permite consultar el mapa del campus.
+4. Buscar ubicación: permite encontrar un lugar específico dentro de la universidad.
+5. Ver detalles de ubicación: permite consultar información adicional sobre un lugar seleccionado.
+6. Ver eventos: permite conocer las actividades que se desarrollan en la universidad.
+7. Ver detalles del evento: permite consultar información específica de cada actividad.
+8. Ver servicios del campus: permite acceder a información de servicios universitarios, como los gastronómicos y la papelería, incluidos sus horarios y demás datos relevantes.
+   
+Funcionalidades del administrador
+
+1. Elegir destino y calcular ruta: permite seleccionar un destino y calcular una ruta para llegar a él.
+2. Gestionar ubicaciones: permite agregar, editar y eliminar ubicaciones del mapa.
+3. Gestionar eventos: permite agregar, editar y eliminar eventos publicados en la aplicación.
 
 Diagrama de Secuencia
 
-Explicar qué proceso representa.
+
 
 🎨 5. URL del Prototipo
 
