@@ -1,0 +1,121 @@
+/* ==========================================================
+   Kartooti — Módulo invitado (tema amarillo)
+   ========================================================== */
+
+body {
+  --acc: var(--amber-500);
+  --acc-dark: var(--amber-ink-2);
+  --acc-soft: var(--amber-100);
+  --acc-bg: #fffbeb;
+
+  min-height: 100vh;
+  background: linear-gradient(160deg, var(--acc-bg) 0%, var(--white) 55%, var(--acc-bg) 100%);
+}
+
+/* Tarjeta central */
+main.container {
+  max-width: 480px;
+  margin: 56px auto;
+  padding: 32px;
+  background: var(--white);
+  border: 2px solid var(--acc);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+}
+
+/* Enlace de volver */
+main.container > a:first-child {
+  display: inline-block;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: var(--slate-500);
+  transition: color .2s;
+}
+main.container > a:first-child:hover { color: var(--acc-dark); }
+
+h1 {
+  font-size: 30px;
+  line-height: 38px;
+  font-weight: 800;
+  color: var(--acc-dark);
+  margin-bottom: 24px;
+}
+
+/* Formulario */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--slate-700);
+}
+
+input {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  background: var(--white);
+  border: 2px solid var(--slate-300);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  text-transform: uppercase;
+  transition: border-color .2s, box-shadow .2s;
+}
+input::placeholder { color: var(--slate-400); text-transform: none; }
+input:focus {
+  outline: none;
+  border-color: var(--acc);
+  box-shadow: 0 0 0 4px var(--acc-soft);
+}
+
+/* Mensaje de error (se oculta si está vacío) */
+#error {
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 13px;
+  line-height: 18px;
+}
+#error:empty { display: none; }
+
+/* Botones */
+form .btn,
+#salir {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 8px;
+  border-radius: var(--radius-lg);
+  font-weight: 700;
+}
+
+.btn--primary {
+  background: var(--acc);
+  color: var(--amber-ink);
+}
+.btn--primary:hover { background: #f0ad00; }
+
+.btn--outline {
+  border-color: var(--acc);
+  color: var(--acc-dark);
+}
+.btn--outline:hover { background: var(--acc-soft); }
+
+/* Página del mapa */
+#saludo {
+  margin-bottom: 24px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--acc-bg);
+  color: var(--slate-600);
+  font-size: 15px;
+}
+
+@media (max-width: 560px) {
+  main.container { margin: 24px 16px; padding: 24px; }
+  h1 { font-size: 26px; line-height: 32px; }
+}

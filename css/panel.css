@@ -1,0 +1,129 @@
+/* Kartooti — Panel de funciones (estudiante e invitado) */
+
+body {
+  min-height: 100vh;
+  background: var(--teal-100);
+}
+
+.dashboard {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 40px;
+  background: var(--white);
+  border: 2px solid var(--teal-200);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+}
+
+.dashboard__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.dashboard__title {
+  font-size: 28px;
+  line-height: 36px;
+  font-weight: 800;
+  color: var(--teal-800);
+}
+
+.dashboard__subtitle {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--slate-500);
+}
+
+#saludo {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--teal-600);
+}
+
+.dashboard__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: var(--white);
+  border: 2px solid var(--teal-200);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+.action-btn:hover {
+  transform: translateY(-3px);
+  border-color: var(--teal-300);
+  box-shadow: var(--shadow-md);
+}
+
+.action-btn__icon {
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  border-radius: var(--radius-md);
+}
+.action-btn__icon--blue   { background: var(--teal-800); }
+.action-btn__icon--teal   { background: var(--teal-500); }
+.action-btn__icon--yellow { background: var(--amber-500); }
+.action-btn__icon--green  { background: var(--green-500); }
+
+.action-btn__title {
+  margin-bottom: 4px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--teal-800);
+}
+.action-btn__desc {
+  font-size: 12px;
+  color: var(--slate-500);
+}
+
+/* Tarjeta bloqueada (invitado) */
+.action-btn--locked {
+  opacity: .55;
+  cursor: not-allowed;
+}
+.action-btn--locked:hover {
+  transform: none;
+  border-color: var(--teal-200);
+  box-shadow: var(--shadow-sm);
+}
+
+.dashboard__tips {
+  padding: 20px 25px;
+  background: var(--teal-200);
+  border-radius: var(--radius-lg);
+}
+.dashboard__tips-title {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--teal-800);
+}
+.dashboard__tips-list {
+  margin: 0;
+  padding-left: 20px;
+  list-style: disc;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--teal-800);
+}
+
+@media (max-width: 640px) {
+  .dashboard { margin: 16px; padding: 24px; }
+  .dashboard__header { flex-direction: column; }
+  .dashboard__grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kartooti · Inicio (invitado)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/inicio.css">
+  <link rel="stylesheet" href="../css/panel.css">
+</head>
+<body>
+  <main class="dashboard">
+    <header class="dashboard__header">
+      <div>
+        <h1 class="dashboard__title">Bienvenid@ a Kartooti</h1>
+        <p class="dashboard__subtitle">Acceso de invitado · funciones limitadas</p>
+        <p id="saludo"></p>
+      </div>
+      <button type="button" id="salir" class="btn btn--outline">Cerrar sesión</button>
+    </header>
+
+    <section class="dashboard__grid">
+      <a class="action-btn" href="explorar.html">
+        <div class="action-btn__icon action-btn__icon--blue">🗺️</div>
+        <div class="action-btn__text">
+          <h2 class="action-btn__title">Mapa básico</h2>
+          <p class="action-btn__desc">Vista general del campus</p>
+        </div>
+      </a>
+
+      <div class="action-btn action-btn--locked" title="Solo para estudiantes">
+        <div class="action-btn__icon action-btn__icon--teal">🔒</div>
+        <div class="action-btn__text">
+          <h2 class="action-btn__title">Buscar ubicación</h2>
+          <p class="action-btn__desc">Solo para estudiantes</p>
+        </div>
+      </div>
+
+      <a class="action-btn" href="eventos.html">
+        <div class="action-btn__icon action-btn__icon--yellow">📅</div>
+        <div class="action-btn__text">
+          <h2 class="action-btn__title">Eventos públicos</h2>
+          <p class="action-btn__desc">Próximos eventos</p>
+        </div>
+      </a>
+
+      <a class="action-btn" href="comidas.html">
+        <div class="action-btn__icon action-btn__icon--green">🍴</div>
+        <div class="action-btn__text">
+          <h2 class="action-btn__title">Servicios</h2>
+          <p class="action-btn__desc">Información general</p>
+        </div>
+      </a>
+    </section>
+
+    <aside class="dashboard__tips">
+      <h3 class="dashboard__tips-title">Consejos rápidos</h3>
+      <ul class="dashboard__tips-list">
+        <li>Usa el mapa básico para ubicarte en el campus</li>
+        <li>Consulta los eventos públicos de la universidad</li>
+        <li>Revisa la información general de servicios</li>
+        <li>Para el acceso completo, inicia sesión con tu correo institucional</li>
+      </ul>
+    </aside>
+  </main>
+
+  <script src="../js/invitado/mapa.js"></script>
+</body>
+</html>

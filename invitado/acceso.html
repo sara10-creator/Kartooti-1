@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kartooti · Acceso invitado</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/inicio.css">
+  <link rel="stylesheet" href="../css/invitado.css">
+</head>
+<body>
+  <main class="container">
+    <a href="../index.html#acceso">← Volver</a>
+    <h1>Acceso de invitado</h1>
+
+    <form id="form-acceso">
+      <label for="codigo">Código de invitación</label>
+      <input type="text" id="codigo" name="codigo" placeholder="Ej: KART-2026" required>
+
+      <p id="error" role="alert"></p>
+      <button type="submit" class="btn btn--primary">Ingresar</button>
+    </form>
+  </main>
+
+  <script src="../js/invitado/acceso.js"></script>
+</body>
+</html>
