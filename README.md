@@ -87,6 +87,44 @@ Funcionalidades del administrador
 
 Diagrama de Secuencia
 
+<img width="1431" height="1600" alt="image" src="https://github.com/user-attachments/assets/a9444824-e25a-446c-a067-774552966d89" />
+
+1. Inicio de la aplicación
+
+El proceso comienza cuando el usuario abre la aplicación móvil. El sistema despliega el menú inicial y presenta las opciones de acceso.
+
+2. Selección del tipo de acceso
+
+El usuario puede elegir entre dos alternativas:
+- Acceso de estudiante o profesor: ingresa con su correo institucional y el sistema valida sus credenciales.
+- Acceso de invitado: introduce un código temporal que el sistema valida antes de permitirle continuar.
+Ambos caminos conducen al proceso de autenticación o validación del acceso, tras el cual se despliega el menú principal.
+
+3. Despliegue del menú principal
+
+Una vez que el acceso es válido, el usuario puede seleccionar una de las funcionalidades principales: consultar el mapa, ver eventos universitarios o consultar servicios del campus.
+
+4. Consulta del mapa interactivo
+
+Si el usuario selecciona el mapa, el sistema muestra el mapa del campus y le permite elegir entre dos alternativas:
+- Buscar un lugar específico: ingresa el nombre del lugar, visualiza su ubicación en el mapa y consulta la información correspondiente.
+- Navegar libremente: explora el mapa sin buscar un lugar concreto.
+Al finalizar la consulta, el flujo se dirige nuevamente al punto de decisión sobre qué operación realizar.
+
+5. Consulta de eventos universitarios
+
+Si el usuario selecciona la opción de eventos, el sistema despliega el menú correspondiente y proporciona información sobre las actividades disponibles, sus horarios y los datos relevantes de cada evento.
+
+6. Consulta de servicios del campus
+
+Si el usuario selecciona los servicios, el sistema le permite escoger entre dos opciones:
+- Servicios gastronómicos: consulta información, horarios y carta de comida.
+- Papelería: consulta información y horarios de atención.
+Ambas alternativas regresan al flujo principal después de mostrar la información solicitada.
+
+7. Decisión de continuar o salir
+
+Al finalizar cada operación, el sistema permite que el usuario decida si desea realizar otra acción. Si desea continuar, regresa al flujo principal para elegir otra funcionalidad. Si no desea realizar más operaciones, selecciona la opción de salida y termina el proceso.
 
 
 🎨 5. URL del Prototipo
