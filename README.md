@@ -21,15 +21,23 @@ De igual forma, kartooti tiene como propósito brindarle a sus usuarios una mejo
 2. Contexto de Uso
 
 El sistema será utilizado mayormente por estudiantes de la Universidad Militar Nueva granada, con un énfasis en estudiantes de nuevo ingreso que recién se están a adaptando al entorno universitario, al igual que cualquier miembro de la comunidad universitaria que desee facilitar sus desplazamientos y acceder a información relevante más facilmente
-¿Cómo se va a utilizar el sistema?
+
+El sistema funciona mediante un inicio de sesión que se le pedirá a cada usuario que desee ingresar. Después de eso, el usuario podrá revisar la ubicación de puntos de interés en el sede, ya sean salones, aulas especiales o demás puntos. Así mismo, desde la pestaña de eventos, el usuario podrá revisar cuales dinámicas hay disponibles en la sede calle 100. La aplicación funcionara tanto en dispositivos mobiles como en formato de escritorio, adaptándose a diferentes tamaños de pantalla y por ende, a las necesidades del usuario.
 
 📋 3. Requerimientos del Sistema
 3.1 Requerimientos Funcionales
 
-Escriban lo que el sistema debe hacer.
+RF-01. Registro de usuarios: El sistema debe permitir que los estudiantes creen una cuenta ingresando sus datos personales y credenciales de acceso.
 
-Ejemplo:
-RF01: El sistema debe permitir registrar usuarios.
+RF-02. Inicio de sesión: El sistema debe permitir que los usuarios registrados inicien sesión mediante sus credenciales.
+
+RF-03. Visualización del mapa: El sistema debe permitir que los estudiantes visualicen un mapa interactivo de la universidad con sus edificios, salones y demás puntos de interés.
+
+RF-04. Búsqueda de ubicaciones: El sistema debe permitir que los usuarios busquen ubicaciones específicas dentro de la universidad y consulten información relacionada con ellas.
+
+RF-05. Consulta de eventos: El sistema debe permitir que los estudiantes consulten los eventos y actividades programados dentro de la universidad, incluyendo sus fechas, horarios, ubicaciones y descripciones.
+
+RF-06. Notificaciones de eventos: El sistema debe enviar notificaciones a los usuarios para informarles sobre eventos, actividades y dinámicas universitarias.
 
 3.2 Requerimientos No Funcionales
 
