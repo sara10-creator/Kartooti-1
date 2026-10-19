@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrador · Kartooti</title>
+  <link rel="icon" href="../assets/img/logo-64.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/pantallas.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body data-raiz="../">
+  <div class="admin-login">
+    <main class="admin-login__centro">
+      <p class="acceso-centro__marca">Kartooti</p>
+      <p class="acceso-centro__lema">Contigo desde el primer semestre</p>
+      <div class="tarjeta-form">
+        <h1>Iniciar sesión</h1>
+        <form id="form-admin" novalidate>
+          <label class="sr-only" for="a-correo">Correo</label>
+          <input class="input" id="a-correo" name="correo" type="email" placeholder="Correo" autocomplete="email" required>
+          <label class="sr-only" for="a-clave">Contraseña</label>
+          <input class="input" id="a-clave" name="clave" type="password" placeholder="Contraseña" autocomplete="current-password" required>
+          <p class="mensaje-error" id="a-error" role="alert"></p>
+          <button class="btn btn--primario btn--bloque" type="submit">Iniciar sesión</button>
+        </form>
+        <a class="enlace-centro" href="../index.html">Volver al sitio</a>
+      </div>
+    </main>
+    <footer id="pie"></footer>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    (function () {
+      var f = document.getElementById('form-admin');
+      var err = document.getElementById('a-error');
+      f.addEventListener('submit', function (e) {
+        e.preventDefault();
+        f.correo.classList.remove('es-error'); f.clave.classList.remove('es-error');
+        if (!f.correo.value.trim() || !f.correo.checkValidity()) { f.correo.classList.add('es-error'); f.correo.focus(); err.textContent = 'Escribe un correo válido.'; err.classList.add('es-visible'); return; }
+        if (!f.clave.value) { f.clave.classList.add('es-error'); f.clave.focus(); err.textContent = 'Escribe tu contraseña.'; err.classList.add('es-visible'); return; }
+        Kartooti.iniciarSesion({ nombre: 'Admin 1', correo: f.correo.value.trim(), rol: 'Administrador' });
+        window.location.href = 'index.html';
+      });
+    })();
+  </script>
+</body>
+</html>

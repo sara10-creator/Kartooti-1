@@ -3,135 +3,102 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Actualizar Datos · Panel Kartooti</title>
+  <title>Actualizar datos · Panel Kartooti</title>
+  <link rel="icon" href="../assets/img/logo-64.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/admin.css">
 </head>
-<body class="admin">
-  <div class="admin-layout">
-    <aside class="sidebar" id="sidebar"></aside>
+<body class="admin" data-raiz="../">
+  <aside class="sidebar" id="sidebar"></aside>
 
-    <div class="admin-main">
-      <header class="topbar" id="topbar"></header>
+  <main class="admin-main">
+    <div class="admin-cabeza">
+      <div>
+        <h1>Actualizar datos</h1>
+        <p>Gestiona los puntos de interés y ubicaciones del campus.</p>
+      </div>
+      <button class="btn-nuevo" type="button" id="btn-nuevo">+ Nuevo punto de interés</button>
+    </div>
 
-      <main class="content">
-        <div class="page-head">
-          <div>
-            <h1 class="page-title">Actualizar Datos</h1>
-            <p class="page-sub">Gestiona los puntos de interés y ubicaciones del campus.</p>
-          </div>
-          <button class="a-btn a-btn--primary" type="button" id="btn-nuevo">
-            <img src="../assets/icons/plus-white.svg" width="16" height="16" alt="">Nuevo punto de interés
-          </button>
+    <div class="filtros">
+      <label class="sr-only" for="f-texto">Buscar</label>
+      <input class="input" id="f-texto" placeholder="Busca por nombre o edificio">
+      <select class="filtro" id="f-tipo" aria-label="Filtrar por tipo">
+        <option value="">Todos los tipos</option>
+        <option>Laboratorio</option><option>Auditorio</option><option>Salón</option><option>Cafetería</option><option>Biblioteca</option>
+      </select>
+      <select class="filtro" id="f-estado" aria-label="Filtrar por estado">
+        <option value="">Todos los estados</option>
+        <option>Activo</option><option>Pendiente</option><option>Inactivo</option>
+      </select>
+    </div>
+
+    <div class="contadores">
+      <div class="contador"><b id="c-total">0</b><span>Total</span></div>
+      <div class="contador"><b id="c-activos">0</b><span>Activos</span></div>
+      <div class="contador"><b id="c-pendientes">0</b><span>Pendientes</span></div>
+    </div>
+
+    <div class="tabla-caja">
+      <table class="tabla">
+        <thead><tr><th>NOMBRE</th><th>TIPO</th><th>TORRE/EDIFICIO</th><th>ESTADO</th><th>ACCIONES</th></tr></thead>
+        <tbody id="tabla"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Ventana: añadir / editar punto de interés -->
+  <div class="modal" id="modal-punto" role="dialog" aria-modal="true" aria-labelledby="punto-titulo" aria-hidden="true">
+    <div class="modal__caja ventana">
+      <h2 id="punto-titulo">Editar punto de interés</h2>
+      <form id="form-punto" novalidate>
+        <div class="campo campo--corto"><label for="p-nombre">Nombre *</label><input class="input" id="p-nombre" name="nombre" placeholder="Ej: Lab de ing. multimedia" required></div>
+        <div class="campos-2">
+          <div class="campo"><label for="p-tipo">Tipo *</label><select id="p-tipo" name="tipo"><option>Laboratorio</option><option>Auditorio</option><option>Salón</option><option>Cafetería</option><option>Biblioteca</option></select></div>
+          <div class="campo"><label for="p-estado">Estado *</label><select id="p-estado" name="estado"><option>Activo</option><option>Pendiente</option><option>Inactivo</option></select></div>
         </div>
-
-        <div class="filters" style="margin-top:32px">
-          <label class="search">
-            <span class="sr-only">Buscar</span>
-            <img src="../assets/icons/search-small.svg" width="16" height="16" alt="">
-            <input type="search" id="f-buscar" placeholder="Buscar por nombre o edificio...">
-          </label>
-          <select class="select" id="f-tipo" aria-label="Filtrar por tipo">
-            <option value="">Todos los tipos</option>
-            <option>Salón</option>
-            <option>Laboratorio</option>
-            <option>Biblioteca</option>
-            <option>Cafetería</option>
-            <option>Auditorio</option>
-          </select>
-          <select class="select" id="f-estado" aria-label="Filtrar por estado">
-            <option value="">Todos los estados</option>
-            <option>Activo</option>
-            <option>Pendiente</option>
-            <option>Inactivo</option>
-          </select>
+        <div class="campos-2">
+          <div class="campo"><label for="p-edificio">Edificio *</label><input class="input" id="p-edificio" name="edificio" placeholder="Ej: Ingenierías" required></div>
+          <div class="campo"><label for="p-piso">Piso *</label><input class="input" id="p-piso" name="piso" inputmode="numeric" placeholder="Ej: 5" required></div>
         </div>
-
-        <div class="stats stats--3">
-          <div class="stat"><p class="stat__value" id="s-total">0</p><p class="stat__label">Total</p></div>
-          <div class="stat"><p class="stat__value c-green" id="s-activos">0</p><p class="stat__label">Activos</p></div>
-          <div class="stat"><p class="stat__value c-orange" id="s-pendientes">0</p><p class="stat__label">Pendientes</p></div>
+        <div class="campo"><label for="p-desc">Descripción</label><input class="input" id="p-desc" name="descripcion" placeholder="Ej: Sala de sistemas con 25 equipos"></div>
+        <button class="btn-medios" type="button" id="p-medios">Añada una foto/mapa del lugar</button>
+        <p class="medios-estado" id="p-medios-estado">Sin medios añadidos...</p>
+        <div class="ventana__botones">
+          <button class="btn-cancelar" type="button" data-cerrar>Cancelar</button>
+          <button class="btn-guardar" type="submit">Guardar cambios</button>
         </div>
-
-        <div class="table-card">
-          <div class="table-scroll">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Tipo</th>
-                  <th>Edificio / Piso</th>
-                  <th>Estado</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody id="tabla"></tbody>
-            </table>
-          </div>
-        </div>
-      </main>
+      </form>
     </div>
   </div>
 
-  <!-- Ventana: crear / editar punto de interés -->
-  <div class="modal" id="modal-punto" role="dialog" aria-modal="true" aria-labelledby="modal-punto-titulo" aria-hidden="true">
-    <form class="modal__box" id="form-punto" novalidate>
-      <div class="modal__head">
-        <h2 class="modal__title" id="modal-punto-titulo">Editar punto de interés</h2>
-        <button class="icon-btn" type="button" data-close aria-label="Cerrar"><img src="../assets/icons/close.svg" width="16" height="16" alt=""></button>
+  <!-- Ventana: cargar archivos (medios) -->
+  <div class="modal" id="modal-archivos" style="z-index:120" role="dialog" aria-modal="true" aria-label="Ingrese medios" aria-hidden="true">
+    <div class="modal__caja ventana ventana--ancha">
+      <p class="cargar__titulo">Ingrese medios</p>
+      <div class="cargar__barra">
+        <label class="sr-only" for="archivo-buscar">Buscar en archivos</label>
+        <input class="input" id="archivo-buscar" placeholder="Buscar en archivos..." readonly>
+        <span class="chip-oscuro">25 MB límite</span>
+        <label class="chip-oscuro" for="archivo-input">Biblioteca / este PC</label>
+        <input class="sr-only" type="file" id="archivo-input" accept="image/*,.pdf">
       </div>
-      <div class="modal__body">
-        <div class="field">
-          <label for="p-nombre">Nombre *</label>
-          <input id="p-nombre" name="nombre" required>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="p-tipo">Tipo *</label>
-            <select id="p-tipo" name="tipo" required>
-              <option>Salón</option>
-              <option>Laboratorio</option>
-              <option>Biblioteca</option>
-              <option>Cafetería</option>
-              <option>Auditorio</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="p-estado">Estado</label>
-            <select id="p-estado" name="estado">
-              <option>Activo</option>
-              <option>Pendiente</option>
-              <option>Inactivo</option>
-            </select>
-          </div>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="p-edificio">Edificio *</label>
-            <input id="p-edificio" name="edificio" required>
-          </div>
-          <div class="field">
-            <label for="p-piso">Piso</label>
-            <input id="p-piso" name="piso" inputmode="numeric">
-          </div>
-        </div>
-        <div class="field">
-          <label for="p-desc">Descripción</label>
-          <textarea id="p-desc" name="descripcion"></textarea>
-        </div>
+      <p class="cargar__archivo" id="archivo-nombre">Ningún archivo seleccionado</p>
+      <div class="ventana__botones">
+        <button class="btn-cancelar" type="button" data-cerrar>Cancelar</button>
+        <button class="btn-guardar" type="button" id="archivo-guardar">Guardar cambios</button>
       </div>
-      <div class="modal__foot">
-        <button class="a-btn a-btn--ghost" type="button" data-close>Cancelar</button>
-        <button class="a-btn a-btn--primary a-btn--sm" type="submit">Guardar cambios</button>
-      </div>
-    </form>
+    </div>
   </div>
 
+  <script src="../js/app.js"></script>
+  <script src="../js/datos.js"></script>
+  <script src="../js/admin/panel.js"></script>
+  <script>Panel.iniciar('datos');</script>
   <script src="../js/admin/comun.js"></script>
-  <script src="../js/admin/datos-ejemplo.js"></script>
   <script src="../js/admin/datos.js"></script>
 </body>
 </html>

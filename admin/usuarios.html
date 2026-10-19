@@ -3,155 +3,127 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestión de Usuarios · Panel Kartooti</title>
+  <title>Gestión de usuarios · Panel Kartooti</title>
+  <link rel="icon" href="../assets/img/logo-64.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/admin.css">
 </head>
-<body class="admin">
-  <div class="admin-layout">
-    <aside class="sidebar" id="sidebar"></aside>
+<body class="admin" data-raiz="../">
+  <aside class="sidebar" id="sidebar"></aside>
 
-    <div class="admin-main">
-      <header class="topbar" id="topbar"></header>
+  <main class="admin-main">
+    <div class="admin-cabeza">
+      <div>
+        <h1>Gestión de usuarios</h1>
+        <p>Administra cuentas, roles y permisos de acceso.</p>
+      </div>
+      <button class="btn-nuevo" type="button" id="btn-nuevo">+ Añadir usuario</button>
+    </div>
 
-      <main class="content">
-        <div class="page-head">
-          <div>
-            <h1 class="page-title">Gestión de Usuarios</h1>
-            <p class="page-sub">Administra cuentas, roles y permisos de acceso.</p>
-          </div>
-          <button class="a-btn a-btn--amber" type="button" id="btn-invitar">
-            <img src="../assets/icons/plus-amber.svg" width="16" height="16" alt="">Invitar usuario
-          </button>
+    <div class="filtros">
+      <label class="sr-only" for="f-texto">Buscar</label>
+      <input class="input" id="f-texto" placeholder="Busca por nombre o correo">
+      <select class="filtro" id="f-rol" aria-label="Filtrar por rol">
+        <option value="">Todos los roles</option>
+        <option>Estudiante</option><option>Invitado</option><option>Administrador</option>
+      </select>
+      <select class="filtro" id="f-estado" aria-label="Filtrar por estado">
+        <option value="">Todos los estados</option>
+        <option>Activo</option><option>Pendiente</option><option>Suspendido</option>
+      </select>
+    </div>
+
+    <div class="contadores">
+      <div class="contador"><b id="c-total">0</b><span>Total</span></div>
+      <div class="contador"><b id="c-activos">0</b><span>Activos</span></div>
+      <div class="contador"><b id="c-pendientes">0</b><span>Pendientes</span></div>
+    </div>
+
+    <div class="tabla-caja">
+      <table class="tabla">
+        <thead><tr><th>USUARIO</th><th>ROL</th><th>ESTADO</th><th>ÚLTIMO ACCESO</th><th>ACCIONES</th></tr></thead>
+        <tbody id="tabla"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Ventana: detalles de usuario -->
+  <div class="modal" id="modal-detalle" role="dialog" aria-modal="true" aria-labelledby="detalle-titulo" aria-hidden="true">
+    <div class="modal__caja ventana detalle">
+      <h2 id="detalle-titulo">Detalles de usuario</h2>
+      <div class="detalle__perfil">
+        <span class="detalle__avatar" id="d-avatar">V</span>
+        <div><b id="d-nombre"></b><span id="d-correo"></span></div>
+      </div>
+      <div class="detalle__datos">
+        <div class="detalle__dato"><b>Registrado</b><span id="d-registro"></span></div>
+        <div class="detalle__dato"><b>Último acceso</b><span id="d-acceso"></span></div>
+      </div>
+      <div class="detalle__rol">
+        <label for="d-rol">Rol</label>
+        <select id="d-rol"><option>Estudiante</option><option>Invitado</option><option>Administrador</option></select>
+      </div>
+      <div class="detalle__estado">
+        <p>Estado</p>
+        <div class="estado-botones" id="d-estado" role="group" aria-label="Estado del usuario">
+          <button type="button" class="estado-activo" data-estado="Activo">Activo</button>
+          <button type="button" class="estado-suspendido" data-estado="Suspendido">Suspendido</button>
+          <button type="button" class="estado-pendiente" data-estado="Pendiente">Pendiente</button>
         </div>
-
-        <div class="stats">
-          <div class="stat"><p class="stat__value" id="s-total">0</p><p class="stat__label">Total</p></div>
-          <div class="stat"><p class="stat__value c-teal" id="s-estudiantes">0</p><p class="stat__label">Estudiantes</p></div>
-          <div class="stat"><p class="stat__value c-orange" id="s-pendientes">0</p><p class="stat__label">Pendientes</p></div>
-          <div class="stat"><p class="stat__value c-red" id="s-suspendidos">0</p><p class="stat__label">Suspendidos</p></div>
-        </div>
-
-        <div class="filters" style="margin-top:24px">
-          <label class="search">
-            <span class="sr-only">Buscar</span>
-            <img src="../assets/icons/search-small.svg" width="16" height="16" alt="">
-            <input type="search" id="f-buscar" placeholder="Buscar por nombre o correo...">
-          </label>
-          <select class="select" id="f-rol" aria-label="Filtrar por rol">
-            <option value="">Todos los roles</option>
-            <option>Estudiante</option>
-            <option>Invitado</option>
-            <option>Admin</option>
-          </select>
-          <select class="select" id="f-estado" aria-label="Filtrar por estado">
-            <option value="">Todos los estados</option>
-            <option>Activo</option>
-            <option>Pendiente</option>
-            <option>Suspendido</option>
-          </select>
-        </div>
-
-        <div class="table-card" style="margin-top:16px">
-          <div class="table-scroll">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th class="col-check"><input type="checkbox" class="check" id="check-todos" aria-label="Seleccionar todos"></th>
-                  <th>Usuario</th>
-                  <th>Rol</th>
-                  <th>Estado</th>
-                  <th>Último acceso</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody id="tabla"></tbody>
-            </table>
-          </div>
-        </div>
-      </main>
+      </div>
+      <button class="btn-cerrar-largo" type="button" data-cerrar>Cerrar</button>
     </div>
   </div>
 
-  <!-- Ventana: detalle de usuario -->
-  <div class="modal" id="modal-usuario" role="dialog" aria-modal="true" aria-labelledby="modal-usuario-titulo" aria-hidden="true">
-    <div class="modal__box">
-      <div class="modal__head">
-        <h2 class="modal__title" id="modal-usuario-titulo">Detalle de usuario</h2>
-        <button class="icon-btn" type="button" data-close aria-label="Cerrar"><img src="../assets/icons/close.svg" width="16" height="16" alt=""></button>
+  <!-- Ventana: añadir usuario -->
+  <div class="modal" id="modal-usuario" role="dialog" aria-modal="true" aria-labelledby="usuario-titulo" aria-hidden="true">
+    <div class="modal__caja ventana">
+      <h2 id="usuario-titulo">Añadir usuario</h2>
+      <form id="form-usuario" novalidate>
+        <div class="campo campo--corto"><label for="u-nombre">Nombre *</label><input class="input" id="u-nombre" name="nombre" placeholder="Nombre completo" required></div>
+        <div class="campos-2">
+          <div class="campo"><label for="u-codigo">Código</label><input class="input" id="u-codigo" name="codigo" placeholder="Código estudiantil"></div>
+          <div class="campo"><label for="u-estado">Estado *</label><select id="u-estado" name="estado"><option>Activo</option><option>Pendiente</option><option>Suspendido</option></select></div>
+        </div>
+        <div class="campos-2">
+          <div class="campo"><label for="u-correo">Correo institucional *</label><input class="input" id="u-correo" name="correo" type="email" placeholder="nombre@unimilitar.edu.co" required></div>
+          <div class="campo"><label for="u-rol">Rol</label><select id="u-rol" name="rol"><option>Estudiante</option><option>Invitado</option><option>Administrador</option></select></div>
+        </div>
+        <div class="ventana__botones">
+          <button class="btn-cancelar" type="button" data-cerrar>Cancelar</button>
+          <button class="btn-guardar" type="submit">Guardar cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Ventana: cargar archivos (medios) -->
+  <div class="modal" id="modal-archivos" style="z-index:120" role="dialog" aria-modal="true" aria-label="Ingrese medios" aria-hidden="true">
+    <div class="modal__caja ventana ventana--ancha">
+      <p class="cargar__titulo">Ingrese medios</p>
+      <div class="cargar__barra">
+        <label class="sr-only" for="archivo-buscar">Buscar en archivos</label>
+        <input class="input" id="archivo-buscar" placeholder="Buscar en archivos..." readonly>
+        <span class="chip-oscuro">25 MB límite</span>
+        <label class="chip-oscuro" for="archivo-input">Biblioteca / este PC</label>
+        <input class="sr-only" type="file" id="archivo-input" accept="image/*,.pdf">
       </div>
-      <div class="modal__body">
-        <div class="profile">
-          <span class="profile__avatar" id="u-avatar">V</span>
-          <div>
-            <p class="profile__name" id="u-nombre"></p>
-            <p class="profile__mail" id="u-correo"></p>
-          </div>
-        </div>
-        <div class="field-row" style="margin-top:8px">
-          <div class="info-box"><p class="info-box__label">Registrado</p><p class="info-box__value" id="u-registro"></p></div>
-          <div class="info-box"><p class="info-box__label">Último acceso</p><p class="info-box__value" id="u-acceso"></p></div>
-        </div>
-        <div class="field" style="margin-top:8px">
-          <label for="u-rol">Rol</label>
-          <select id="u-rol">
-            <option>Estudiante</option>
-            <option>Invitado</option>
-            <option>Admin</option>
-          </select>
-        </div>
-        <div class="field" style="margin-top:-4px">
-          <span class="field__label">Estado</span>
-          <div class="segmented" id="u-estado" role="group" aria-label="Estado">
-            <button type="button" data-value="Activo">Activo</button>
-            <button type="button" data-value="Suspendido">Suspendido</button>
-            <button type="button" data-value="Pendiente">Pendiente</button>
-          </div>
-        </div>
-      </div>
-      <div class="modal__foot">
-        <button class="a-btn a-btn--primary a-btn--sm a-btn--block" type="button" data-close>Cerrar</button>
+      <p class="cargar__archivo" id="archivo-nombre">Ningún archivo seleccionado</p>
+      <div class="ventana__botones">
+        <button class="btn-cancelar" type="button" data-cerrar>Cancelar</button>
+        <button class="btn-guardar" type="button" id="archivo-guardar">Guardar cambios</button>
       </div>
     </div>
   </div>
 
-  <!-- Ventana: invitar usuario -->
-  <div class="modal" id="modal-invitar" role="dialog" aria-modal="true" aria-labelledby="modal-invitar-titulo" aria-hidden="true">
-    <form class="modal__box" id="form-invitar" novalidate>
-      <div class="modal__head">
-        <h2 class="modal__title" id="modal-invitar-titulo">Invitar usuario</h2>
-        <button class="icon-btn" type="button" data-close aria-label="Cerrar"><img src="../assets/icons/close.svg" width="16" height="16" alt=""></button>
-      </div>
-      <div class="modal__body">
-        <div class="field">
-          <label for="i-nombre">Nombre completo *</label>
-          <input id="i-nombre" name="nombre" required>
-        </div>
-        <div class="field">
-          <label for="i-correo">Correo *</label>
-          <input id="i-correo" name="correo" type="email" required placeholder=" ">
-        </div>
-        <div class="field">
-          <label for="i-rol">Rol</label>
-          <select id="i-rol" name="rol">
-            <option>Estudiante</option>
-            <option>Invitado</option>
-            <option>Admin</option>
-          </select>
-        </div>
-      </div>
-      <div class="modal__foot">
-        <button class="a-btn a-btn--ghost" type="button" data-close>Cancelar</button>
-        <button class="a-btn a-btn--primary a-btn--sm" type="submit">Enviar invitación</button>
-      </div>
-    </form>
-  </div>
-
+  <script src="../js/app.js"></script>
+  <script src="../js/datos.js"></script>
+  <script src="../js/admin/panel.js"></script>
+  <script>Panel.iniciar('usuarios');</script>
   <script src="../js/admin/comun.js"></script>
-  <script src="../js/admin/datos-ejemplo.js"></script>
   <script src="../js/admin/usuarios.js"></script>
 </body>
 </html>

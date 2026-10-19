@@ -1,0 +1,373 @@
+/* ==========================================================
+   Kartooti — Pantallas de la app (acceso, principal, mapa,
+   buscar, eventos y comida)
+   ========================================================== */
+
+/* ---------- Encabezado simple (sin sesión) ---------- */
+.header--simple { justify-content: flex-start; }
+
+/* ---------- Acceso: iniciar sesión, crear cuenta, invitado ---------- */
+.acceso-pagina {
+  position: relative;
+  padding: 32px 32px 64px;
+}
+.acceso-pagina .btn-regresar { position: absolute; top: 28px; left: 32px; }
+.acceso-centro {
+  max-width: 672px;
+  margin: 0 auto;
+  padding-top: 96px;
+  text-align: center;
+}
+.acceso-centro__marca {
+  font-size: 40px;
+  line-height: 60px;
+  font-weight: 800;
+  color: var(--primario);
+}
+.acceso-centro__lema {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 300;
+  color: var(--azul-claro);
+}
+.tarjeta-form {
+  margin-top: 40px;
+  padding: 28px 40px 32px;
+  background: var(--blanco);
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+  text-align: left;
+}
+.tarjeta-form h1 {
+  margin-bottom: 24px;
+  text-align: center;
+  font-size: 28px;
+  line-height: 36px;
+  font-weight: 700;
+  color: var(--primario);
+}
+.tarjeta-form--celeste h1 { color: var(--secundario); }
+.tarjeta-form form { display: flex; flex-direction: column; gap: 16px; }
+.tarjeta-form .input { height: 54px; font-size: 18px; }
+.tarjeta-form .btn { margin-top: 8px; min-height: 54px; }
+.enlace-centro {
+  display: block;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--secundario);
+}
+.enlace-centro:hover { text-decoration: underline; }
+.mensaje-error {
+  display: none;
+  font-size: 14px;
+  color: #c10007;
+}
+.mensaje-error.es-visible { display: block; }
+
+/* Invitado: sin tarjeta, campos sobre el fondo */
+.form-invitado { max-width: 560px; margin: 40px auto 0; display: flex; flex-direction: column; gap: 16px; }
+.form-invitado h1 {
+  font-size: 30px;
+  line-height: 36px;
+  font-weight: 700;
+  color: var(--primario);
+}
+.form-invitado .input { height: 40px; }
+.form-invitado .btn { min-height: 36px; padding: 4px 20px; border-radius: 8px; }
+
+/* ---------- Principal (dashboard del estudiante) ---------- */
+.bienvenida h1 {
+  font-size: 40px;
+  line-height: 60px;
+  font-weight: 800;
+  color: var(--primario);
+}
+.bienvenida p { font-size: 18px; line-height: 28px; font-weight: 300; color: var(--azul-claro); }
+
+.opciones {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px 26px;
+  margin: 35px 0;
+}
+.opcion {
+  display: flex;
+  align-items: center;
+  gap: 56px;
+  padding: 45px 50px;
+  background: var(--blanco);
+  border-radius: 24px;
+  transition: transform .2s, box-shadow .2s;
+}
+.opcion:hover { transform: translateY(-3px); box-shadow: 0 16px 32px -18px rgba(2, 83, 115, 0.35); }
+.opcion img { width: 85px; height: 85px; flex-shrink: 0; }
+.opcion b { display: block; font-size: 28px; line-height: 36px; font-weight: 700; color: var(--azul-medio); }
+.opcion small { display: block; font-size: 18px; line-height: 28px; font-weight: 300; color: var(--azul-claro); }
+
+/* ---------- Mapa interactivo ---------- */
+.mapa-titulo { text-align: center; margin-top: -8px; }
+.mapa-titulo h1 { font-size: 40px; line-height: 60px; font-weight: 800; color: var(--primario); }
+.mapa-titulo p { margin-top: 19px; font-size: 18px; line-height: 28px; font-weight: 300; color: var(--azul-medio); }
+
+.mapa {
+  width: 100%;
+  max-width: 871px;
+  margin: 10px auto 0;
+  padding: 20px;
+}
+.mapa__ventana {
+  position: relative;
+  height: 416px;
+  overflow: auto;
+  border-radius: 6px;
+  background: #d9e4e8;
+  cursor: grab;
+  scrollbar-width: thin;
+}
+.mapa__ventana.arrastrando { cursor: grabbing; }
+.mapa__ventana img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
+  transition: width .2s, height .2s;
+}
+.mapa__controles {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  max-width: 999px;
+  margin: 10px auto 0;
+  padding: 8px 60px;
+  border-radius: 26px;
+  background: var(--paleta-4);
+}
+.mapa__controles button { width: 48px; height: 48px; border-radius: 50%; transition: transform .15s, background-color .15s; }
+.mapa__controles button:hover { transform: scale(1.06); background: rgba(255, 255, 255, 0.4); }
+.mapa__controles button:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+.mapa__zoom { min-width: 56px; text-align: center; font-size: 18px; line-height: 28px; font-weight: 600; color: var(--primario); }
+
+/* Mapa ampliado */
+body.mapa-grande { background: #626262; }
+.mapa-grande__inner { padding: 74px 66px 40px; }
+.mapa-grande .btn-regresar { width: auto; padding: 12px 30px 12px 10px; gap: 22px; font-size: 30px; }
+.mapa-grande__img {
+  display: block;
+  width: 100%;
+  max-width: 1338px;
+  margin: 30px auto 0;
+  border-radius: 4px;
+}
+
+/* ---------- Buscar ---------- */
+.buscar {
+  max-width: 834px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+.buscar__titulo { padding-top: 14px; }
+.buscar__titulo h1 { font-size: 40px; line-height: 60px; font-weight: 800; color: var(--primario); }
+.buscar__titulo p { font-size: 18px; line-height: 28px; font-weight: 300; color: var(--primario); }
+.buscar__form { display: flex; flex-direction: column; gap: 24px; }
+.buscar__form .input { height: 40px; }
+.buscar__botones { display: flex; gap: 19px; }
+.buscar__botones .btn { min-height: 63px; padding: 16px 32px; font-size: 18px; }
+.btn--limpiar { border: 1.5px solid var(--paleta-4); color: #555; font-weight: 600; background: transparent; }
+.btn--limpiar:hover { background: var(--blanco); filter: none; }
+.sugerencias { display: flex; flex-direction: column; gap: 24px; }
+.sugerencias p { text-align: center; font-size: 18px; line-height: 28px; font-weight: 300; color: var(--primario); }
+.sugerencias__lista { display: flex; flex-wrap: wrap; gap: 12px; }
+.sugerencia {
+  width: 116px;
+  height: 44px;
+  border-radius: 999px;
+  background: var(--celeste);
+  color: var(--blanco);
+  font-size: 15px;
+  font-weight: 700;
+  transition: filter .2s, transform .2s;
+}
+.sugerencia:hover { filter: brightness(0.95); transform: translateY(-1px); }
+
+.resultado {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+}
+.resultado.es-visible { display: flex; }
+.resultado__texto {
+  padding: 16px 20px;
+  border-radius: 16px;
+  background: var(--blanco);
+  border-left: 6px solid var(--paleta-1);
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--primario);
+}
+.resultado__texto b { font-weight: 700; }
+.resultado__texto.no-encontrado { border-left-color: var(--rojo); }
+.resultado img { width: 100%; height: 390px; object-fit: cover; border-radius: 4px; }
+
+/* ---------- Eventos ---------- */
+.eventos { display: flex; flex-direction: column; gap: 71px; margin-top: 10px; padding: 10px; }
+.evento {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 31px 24px;
+  border-radius: 20px;
+  background: rgba(197, 221, 230, 0.28);
+}
+.evento__cabeza { display: flex; align-items: center; gap: 55px; }
+.evento__fecha {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  background: var(--color, var(--primario));
+  color: var(--blanco);
+  font-weight: 800;
+  text-align: center;
+}
+.evento__fecha b { font-size: 24px; line-height: 28px; }
+.evento__fecha small { font-size: 12px; line-height: 21px; }
+.evento__cabeza h2 { font-size: 28px; line-height: 36px; font-weight: 700; color: var(--primario); }
+.evento__dato { display: flex; align-items: flex-end; gap: 12px; font-size: 18px; line-height: 28px; font-weight: 300; color: var(--primario); }
+.evento__dato img { width: 32px; height: 31px; }
+.evento__info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 63px;
+  border-radius: 16px;
+  background: var(--color, var(--primario));
+  color: var(--blanco);
+  font-size: 18px;
+  font-weight: 700;
+  transition: filter .2s;
+}
+.evento__info:hover { filter: brightness(1.1); }
+.vacio { padding: 40px; text-align: center; font-size: 18px; color: var(--azul-claro); }
+
+/* ---------- Comida ---------- */
+.comidas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 36px 16px;
+  max-width: 1479px;
+  margin: 10px auto 0;
+  padding: 10px;
+}
+.comida {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 20px;
+  border: 1px solid #837777;
+  border-radius: 16px;
+}
+.comida__nombre { display: flex; align-items: center; gap: 10px; padding: 7px 15px; }
+.comida__nombre span { font-size: 30px; line-height: 36px; }
+.comida__nombre h2 { font-size: 28px; line-height: 36px; font-weight: 700; color: var(--primario); }
+.comida__label { font-size: 18px; line-height: 28px; font-weight: 300; color: var(--primario); }
+.comida__horario { font-size: 18px; line-height: 28px; font-weight: 300; color: var(--azul-claro); }
+.comida__botones { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 42px; margin-top: 12px; }
+.comida__botones .btn { min-height: 51px; gap: 13px; }
+.comida__botones .btn--borde img { width: 40px; height: 35px; margin: -6px 0; }
+
+.consejos--comida { margin-top: 48px; }
+
+/* Ventana del menú */
+.menu-caja { background: transparent; box-shadow: none; overflow: visible; border-radius: 0; max-height: none; }
+.menu-caja img { max-width: min(606px, calc(100vw - 48px)); max-height: calc(100vh - 80px); width: auto; height: auto; object-fit: contain; }
+.menu-caja .btn-cerrar { top: -28px; left: -28px; }
+.menu-caja figcaption { margin-top: 10px; text-align: center; color: var(--blanco); font-size: 15px; }
+
+/* ---------- Adaptable ---------- */
+@media (max-width: 1200px) {
+  .opcion { gap: 28px; padding: 32px; }
+  .opcion b { font-size: 24px; line-height: 32px; }
+  .bienvenida h1, .mapa-titulo h1, .buscar__titulo h1 { font-size: 32px; line-height: 44px; }
+  .comida__botones { gap: 16px; }
+}
+
+@media (max-width: 860px) {
+  .opciones { grid-template-columns: minmax(0, 1fr); gap: 16px; margin: 24px 0; }
+  .comidas { grid-template-columns: minmax(0, 1fr); }
+  .acceso-centro { padding-top: 72px; }
+}
+
+@media (max-width: 760px) {
+  .acceso-pagina { padding: 16px 16px 40px; }
+  .acceso-pagina .btn-regresar { position: static; }
+  .acceso-centro { padding-top: 24px; }
+  .acceso-centro__marca { font-size: 30px; line-height: 40px; }
+  .acceso-centro__lema { font-size: 14px; }
+  .tarjeta-form { margin-top: 24px; padding: 24px 20px; }
+  .tarjeta-form h1 { font-size: 22px; line-height: 30px; margin-bottom: 16px; }
+  .tarjeta-form .input { height: 46px; font-size: 16px; }
+  .form-invitado h1 { font-size: 24px; text-align: center; }
+
+  .bienvenida h1 { font-size: 24px; line-height: 32px; }
+  .bienvenida p { font-size: 14px; line-height: 20px; }
+  .opcion { gap: 16px; padding: 16px; border-radius: 16px; }
+  .opcion img { width: 60px; height: 60px; }
+  .opcion b { font-size: 18px; line-height: 24px; }
+  .opcion small { font-size: 14px; line-height: 20px; }
+
+  .mapa-titulo h1 { font-size: 24px; line-height: 32px; }
+  .mapa-titulo p { margin-top: 6px; font-size: 14px; line-height: 20px; }
+  .mapa { padding: 12px 0; }
+  .mapa__ventana { height: 300px; }
+  .mapa__controles { gap: 14px; padding: 6px 16px; }
+  .mapa__controles button { width: 40px; height: 40px; }
+  .mapa__controles button img { width: 40px; height: 40px; }
+  .mapa-grande__inner { padding: 20px 12px; }
+  .mapa-grande .btn-regresar { font-size: 16px; padding: 8px 16px 8px 10px; gap: 10px; }
+
+  .buscar { gap: 24px; }
+  .buscar__titulo h1 { font-size: 24px; line-height: 32px; }
+  .buscar__titulo p { font-size: 14px; line-height: 20px; }
+  .buscar__botones .btn { min-height: 48px; padding: 10px 20px; font-size: 15px; flex: 1; }
+  .sugerencias p { text-align: left; font-size: 15px; }
+  .sugerencia { width: auto; padding: 0 18px; height: 38px; font-size: 14px; }
+  .resultado__texto { font-size: 15px; line-height: 22px; }
+  .resultado img { height: 220px; }
+
+  .eventos { gap: 16px; padding: 0; }
+  .evento { padding: 18px 16px; gap: 10px; }
+  .evento__cabeza { gap: 16px; }
+  .evento__fecha { width: 56px; height: 56px; border-radius: 14px; }
+  .evento__fecha b { font-size: 20px; line-height: 22px; }
+  .evento__cabeza h2 { font-size: 18px; line-height: 24px; }
+  .evento__dato { font-size: 14px; line-height: 20px; align-items: center; }
+  .evento__dato img { width: 22px; height: 22px; }
+  .evento__info { height: 44px; font-size: 15px; border-radius: 12px; }
+
+  .comidas { padding: 0; gap: 16px; }
+  .comida { padding: 14px; }
+  .comida__nombre { padding: 4px 0; }
+  .comida__nombre span { font-size: 22px; }
+  .comida__nombre h2 { font-size: 18px; line-height: 24px; }
+  .comida__label, .comida__horario { font-size: 14px; line-height: 20px; }
+  .comida__botones { gap: 10px; }
+  .comida__botones .btn { min-height: 42px; padding: 8px; font-size: 14px; }
+  .comida__botones .btn img { width: 20px !important; height: 20px !important; margin: 0 !important; }
+  .menu-caja .btn-cerrar { top: -16px; left: -12px; }
+}
+
+/* Principal: márgenes amplios como en el diseño */
+.pagina--ancha { max-width: 1936px; padding-left: 154px; padding-right: 154px; padding-top: 80px; }
+@media (max-width: 1200px) { .pagina--ancha { padding-left: 40px; padding-right: 40px; padding-top: 48px; } }
+@media (max-width: 760px) { .pagina--ancha { padding-left: 16px; padding-right: 16px; padding-top: 24px; } }
