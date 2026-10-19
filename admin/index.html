@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resumen · Panel Kartooti</title>
+  <link rel="icon" href="../assets/img/logo-64.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin" data-raiz="../">
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <main class="admin-main">
+    <div class="bienvenida-admin">
+      <h1>Bienvenido de nuevo</h1>
+      <p>Esto es lo que está pasando en tu campus hoy.</p>
+    </div>
+
+    <section class="kpis" aria-label="Indicadores">
+      <a class="kpi" href="usuarios.html" style="--kpi:#c5dde6"><img src="../assets/icons/user.svg" alt=""><b id="k-usuarios">1249</b><span>Usuarios activos</span></a>
+      <a class="kpi" href="eventos.html" style="--kpi:#97d3b1"><img src="../assets/icons/kpi-reloj.svg" alt=""><b id="k-eventos">39</b><span>Eventos activos</span></a>
+      <a class="kpi" href="datos.html" style="--kpi:#f2ce5e"><img src="../assets/icons/kpi-lugar.svg" alt=""><b id="k-puntos">89</b><span>Puntos de interés</span></a>
+      <a class="kpi kpi--claro" href="usuarios.html" style="--kpi:#4ea8c0"><img src="../assets/icons/user.svg" alt="" style="filter:brightness(0) invert(1)"><b>113</b><span>Invitados activos</span></a>
+    </section>
+
+    <div class="resumen-grid">
+      <section class="actividad">
+        <h2>Actividad reciente</h2>
+        <ul id="lista-actividad"></ul>
+      </section>
+
+      <section class="rapidas">
+        <h2>Acciones rápidas</h2>
+        <a class="rapida" href="datos.html"><img src="../assets/icons/qa-datos.svg" alt=""><span><b>Actualizar datos</b><span>Edita mapas y puntos de interés</span></span></a>
+        <a class="rapida" href="usuarios.html"><img src="../assets/icons/qa-usuarios.svg" alt=""><span><b>Administrar cuentas</b><span>Gestiona usuarios y permisos</span></span></a>
+        <a class="rapida" href="eventos.html"><img src="../assets/icons/qa-eventos.svg" alt=""><span><b>Gestión de eventos</b><span>Publicar y editar eventos</span></span></a>
+      </section>
+    </div>
+  </main>
+
+  <!-- Ventana: cargar archivos (medios) -->
+  <div class="modal" id="modal-archivos" style="z-index:120" role="dialog" aria-modal="true" aria-label="Ingrese medios" aria-hidden="true">
+    <div class="modal__caja ventana ventana--ancha">
+      <p class="cargar__titulo">Ingrese medios</p>
+      <div class="cargar__barra">
+        <label class="sr-only" for="archivo-buscar">Buscar en archivos</label>
+        <input class="input" id="archivo-buscar" placeholder="Buscar en archivos..." readonly>
+        <span class="chip-oscuro">25 MB límite</span>
+        <label class="chip-oscuro" for="archivo-input">Biblioteca / este PC</label>
+        <input class="sr-only" type="file" id="archivo-input" accept="image/*,.pdf">
+      </div>
+      <p class="cargar__archivo" id="archivo-nombre">Ningún archivo seleccionado</p>
+      <div class="ventana__botones">
+        <button class="btn-cancelar" type="button" data-cerrar>Cancelar</button>
+        <button class="btn-guardar" type="button" id="archivo-guardar">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/datos.js"></script>
+  <script src="../js/admin/panel.js"></script>
+  <script>Panel.iniciar('resumen');</script>
+  <script src="../js/admin/resumen.js"></script>
+</body>
+</html>

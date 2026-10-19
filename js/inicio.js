@@ -1,20 +1,18 @@
-// Kartooti — Página de inicio
-// Menú desplegable en pantallas pequeñas.
+// Kartooti — Página de inicio: menú desplegable en celular
 (function () {
   var nav = document.querySelector('.nav');
-  var toggle = document.querySelector('.nav__toggle');
-  if (!nav || !toggle) return;
+  var boton = document.querySelector('.nav__menu');
+  if (!nav || !boton) return;
 
-  toggle.addEventListener('click', function () {
-    var open = nav.classList.toggle('is-open');
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  boton.addEventListener('click', function () {
+    var abierto = nav.classList.toggle('esta-abierto');
+    boton.setAttribute('aria-expanded', abierto ? 'true' : 'false');
   });
 
-  // Cierra el menú al elegir un enlace
-  nav.querySelectorAll('.nav__links a').forEach(function (link) {
-    link.addEventListener('click', function () {
-      nav.classList.remove('is-open');
-      toggle.setAttribute('aria-expanded', 'false');
+  nav.querySelectorAll('.nav__links a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      nav.classList.remove('esta-abierto');
+      boton.setAttribute('aria-expanded', 'false');
     });
   });
 })();

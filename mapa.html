@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa interactivo · Kartooti</title>
+  <link rel="icon" href="assets/img/logo-64.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/pantallas.css">
+</head>
+<body>
+  <header id="encabezado"></header>
+
+  <main class="contenedor pagina">
+    <a class="btn-regresar" href="principal.html"><img src="assets/icons/regresar.svg" width="41" height="15" alt="">Regresar</a>
+    <div class="mapa-titulo">
+      <h1>Mapa Interactivo</h1>
+      <p>Usa +/- para acercar o alejar, luego desplázate por el mapa</p>
+    </div>
+
+    <div class="mapa">
+      <div class="mapa__ventana" id="mapa-ventana" tabindex="0" aria-label="Mapa del campus. Arrastra para moverte.">
+        <img src="assets/img/mapa-campus.jpg" alt="Mapa satelital del campus de la Universidad Militar Nueva Granada, Calle 100" id="mapa-img" draggable="false">
+      </div>
+    </div>
+
+    <div class="mapa__controles" role="group" aria-label="Controles del mapa">
+      <button type="button" id="zoom-mas" aria-label="Acercar"><img src="assets/icons/map-mas.svg" width="48" height="48" alt=""></button>
+      <span class="mapa__zoom" id="zoom-valor" aria-live="polite">100%</span>
+      <a href="mapa-ampliado.html" aria-label="Ver mapa en pantalla completa"><img src="assets/icons/map-expandir.svg" width="48" height="48" alt=""></a>
+      <button type="button" id="zoom-menos" aria-label="Alejar"><img src="assets/icons/map-menos.svg" width="48" height="48" alt=""></button>
+    </div>
+  </main>
+
+  <footer id="pie"></footer>
+  <script src="js/app.js"></script>
+  <script src="js/mapa.js"></script>
+</body>
+</html>

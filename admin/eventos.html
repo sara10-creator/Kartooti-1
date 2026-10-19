@@ -3,149 +3,103 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestión de Eventos · Panel Kartooti</title>
+  <title>Gestión de eventos · Panel Kartooti</title>
+  <link rel="icon" href="../assets/img/logo-64.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/admin.css">
 </head>
-<body class="admin">
-  <div class="admin-layout">
-    <aside class="sidebar" id="sidebar"></aside>
+<body class="admin" data-raiz="../">
+  <aside class="sidebar" id="sidebar"></aside>
 
-    <div class="admin-main">
-      <header class="topbar" id="topbar"></header>
+  <main class="admin-main">
+    <div class="admin-cabeza">
+      <div>
+        <h1>Gestión de eventos</h1>
+        <p>Publica y administra los eventos en el campus.</p>
+      </div>
+      <button class="btn-nuevo" type="button" id="btn-nuevo">+ Nuevo evento</button>
+    </div>
 
-      <main class="content">
-        <div class="page-head">
-          <div>
-            <h1 class="page-title">Gestión de Eventos</h1>
-            <p class="page-sub">Publica y administra todos los eventos del campus.</p>
-          </div>
-          <button class="a-btn a-btn--primary" type="button" id="btn-nuevo">
-            <img src="../assets/icons/plus-white.svg" width="16" height="16" alt="">Nuevo evento
-          </button>
+    <div class="filtros">
+      <label class="sr-only" for="f-texto">Buscar</label>
+      <input class="input" id="f-texto" placeholder="Evento...">
+      <select class="filtro" id="f-categoria" aria-label="Filtrar por categoría">
+        <option value="">Todas las categorías</option>
+        <option>Académico</option><option>Cultural</option><option>Deportivo</option><option>Tecnología</option>
+      </select>
+      <select class="filtro" id="f-estado" aria-label="Filtrar por estado">
+        <option value="">Todos los estados</option>
+        <option>Publicado</option><option>Borrador</option><option>Pendiente</option>
+      </select>
+    </div>
+
+    <div class="contadores">
+      <div class="contador"><b id="c-total">0</b><span>Total</span></div>
+      <div class="contador"><b id="c-publicados">0</b><span>Publicados</span></div>
+      <div class="contador"><b id="c-pendientes">0</b><span>Pendientes</span></div>
+    </div>
+
+    <div class="tabla-caja">
+      <table class="tabla">
+        <thead><tr><th>EVENTO</th><th>CATEGORÍA</th><th>FECHA</th><th>ESTADO</th><th>ACCIONES</th></tr></thead>
+        <tbody id="tabla"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Ventana: añadir / editar evento -->
+  <div class="modal" id="modal-evento" role="dialog" aria-modal="true" aria-labelledby="evento-titulo" aria-hidden="true">
+    <div class="modal__caja ventana">
+      <h2 id="evento-titulo">Editar evento</h2>
+      <form id="form-evento" novalidate>
+        <div class="campo campo--corto"><label for="e-titulo">Título del evento *</label><input class="input" id="e-titulo" name="titulo" placeholder="Ej: Vitrina científica" required></div>
+        <div class="campos-2">
+          <div class="campo"><label for="e-categoria">Categoría *</label><select id="e-categoria" name="categoria"><option>Académico</option><option>Cultural</option><option>Deportivo</option><option>Tecnología</option></select></div>
+          <div class="campo"><label for="e-estado">Estado *</label><select id="e-estado" name="estado"><option>Publicado</option><option>Borrador</option><option>Pendiente</option></select></div>
         </div>
-
-        <div class="stats">
-          <div class="stat"><p class="stat__value" id="s-total">0</p><p class="stat__label">Total</p></div>
-          <div class="stat"><p class="stat__value c-green" id="s-publicados">0</p><p class="stat__label">Publicados</p></div>
-          <div class="stat"><p class="stat__value c-gray" id="s-borradores">0</p><p class="stat__label">Borradores</p></div>
-          <div class="stat"><p class="stat__value c-blue" id="s-finalizados">0</p><p class="stat__label">Finalizados</p></div>
+        <div class="campos-2">
+          <div class="campo"><label for="e-fecha">Fecha *</label><input class="input" id="e-fecha" name="fecha" type="date" required></div>
+          <div class="campo"><label for="e-hora">Hora *</label><input class="input" id="e-hora" name="hora" placeholder="Ej: 9:00 AM - 5:00 PM" required></div>
         </div>
-
-        <div class="filters" style="margin-top:24px">
-          <label class="search">
-            <span class="sr-only">Buscar</span>
-            <img src="../assets/icons/search-small.svg" width="16" height="16" alt="">
-            <input type="search" id="f-buscar" placeholder="Buscar eventos...">
-          </label>
-          <select class="select" id="f-categoria" aria-label="Filtrar por categoría">
-            <option value="">Todas las categorías</option>
-            <option>Académico</option>
-            <option>Tecnología</option>
-            <option>Deportivo</option>
-            <option>Cultural</option>
-          </select>
-          <select class="select" id="f-estado" aria-label="Filtrar por estado">
-            <option value="">Todos los estados</option>
-            <option>Publicado</option>
-            <option>Borrador</option>
-            <option>Finalizado</option>
-          </select>
-          <div class="view-toggle" role="group" aria-label="Vista">
-            <button type="button" class="is-active" data-vista="lista" aria-label="Ver como lista" aria-pressed="true"><img src="../assets/icons/view-list.svg" width="16" height="16" alt=""></button>
-            <button type="button" data-vista="tarjetas" aria-label="Ver como tarjetas" aria-pressed="false"><img src="../assets/icons/view-grid.svg" width="16" height="16" alt=""></button>
-          </div>
+        <div class="campo"><label for="e-lugar">Lugar *</label><input class="input" id="e-lugar" name="lugar" placeholder="Ej: Aula máxima" required></div>
+        <div class="campo"><label for="e-desc">Descripción</label><input class="input" id="e-desc" name="descripcion" placeholder="Ej: Muestra de proyectos científicos"></div>
+        <button class="btn-medios" type="button" id="e-medios">Añadir promocional/foto de evento</button>
+        <p class="medios-estado" id="e-medios-estado">Sin medios añadidos...</p>
+        <div class="ventana__botones">
+          <button class="btn-cancelar" type="button" data-cerrar>Cancelar</button>
+          <button class="btn-guardar" type="submit">Guardar cambios</button>
         </div>
-
-        <div class="table-card">
-          <div class="table-scroll" id="vista-lista">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Evento</th>
-                  <th>Categoría</th>
-                  <th>Fecha</th>
-                  <th>Estado</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody id="tabla"></tbody>
-            </table>
-          </div>
-          <div class="cards-grid" id="vista-tarjetas" hidden></div>
-        </div>
-      </main>
+      </form>
     </div>
   </div>
 
-  <!-- Ventana: crear / editar evento -->
-  <div class="modal" id="modal-evento" role="dialog" aria-modal="true" aria-labelledby="modal-evento-titulo" aria-hidden="true">
-    <form class="modal__box modal__box--wide" id="form-evento" novalidate>
-      <div class="modal__head">
-        <h2 class="modal__title" id="modal-evento-titulo">Editar evento</h2>
-        <button class="icon-btn" type="button" data-close aria-label="Cerrar"><img src="../assets/icons/close.svg" width="16" height="16" alt=""></button>
+  <!-- Ventana: cargar archivos (medios) -->
+  <div class="modal" id="modal-archivos" style="z-index:120" role="dialog" aria-modal="true" aria-label="Ingrese medios" aria-hidden="true">
+    <div class="modal__caja ventana ventana--ancha">
+      <p class="cargar__titulo">Ingrese medios</p>
+      <div class="cargar__barra">
+        <label class="sr-only" for="archivo-buscar">Buscar en archivos</label>
+        <input class="input" id="archivo-buscar" placeholder="Buscar en archivos..." readonly>
+        <span class="chip-oscuro">25 MB límite</span>
+        <label class="chip-oscuro" for="archivo-input">Biblioteca / este PC</label>
+        <input class="sr-only" type="file" id="archivo-input" accept="image/*,.pdf">
       </div>
-      <div class="modal__body">
-        <div class="field">
-          <label for="e-titulo">Título del evento *</label>
-          <input id="e-titulo" name="titulo" required>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="e-categoria">Categoría</label>
-            <select id="e-categoria" name="categoria">
-              <option>Académico</option>
-              <option>Tecnología</option>
-              <option>Deportivo</option>
-              <option>Cultural</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="e-estado">Estado</label>
-            <select id="e-estado" name="estado">
-              <option>Publicado</option>
-              <option>Borrador</option>
-              <option>Finalizado</option>
-            </select>
-          </div>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="e-fecha">Fecha *</label>
-            <input id="e-fecha" name="fecha" type="date" required>
-          </div>
-          <div class="field">
-            <label for="e-hora">Hora</label>
-            <input id="e-hora" name="hora" placeholder="9:00 AM - 5:00 PM">
-          </div>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="e-lugar">Lugar *</label>
-            <input id="e-lugar" name="lugar" required>
-          </div>
-          <div class="field">
-            <label for="e-capacidad">Capacidad</label>
-            <input id="e-capacidad" name="capacidad" type="number" min="0">
-          </div>
-        </div>
-        <div class="field">
-          <label for="e-desc">Descripción</label>
-          <textarea id="e-desc" name="descripcion"></textarea>
-        </div>
+      <p class="cargar__archivo" id="archivo-nombre">Ningún archivo seleccionado</p>
+      <div class="ventana__botones">
+        <button class="btn-cancelar" type="button" data-cerrar>Cancelar</button>
+        <button class="btn-guardar" type="button" id="archivo-guardar">Guardar cambios</button>
       </div>
-      <div class="modal__foot">
-        <button class="a-btn a-btn--ghost" type="button" data-close>Cancelar</button>
-        <button class="a-btn a-btn--primary a-btn--sm" type="submit">Guardar cambios</button>
-      </div>
-    </form>
+    </div>
   </div>
 
+  <script src="../js/app.js"></script>
+  <script src="../js/datos.js"></script>
+  <script src="../js/admin/panel.js"></script>
+  <script>Panel.iniciar('eventos');</script>
   <script src="../js/admin/comun.js"></script>
-  <script src="../js/admin/datos-ejemplo.js"></script>
   <script src="../js/admin/eventos.js"></script>
 </body>
 </html>
