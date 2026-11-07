@@ -31,7 +31,7 @@
     });
   }
 
-  if (!reducir && 'IntersectionObserver' in window) {
+  if ('IntersectionObserver' in window) {
     raiz.classList.add('anim');
 
     marcar('.funcion', null, 0.12);
@@ -82,6 +82,7 @@
   }, { passive: true });
   alDesplazar();
 
+  // Con "reducir movimiento" se omiten burbujas, inclinación 3D y paralaje
   if (reducir) return;
 
   // 3. Burbujas que suben en el fondo del hero
