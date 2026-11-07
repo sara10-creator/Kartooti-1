@@ -299,15 +299,15 @@
 @keyframes pulso { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
 @keyframes foco { 0%, 100% { transform: scale(1); filter: none; } 50% { transform: scale(1.25); filter: drop-shadow(0 0 6px rgba(242, 206, 94, .9)); } }
 
-/* ---------- Respeto a "reducir movimiento" ---------- */
+/* ---------- Versión suave para "reducir movimiento" ----------
+   Si el sistema pide reducir movimiento, se quitan los
+   desplazamientos grandes y lo que flota, pero se mantienen
+   apariciones, colores, brillos y efectos al pasar el cursor. */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    animation-delay: 0s !important;
-    transition-duration: .01ms !important;
-    transition-delay: 0s !important;
-  }
+  .hero__fondo span, .mock__marco, .nav { animation: none; }
   .hero__fondo i { display: none; }
-  .anim .revelar, .anim .tips__lista li { opacity: 1; transform: none; }
+  .hero__texto > *, .hero__mini li, .mock__lista li, .mock__mapa, .mock { animation-name: desvanecer; }
+  .anim .revelar, .anim .revelar--izq, .anim .revelar--der, .anim .revelar--zoom, .anim .tips__lista li { transform: none; }
+  .pasos__caja li.visible .pasos__emoji { animation-name: desvanecer; }
 }
+@keyframes desvanecer { from { opacity: 0; } to { opacity: 1; } }
