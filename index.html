@@ -11,8 +11,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/inicio.css">
+  <link rel="stylesheet" href="css/inicio-animaciones.css">
 </head>
 <body class="landing">
+  <div class="progreso" aria-hidden="true"></div>
 
   <!-- Encabezado -->
   <header class="nav">
@@ -40,10 +42,11 @@
   <main>
     <!-- Carteles (hero) -->
     <section class="hero" id="que-es">
+      <div class="hero__fondo" aria-hidden="true"><span></span><span></span><span></span></div>
       <div class="hero__inner">
         <div class="hero__texto">
           <span class="pildora"><span aria-hidden="true">🐢</span> Hecho por estudiantes, para estudiantes</span>
-          <h1>Contigo desde el<br>primer semestre</h1>
+          <h1>Contigo desde el<br><span class="resalta">primer semestre</span></h1>
           <p class="hero__lead">Kartooti es tu guía digital del campus universitario. Localiza salones, descubre eventos, encuentra dónde comer y nunca más llegues tarde por no saber dónde está el bloque D.</p>
           <ul class="hero__mini">
             <li>🗺️ Mapa en tiempo real</li>
@@ -58,6 +61,7 @@
 
         <div class="hero__mock">
           <div class="mock">
+           <div class="mock__marco">
             <div class="mock__barra">
               <span aria-hidden="true">🐢</span>
               <b>Kartooti</b>
@@ -70,6 +74,7 @@
               <li><a href="acceso-invitado.html"><span class="mock__ico" style="background:#00bc7d">🍽️</span><span class="mock__txt"><b>Comida</b><small>Cafeterías</small></span><img src="assets/icons/chevron.svg" width="12" height="15" alt=""></a></li>
             </ul>
             <span class="mock__mapa">Vista previa del mapa</span>
+           </div>
           </div>
         </div>
       </div>
@@ -121,7 +126,7 @@
       </ol>
 
       <div class="tips">
-        <p class="tips__titulo">💡 Consejos rápidos</p>
+        <p class="tips__titulo"><span aria-hidden="true">💡</span> Consejos rápidos</p>
         <ul class="tips__lista">
           <li>Usa el mapa interactivo para explorar el campus</li>
           <li>Busca ubicaciones con la función de búsqueda para llegar directo al lugar</li>
