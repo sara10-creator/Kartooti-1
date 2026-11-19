@@ -3,26 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kartooti · Acceso invitado</title>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Acceso de invitado · Kartooti</title>
+  <link rel="icon" href="../assets/img/logo-64.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/base.css">
-  <link rel="stylesheet" href="../css/inicio.css">
-  <link rel="stylesheet" href="../css/invitado.css">
+  <link rel="stylesheet" href="../css/pantallas.css">
 </head>
-<body>
-  <main class="container">
-    <a href="../index.html#acceso">← Volver</a>
-    <h1>Acceso de invitado</h1>
+<body data-raiz="../">
+  <header class="header header--simple">
+    <a class="marca" href="../index.html" aria-label="Kartooti, ir a la página de inicio">
+      <img src="../assets/img/logo.png" alt="">
+      <span>Kartooti</span>
+    </a>
+  </header>
 
-    <form id="form-acceso">
-      <label for="codigo">Código de invitación</label>
-      <input type="text" id="codigo" name="codigo" placeholder="Ej: KART-2026" required>
+  <main class="acceso-pagina">
+    <a class="btn-regresar" href="../index.html#acceso"><img src="../assets/icons/regresar.svg" width="41" height="15" alt="">Regresar</a>
 
-      <p id="error" role="alert"></p>
-      <button type="submit" class="btn btn--primary">Ingresar</button>
-    </form>
+    <div class="acceso-centro">
+      <form class="form-invitado" id="form-invitado" style="margin-top:0;text-align:left" novalidate>
+        <h1>Acceso de invitado</h1>
+        <label class="sr-only" for="i-codigo">Código de invitación</label>
+        <input class="input" id="i-codigo" name="codigo" type="text" placeholder="Codigo de invitación (Ej: KART-2026)" autocomplete="off" required>
+        <p class="mensaje-error" id="i-error" role="alert"></p>
+        <button class="btn btn--amarillo" type="submit">Ingresar</button>
+      </form>
+    </div>
   </main>
 
-  <script src="../js/invitado/acceso.js"></script>
+  <footer id="pie"></footer>
+
+  <script src="../js/app.js"></script>
+  <script>
+    (function () {
+      var K = Kartooti;
+      var form = document.getElementById('form-invitado');
+      var error = document.getElementById('i-error');
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var codigo = form.codigo.value.trim();
+        if (codigo.length < 4) {
+          form.codigo.classList.add('es-error');
+          form.codigo.focus();
+          error.textContent = 'Ingresa un código de invitación válido (mínimo 4 caracteres).';
+          error.classList.add('es-visible');
+          return;
+        }
+        K.iniciarSesion({ nombre: 'Invitado', correo: 'Código ' + codigo.toUpperCase(), rol: 'Invitado' });
+        window.location.href = '../principal.html';
+      });
+    })();
+  </script>
 </body>
 </html>
