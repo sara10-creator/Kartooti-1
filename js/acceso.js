@@ -15,6 +15,11 @@
     if (campos[0]) campos[0].focus();
   }
 
+  var DOMINIO = '@unimilitar.edu.co';
+  function esInstitucional(correo) {
+    return correo.trim().toLowerCase().slice(-DOMINIO.length) === DOMINIO;
+  }
+
   function nombreDesdeCorreo(correo) {
     var base = correo.split('@')[0].replace(/^est\./, '').replace(/[._-]+/g, ' ');
     return base.replace(/\b\w/g, function (l) { return l.toUpperCase(); });
@@ -27,6 +32,7 @@
       e.preventDefault();
       var correo = login.correo, clave = login.clave;
       if (!correo.value.trim() || !correo.checkValidity()) { marcar([correo]); return error('l-error', 'Escribe un correo válido.'); }
+      if (!esInstitucional(correo.value)) { marcar([correo]); return error('l-error', 'Usa tu correo institucional (' + DOMINIO + ').'); }
       if (!clave.value) { marcar([clave]); return error('l-error', 'Escribe tu contraseña.'); }
       error('l-error', '');
       K.iniciarSesion({ nombre: nombreDesdeCorreo(correo.value.trim()), correo: correo.value.trim(), rol: 'Estudiante' });
@@ -42,6 +48,7 @@
       var f = registro;
       if (!f.nombre.value.trim()) { marcar([f.nombre]); return error('r-error', 'Escribe tu nombre completo.'); }
       if (!f.correo.value.trim() || !f.correo.checkValidity()) { marcar([f.correo]); return error('r-error', 'Escribe un correo electrónico válido.'); }
+      if (!esInstitucional(f.correo.value)) { marcar([f.correo]); return error('r-error', 'Usa tu correo institucional (' + DOMINIO + ').'); }
       if (f.clave.value.length < 6) { marcar([f.clave]); return error('r-error', 'La contraseña debe tener al menos 6 caracteres.'); }
       if (f.clave.value !== f.clave2.value) { marcar([f.clave2]); return error('r-error', 'Las contraseñas no coinciden.'); }
       error('r-error', '');
