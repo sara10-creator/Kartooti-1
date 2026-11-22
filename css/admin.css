@@ -2,6 +2,8 @@
    Kartooti — Panel de administración (página "app")
    ========================================================== */
 
+html.auth-pending body { visibility: hidden; }
+
 body.admin { flex-direction: row; background: var(--fondo); }
 
 /* ---------- Barra lateral ---------- */

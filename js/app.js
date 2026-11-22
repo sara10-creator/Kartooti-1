@@ -127,7 +127,21 @@ var Kartooti = (function () {
     if (cerrar) cerrarModal(cerrar.closest('.modal'));
     if (e.target.classList && e.target.classList.contains('modal')) cerrarModal(e.target);
     var salir = e.target.closest('[data-salir]');
-    if (salir) cerrarSesion();
+    if (salir) {
+      e.preventDefault();
+      var destino = salir.href;
+      var clienteUrl = new URL(raiz + 'js/supabase.js', document.baseURI).href;
+      import(clienteUrl).then(function (modulo) {
+        return modulo.supabase.auth.signOut();
+      }).then(function (resultado) {
+        if (resultado.error) throw resultado.error;
+        cerrarSesion();
+        window.location.assign(destino);
+      }).catch(function (err) {
+        console.error('Error al cerrar sesión con Supabase:', err);
+        aviso('No fue posible cerrar la sesión. Inténtalo de nuevo.');
+      });
+    }
   });
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
