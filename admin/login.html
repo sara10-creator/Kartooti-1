@@ -34,19 +34,6 @@
   </div>
 
   <script src="../js/app.js"></script>
-  <script>
-    (function () {
-      var f = document.getElementById('form-admin');
-      var err = document.getElementById('a-error');
-      f.addEventListener('submit', function (e) {
-        e.preventDefault();
-        f.correo.classList.remove('es-error'); f.clave.classList.remove('es-error');
-        if (!f.correo.value.trim() || !f.correo.checkValidity()) { f.correo.classList.add('es-error'); f.correo.focus(); err.textContent = 'Escribe un correo válido.'; err.classList.add('es-visible'); return; }
-        if (!f.clave.value) { f.clave.classList.add('es-error'); f.clave.focus(); err.textContent = 'Escribe tu contraseña.'; err.classList.add('es-visible'); return; }
-        Kartooti.iniciarSesion({ nombre: 'Admin 1', correo: f.correo.value.trim(), rol: 'Administrador' });
-        window.location.href = 'index.html';
-      });
-    })();
-  </script>
+  <script type="module" src="../js/admin/login.js"></script>
 </body>
 </html>

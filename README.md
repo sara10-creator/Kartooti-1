@@ -167,12 +167,32 @@ index.html            Página de inicio (landing) de Kartooti
 
 Por ahora el panel usa datos de ejemplo que se guardan en el navegador (localStorage), así que los cambios se mantienen al recargar la página. Cuando exista la base de datos, solo hay que reemplazar `js/admin/datos-ejemplo.js` por llamadas al servidor.
 
+### Autenticación y perfiles
+
+El registro y el inicio de sesión de estudiantes y administradores usan Supabase Auth. Cada cuenta crea un perfil en `public.profiles` mediante el trigger de la migración `supabase/migrations/20261122162000_profiles.sql`. RLS limita la lectura a la fila propia y solo permite que el usuario actualice su nombre; el rol no es modificable desde el navegador.
+
+Antes de probar el registro, ejecuta esa migración en el SQL Editor de Supabase y habilita el proveedor **Email**. En **Authentication → URL Configuration**, agrega `http://localhost:5173/login.html` y la URL exacta de producción a **Redirect URLs**. El registro envía el correo de confirmación de vuelta a `login.html`. Define **Site URL** como la URL de producción.
+
+Para conceder acceso administrativo, crea primero la cuenta del administrador mediante el registro y luego ejecuta en SQL Editor, reemplazando el correo:
+
+```sql
+update public.profiles
+set role = 'admin'
+where id = (
+  select id from auth.users
+  where lower(email) = lower('admin@example.com')
+);
+```
+
+El acceso administrativo y sus páginas comprueban ese rol en la base de datos. Los datos que gestiona el panel siguen siendo ejemplos almacenados en `localStorage`; todavía no se escriben en tablas de Supabase. Si se conectan esos datos después, cada tabla necesitará sus propias políticas RLS. Nunca incluyas una clave `service_role` en el navegador.
+
 🚀 8. Instalación y Ejecución
 
-No necesita instalar nada: es HTML, CSS y JavaScript puro.
+Se requiere [Node.js 22.12 o posterior](https://nodejs.org/en/download) (incluye npm).
 
 1. Clona o descarga el repositorio.
-2. Abre `index.html` en el navegador (doble clic) para ver la página de inicio.
-3. Para entrar al panel, usa el botón **Acceso administrativo** de la página de inicio o abre `admin/resumen.html`.
+2. Ejecuta `npm install`.
+3. Ejecuta `npm run dev` y abre la URL que muestra Vite (por defecto `http://localhost:5173`).
+4. Ejecuta `npm run check:auth` para comprobar la sintaxis de los módulos de autenticación.
 
-Opcional: para verlo como un sitio real, en VS Code instala la extensión *Live Server* y haz clic en **Go Live**, o publícalo gratis con GitHub Pages (Settings → Pages → rama `main`).
+No abras las páginas con doble clic (`file://`): los módulos JavaScript y Supabase Auth necesitan un servidor HTTP.
