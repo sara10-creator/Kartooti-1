@@ -12,6 +12,7 @@ var Kartooti = (function () {
   }
   function iniciarSesion(datos) {
     try { localStorage.setItem('kartooti:sesion', JSON.stringify(datos)); } catch (e) { /* sin almacenamiento */ }
+    if (window.KartootiCookies) KartootiCookies.guardarSesion(datos);
   }
   function cerrarSesion() {
     try { localStorage.removeItem('kartooti:sesion'); } catch (e) { /* sin almacenamiento */ }
