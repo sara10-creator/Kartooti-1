@@ -7,7 +7,7 @@
 :root {
   /* Paleta del Figma (página "app") */
   --primario: #025373;
-  --secundario: #1a9aab;
+  --secundario: #137a87;      /* antes #1a9aab: contraste 3.36:1 → 5.05:1 (WCAG 1.4.3) */
   --fondo: #f0f8fa;
   --paleta-1: #4ea8c0;
   --paleta-2: #97d3b1;
@@ -15,7 +15,7 @@
   --paleta-4: #c5dde6;
   --paleta-5: #0f4a58;
   --azul-medio: #1a5f7a;
-  --azul-claro: #5a8fa0;
+  --azul-claro: #3f6f7f;      /* antes #5a8fa0: 3.3:1 → 5.1:1 */
   --teal: #1a7080;
   --celeste: #7dd4e8;
   --menta: #00c8b3;
@@ -25,8 +25,8 @@
   --texto: #1d293d;
   --texto-2: #314158;
   --texto-3: #45556c;
-  --gris: #62748e;
-  --gris-2: #90a1b9;
+  --gris: #55667e;            /* antes #62748e: 4.42:1 → 5.4:1 */
+  --gris-2: #5f6f86;          /* antes #90a1b9: 2.6:1 → 5.1:1 */
   --linea: #e2e8f0;
   --blanco: #ffffff;
   --rojo: #ff6467;
@@ -75,6 +75,40 @@ main { flex: 1; }
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;
+}
+
+/* ---------- Accesibilidad: foco visible y enlace "Saltar al contenido" ---------- */
+/* WCAG 2.4.7 (foco visible): todo lo que se usa con teclado muestra un contorno claro */
+:focus-visible {
+  outline: 3px solid var(--primario);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+/* Sobre fondos oscuros (barra lateral del admin, pie, barra móvil) el contorno es claro */
+.sidebar :focus-visible, .menu-movil :focus-visible, .footer :focus-visible, .cuenta :focus-visible {
+  outline-color: var(--celeste);
+}
+/* WCAG 2.4.1 (evitar bloques): primer elemento al usar Tab */
+.saltar {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 1000;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: var(--primario);
+  color: var(--blanco);
+  font-weight: 700;
+  transform: translateY(-200%);
+  transition: transform .15s;
+}
+.saltar:focus { transform: none; }
+/* Destino del enlace "saltar": el contenido principal no muestra contorno al recibir el foco */
+main:focus { outline: none; }
+
+/* WCAG 2.3.3 / preferencia del sistema: menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
 
 /* ---------- Tipografía ---------- */
@@ -155,7 +189,7 @@ main { flex: 1; }
   font-size: 15px;
   line-height: 28px;
   font-weight: 700;
-  color: var(--menta);
+  color: #00756a;           /* antes var(--menta): 2.1:1 sobre blanco → 5.6:1 */
   transition: background-color .2s;
 }
 .btn-salir:hover { background: rgba(0, 200, 179, 0.08); }
@@ -200,7 +234,7 @@ main { flex: 1; }
 .btn--medio { background: var(--azul-medio); color: var(--blanco); }
 .btn--borde { border: 1.5px solid var(--azul-medio); color: var(--primario); background: transparent; }
 .btn--borde:hover { background: rgba(2, 83, 115, 0.05); filter: none; }
-.btn--amarillo { background: var(--paleta-3); color: var(--blanco); }
+.btn--amarillo { background: var(--paleta-3); color: var(--texto); } /* texto blanco sobre amarillo: 1.5:1 */
 .btn--bloque { width: 100%; }
 
 /* ---------- Campos de texto ---------- */
@@ -217,6 +251,8 @@ main { flex: 1; }
 }
 .input::placeholder { color: var(--azul-claro); }
 .input:focus { border-color: var(--paleta-1); box-shadow: 0 0 0 3px rgba(78, 168, 192, 0.2); }
+.input:focus-visible { outline: 3px solid var(--primario); outline-offset: 2px; }
+.input[aria-invalid="true"] { border-color: var(--rojo); }
 .input.es-error { border-color: var(--rojo); }
 
 /* ---------- Caja de consejos ---------- */

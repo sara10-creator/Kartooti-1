@@ -11,9 +11,20 @@ import { supabase } from './supabase.js';
     el.classList.toggle('es-visible', !!texto);
   }
 
+  // Marca los campos con error. Además del color rojo, lo anuncia a los lectores
+  // de pantalla (aria-invalid) y enlaza el campo con el mensaje (aria-describedby).
   function marcar(campos) {
-    document.querySelectorAll('.input').forEach(function (i) { i.classList.remove('es-error'); });
-    campos.forEach(function (c) { c.classList.add('es-error'); });
+    document.querySelectorAll('.input').forEach(function (i) {
+      i.classList.remove('es-error');
+      i.removeAttribute('aria-invalid');
+    });
+    campos.forEach(function (c) {
+      c.classList.add('es-error');
+      c.setAttribute('aria-invalid', 'true');
+      var form = c.form;
+      var msg = form && form.querySelector('.mensaje-error, [role="alert"]');
+      if (msg && msg.id) c.setAttribute('aria-describedby', msg.id);
+    });
     if (campos[0]) campos[0].focus();
   }
 

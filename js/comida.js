@@ -12,8 +12,9 @@ KartootiDatos.listo.then(function () {
       '<p class="comida__label">Horario de apertura</p>' +
       '<p class="comida__horario">' + K.esc(c.horario) + '</p>' +
       '<div class="comida__botones">' +
-        '<a class="btn btn--primario" href="buscar.html?q=' + encodeURIComponent(c.nombre) + '"><img src="' + r + 'icons/food-mapa.svg" width="21" height="21" alt="">Ver Mapa</a>' +
-        '<button class="btn btn--borde" type="button" data-menu="' + c.id + '"><img src="' + r + 'icons/food-menu.svg" alt="">Menú</button>' +
+        // aria-label: cada botón dice de qué restaurante es (WCAG 2.4.4 / 2.5.3: empieza con el texto visible)
+        '<a class="btn btn--primario" href="buscar.html?q=' + encodeURIComponent(c.nombre) + '" aria-label="Ver Mapa: ubicación de ' + K.esc(c.nombre) + '"><img src="' + r + 'icons/food-mapa.svg" width="21" height="21" alt="">Ver Mapa</a>' +
+        '<button class="btn btn--borde" type="button" data-menu="' + c.id + '" aria-label="Menú de ' + K.esc(c.nombre) + '" aria-haspopup="dialog"><img src="' + r + 'icons/food-menu.svg" alt="">Menú</button>' +
       '</div>' +
     '</article>';
   }).join('');

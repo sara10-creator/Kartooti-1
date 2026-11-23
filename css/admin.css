@@ -29,8 +29,8 @@ body.admin { flex-direction: row; background: var(--fondo); }
 }
 .sidebar__marca img { width: 54px; height: 54px; border-radius: 12px; }
 .sidebar__marca b { display: block; font-size: 32px; line-height: 40px; font-weight: 800; color: var(--fondo); }
-.sidebar__marca small { display: block; font-size: 10px; line-height: 16px; font-weight: 300; color: var(--secundario); }
-.sidebar__titulo { font-size: 16px; line-height: 36px; font-weight: 600; color: var(--secundario); }
+.sidebar__marca small { display: block; font-size: 10px; line-height: 16px; font-weight: 300; color: var(--celeste); } /* 5.8:1 sobre la barra oscura */
+.sidebar__titulo { font-size: 16px; line-height: 36px; font-weight: 600; color: var(--celeste); }
 .sidebar__menu { display: flex; flex-direction: column; gap: 12px; margin-top: -20px; }
 .sidebar__op {
   display: flex;
@@ -63,7 +63,7 @@ body.admin { flex-direction: row; background: var(--fondo); }
   text-align: left;
 }
 .sidebar__cuenta:hover { color: var(--menta-2); }
-.sidebar__pie .btn-salir { margin: 6px 0 0 20px; }
+.sidebar__pie .btn-salir { margin: 6px 0 0 20px; color: var(--menta); } /* sobre fondo oscuro el menta sí contrasta */
 
 .menu-movil { display: none; }
 
@@ -223,7 +223,7 @@ body.admin { flex-direction: row; background: var(--fondo); }
 .kpi img { height: 49px; width: auto; align-self: flex-start; }
 .kpi b { font-size: 40px; line-height: 60px; font-weight: 800; color: var(--primario); }
 .kpi span { font-family: var(--font-texto); font-size: 24px; line-height: 32px; color: #000; }
-.kpi--claro b { color: var(--fondo); }
+.kpi--claro b { color: var(--paleta-5); } /* antes texto claro sobre celeste: 2.5:1 */
 
 .resumen-grid {
   display: grid;
@@ -270,7 +270,7 @@ body.admin { flex-direction: row; background: var(--fondo); }
 .rapida:hover { background: var(--fondo); transform: translateX(3px); }
 .rapida img { width: 32px; height: 32px; }
 .rapida b { display: block; font-size: 14px; line-height: 20px; font-weight: 500; color: #000; }
-.rapida span { display: block; font-size: 12px; line-height: 20px; font-weight: 300; color: #9b9b9b; }
+.rapida span { display: block; font-size: 12px; line-height: 20px; font-weight: 300; color: #6b6b6b; } /* antes #9b9b9b: 2.8:1 */
 
 /* ---------- Ventanas del panel ---------- */
 .ventana { width: 100%; max-width: 553px; padding: 40px 28px 32px; }
@@ -298,6 +298,8 @@ body.admin { flex-direction: row; background: var(--fondo); }
 }
 .campo select { appearance: none; -webkit-appearance: none; background: var(--blanco) url("../assets/icons/chevron-down-azul.svg") no-repeat right 12px center; padding-right: 34px; }
 .campo .input:focus, .campo select:focus { border-color: var(--paleta-1); box-shadow: 0 0 0 3px rgba(78, 168, 192, 0.2); color: var(--primario); }
+.campo .input:focus-visible, .campo select:focus-visible { outline: 3px solid var(--primario); outline-offset: 2px; }
+.campo [aria-invalid="true"] { border-color: var(--rojo); }
 .campo .input.es-error { border-color: var(--rojo); }
 .campos-2 { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 16px; }
 .campo--corto { max-width: 302px; }
@@ -459,9 +461,10 @@ label.chip-oscuro:hover { filter: brightness(1.15); }
     left: 0;
     top: 0;
     transform: translateX(-100%);
-    transition: transform .25s ease;
+    visibility: hidden; /* cerrado: sus enlaces no reciben el foco del teclado */
+    transition: transform .25s ease, visibility 0s linear .25s;
   }
-  body.menu-abierto .sidebar { transform: none; box-shadow: 0 0 40px rgba(0, 0, 0, 0.35); }
+  body.menu-abierto .sidebar { transform: none; visibility: visible; transition: transform .25s ease; box-shadow: 0 0 40px rgba(0, 0, 0, 0.35); }
   .menu-movil {
     display: flex;
     align-items: center;
@@ -508,4 +511,11 @@ label.chip-oscuro:hover { filter: brightness(1.15); }
   .detalle__dato { width: auto; flex: 1; }
   .estado-botones { gap: 10px; }
   .cuenta--admin { left: 16px; bottom: 16px; }
+}
+
+/* Accesibilidad: el selector de archivos está oculto visualmente; cuando recibe
+   el foco con el teclado, se resalta su etiqueta "Biblioteca / este PC" (WCAG 2.4.7) */
+.cargar__barra:has(#archivo-input:focus-visible) label[for="archivo-input"] {
+  outline: 3px solid var(--primario);
+  outline-offset: 3px;
 }

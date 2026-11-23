@@ -9,6 +9,15 @@
     boton.setAttribute('aria-expanded', abierto ? 'true' : 'false');
   });
 
+  // Escape cierra el menú del celular y devuelve el foco al botón (teclado)
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && nav.classList.contains('esta-abierto')) {
+      nav.classList.remove('esta-abierto');
+      boton.setAttribute('aria-expanded', 'false');
+      boton.focus();
+    }
+  });
+
   nav.querySelectorAll('.nav__links a').forEach(function (a) {
     a.addEventListener('click', function () {
       nav.classList.remove('esta-abierto');
