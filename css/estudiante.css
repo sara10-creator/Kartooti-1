@@ -70,6 +70,8 @@ input:focus {
   border-color: var(--acc);
   box-shadow: 0 0 0 4px var(--acc-soft);
 }
+/* Foco visible con teclado (WCAG 2.4.7) */
+input:focus-visible { outline: 3px solid var(--acc); outline-offset: 2px; }
 
 /* Mensaje de error (se oculta si está vacío) */
 #error {

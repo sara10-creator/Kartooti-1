@@ -62,17 +62,22 @@ var Kartooti = (function () {
       '<p class="cuenta__dato">Rol: ' + esc(s.rol) + '</p>' +
       '<p class="cuenta__dato">Estado: Activo</p>' +
       '<a class="cuenta__salir" href="' + raiz + 'index.html" data-salir>Cerrar sesión</a>';
-    document.body.appendChild(tarjeta);
+    // Justo después del encabezado: así, con Tab, se llega a la tarjeta después del botón
+    cont.parentNode.insertBefore(tarjeta, cont.nextSibling);
 
     var btn = document.getElementById('btn-cuenta');
+    btn.setAttribute('aria-controls', 'tarjeta-cuenta');
     btn.addEventListener('click', function (e) {
       e.stopPropagation();
       var abierta = tarjeta.classList.toggle('esta-abierto');
       btn.setAttribute('aria-expanded', abierta ? 'true' : 'false');
+      // Al abrir, el foco entra en la tarjeta (WCAG 2.4.3)
+      if (abierta) tarjeta.querySelector('.btn-cerrar').focus();
     });
     tarjeta.querySelector('.btn-cerrar').addEventListener('click', function () {
       tarjeta.classList.remove('esta-abierto');
       btn.setAttribute('aria-expanded', 'false');
+      btn.focus();
     });
     document.addEventListener('click', function (e) {
       if (tarjeta.classList.contains('esta-abierto') && !tarjeta.contains(e.target)) {
@@ -107,9 +112,17 @@ var Kartooti = (function () {
   }
 
   // ---------- Ventanas emergentes ----------
+  // Accesibilidad (WCAG 2.1.2, 2.4.3): al abrir, el foco entra en la ventana;
+  // Tab no se escapa hacia la página de atrás; al cerrar, el foco vuelve
+  // al botón que la abrió.
+  var ENFOCABLES = 'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  var origenDelFoco = {};
+
   function abrirModal(id) {
     var m = document.getElementById(id);
     if (!m) return;
+    if (!m.getAttribute('role')) m.setAttribute('role', 'dialog');
+    origenDelFoco[id] = document.activeElement;
     m.classList.add('esta-abierto');
     m.setAttribute('aria-hidden', 'false');
     var foco = m.querySelector('input, select, textarea, button:not(.btn-cerrar)') || m.querySelector('button');
@@ -120,6 +133,45 @@ var Kartooti = (function () {
     if (!m) return;
     m.classList.remove('esta-abierto');
     m.setAttribute('aria-hidden', 'true');
+    var volver = origenDelFoco[m.id];
+    if (volver && document.contains(volver) && typeof volver.focus === 'function') volver.focus();
+    delete origenDelFoco[m.id];
+  }
+
+  // Mantiene el foco dentro de la ventana abierta mientras se usa Tab
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab') return;
+    var abiertas = document.querySelectorAll('.modal.esta-abierto');
+    var m = abiertas[abiertas.length - 1];
+    if (!m) return;
+    var lista = Array.prototype.filter.call(m.querySelectorAll(ENFOCABLES), function (el) {
+      return el.offsetParent !== null || el === document.activeElement;
+    });
+    if (!lista.length) return;
+    var primero = lista[0], ultimo = lista[lista.length - 1];
+    if (!m.contains(document.activeElement)) { e.preventDefault(); primero.focus(); return; }
+    if (e.shiftKey && document.activeElement === primero) { e.preventDefault(); ultimo.focus(); }
+    else if (!e.shiftKey && document.activeElement === ultimo) { e.preventDefault(); primero.focus(); }
+  });
+
+  // ---------- Enlace "Saltar al contenido principal" (WCAG 2.4.1) ----------
+  function prepararSaltar() {
+    var main = document.querySelector('main');
+    if (!main || document.querySelector('.saltar')) return;
+    // Solo hace falta si antes del contenido hay encabezado, menú o barra lateral
+    if (!document.querySelector('#encabezado, .nav, .sidebar, header')) return;
+    if (!main.id) main.id = 'contenido';
+    if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
+    var a = document.createElement('a');
+    a.className = 'saltar';
+    a.href = '#' + main.id;
+    a.textContent = 'Saltar al contenido principal';
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      main.focus();
+      main.scrollIntoView();
+    });
+    document.body.insertBefore(a, document.body.firstChild);
   }
 
   document.addEventListener('click', function (e) {
@@ -147,7 +199,11 @@ var Kartooti = (function () {
     if (e.key !== 'Escape') return;
     document.querySelectorAll('.modal.esta-abierto').forEach(cerrarModal);
     var t = document.getElementById('tarjeta-cuenta');
-    if (t) t.classList.remove('esta-abierto');
+    if (t && t.classList.contains('esta-abierto')) {
+      t.classList.remove('esta-abierto');
+      var b = document.getElementById('btn-cuenta');
+      if (b) { b.setAttribute('aria-expanded', 'false'); b.focus(); }
+    }
   });
 
   // ---------- Aviso ----------
@@ -168,6 +224,7 @@ var Kartooti = (function () {
 
   pintarEncabezado();
   pintarPie();
+  prepararSaltar();
 
   return {
     raiz: raiz,

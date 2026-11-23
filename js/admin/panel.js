@@ -38,17 +38,32 @@ var Panel = (function () {
         '<a class="btn-salir" href="login.html" data-salir><img src="' + r + 'assets/icons/salir.svg" width="35" height="31" alt="">Salir</a>' +
       '</div>';
 
-    // Barra superior en celular
-    var movil = document.createElement('div');
+    // Barra superior en celular (es un <header>: así queda dentro de un "landmark")
+    // Si la página ya tiene su propio <header>, se usa <nav> para no repetir el landmark "banner"
+    var movil = document.createElement(document.querySelector('header') ? 'nav' : 'header');
+    if (movil.tagName === 'NAV') movil.setAttribute('aria-label', 'Barra del panel en celular');
     movil.className = 'menu-movil';
-    movil.innerHTML = '<button type="button" aria-label="Abrir menú"><span></span><span></span><span></span></button><img src="' + r + 'assets/img/logo.png" alt="">Kartooti';
-    document.body.insertBefore(movil, document.body.firstChild);
-    movil.querySelector('button').addEventListener('click', function (e) {
+    movil.innerHTML = '<button type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="sidebar"><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span></button><img src="' + r + 'assets/img/logo.png" alt="">Kartooti';
+    var saltar = document.querySelector('.saltar');
+    document.body.insertBefore(movil, saltar ? saltar.nextSibling : document.body.firstChild);
+    var btnMenu = movil.querySelector('button');
+
+    function menuMovil(abrir) {
+      document.body.classList.toggle('menu-abierto', abrir);
+      btnMenu.setAttribute('aria-expanded', abrir ? 'true' : 'false');
+      btnMenu.setAttribute('aria-label', abrir ? 'Cerrar menú' : 'Abrir menú');
+      if (abrir) { var primero = barra.querySelector('a, button'); if (primero) setTimeout(function () { primero.focus(); }, 60); }
+    }
+    btnMenu.addEventListener('click', function (e) {
       e.stopPropagation();
-      document.body.classList.toggle('menu-abierto');
+      menuMovil(!document.body.classList.contains('menu-abierto'));
     });
     document.addEventListener('click', function (e) {
-      if (document.body.classList.contains('menu-abierto') && !barra.contains(e.target)) document.body.classList.remove('menu-abierto');
+      if (document.body.classList.contains('menu-abierto') && !barra.contains(e.target)) menuMovil(false);
+    });
+    // Escape cierra el menú del celular y devuelve el foco al botón
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && document.body.classList.contains('menu-abierto')) { menuMovil(false); btnMenu.focus(); }
     });
 
     // Tarjeta "Mi cuenta"
@@ -63,15 +78,29 @@ var Panel = (function () {
       '<p class="cuenta__dato">Rol: Administrador</p>' +
       '<p class="cuenta__dato">Estado: Activo</p>' +
       '<a class="cuenta__salir" href="' + r + 'index.html" data-salir>Cerrar sesión</a>';
-    document.body.appendChild(tarjeta);
+    tarjeta.id = 'tarjeta-mi-cuenta';
+    // Justo después de la barra lateral, para que el orden con Tab sea natural
+    barra.parentNode.insertBefore(tarjeta, barra.nextSibling);
 
-    document.getElementById('btn-mi-cuenta').addEventListener('click', function (e) {
+    var btnCuenta = document.getElementById('btn-mi-cuenta');
+    btnCuenta.setAttribute('aria-expanded', 'false');
+    btnCuenta.setAttribute('aria-controls', 'tarjeta-mi-cuenta');
+    function cuenta(abrir, devolverFoco) {
+      tarjeta.classList.toggle('esta-abierto', abrir);
+      btnCuenta.setAttribute('aria-expanded', abrir ? 'true' : 'false');
+      if (abrir) tarjeta.querySelector('.btn-cerrar').focus();
+      else if (devolverFoco) btnCuenta.focus();
+    }
+    btnCuenta.addEventListener('click', function (e) {
       e.stopPropagation();
-      tarjeta.classList.toggle('esta-abierto');
+      cuenta(!tarjeta.classList.contains('esta-abierto'));
     });
-    tarjeta.querySelector('.btn-cerrar').addEventListener('click', function () { tarjeta.classList.remove('esta-abierto'); });
+    tarjeta.querySelector('.btn-cerrar').addEventListener('click', function () { cuenta(false, true); });
     document.addEventListener('click', function (e) {
-      if (tarjeta.classList.contains('esta-abierto') && !tarjeta.contains(e.target)) tarjeta.classList.remove('esta-abierto');
+      if (tarjeta.classList.contains('esta-abierto') && !tarjeta.contains(e.target)) cuenta(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && tarjeta.classList.contains('esta-abierto')) cuenta(false, true);
     });
 
     prepararCargaArchivos();
