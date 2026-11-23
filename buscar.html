@@ -28,7 +28,8 @@
       <form class="buscar__form" id="form-buscar" role="search" novalidate>
         <div class="campo">
           <label for="b-texto">Salón o lugar</label>
-          <input class="input" type="search" id="b-texto" name="q" placeholder="Ejemplo: B201, Aula máxima, Café leyenda" autocomplete="off" aria-describedby="b-ayuda">
+          <input class="input" type="search" id="b-texto" name="q" placeholder="Ejemplo: B201, Aula máxima, Café leyenda" autocomplete="off" list="b-opciones" aria-describedby="b-ayuda">
+          <datalist id="b-opciones"></datalist>
           <small id="b-ayuda" class="sr-only">Los salones se escriben con la letra del bloque, el piso y el número, por ejemplo B201.</small>
         </div>
         <div class="buscar__botones">
@@ -39,16 +40,25 @@
 
       <div class="resultado" id="resultado">
         <p class="resultado__texto" id="resultado-texto" role="status" aria-live="polite"></p>
-        <img src="assets/img/mapa-campus.jpg" alt="Mapa general del campus">
         <a class="btn btn--borde" href="mapa.html" style="align-self:flex-start">Ver el mapa interactivo</a>
       </div>
-
+      <section class="campus" aria-labelledby="campus-titulo">
+        <h2 class="campus__titulo" id="campus-titulo">Mapa del campus · Sede Calle 100</h2>
+        <div class="campus__cuerpo">
+          <nav class="campus__lista" id="campus-lista" aria-label="Lugares del campus"></nav>
+          <div class="campus__mapa">
+            <img src="assets/img/ilustracion-campus.svg" alt="Ilustración del campus visto desde arriba. El lugar que busques se resalta en el mapa." width="950" height="537">
+            <svg class="campus__capa" id="campus-capa" viewBox="0 0 950 537" aria-hidden="true" focusable="false"></svg>
+          </div>
+        </div>
+      </section>
       <section class="sugerencias" id="sugerencias" aria-labelledby="sugerencias-titulo">
         <p id="sugerencias-titulo">Búsquedas frecuentes</p>
         <div class="sugerencias__lista">
           <button class="sugerencia" type="button">B201</button>
-          <button class="sugerencia" type="button">C110</button>
+          <button class="sugerencia" type="button">Plaza Cervantes</button>
           <button class="sugerencia" type="button">E510</button>
+          <button class="sugerencia" type="button">Auditorios</button>
           <button class="sugerencia" type="button">Aula máxima</button>
           <button class="sugerencia" type="button">Café leyenda</button>
         </div>

@@ -372,3 +372,29 @@ body.mapa-grande { background: #626262; }
 .pagina--ancha { max-width: 1936px; padding-left: 154px; padding-right: 154px; padding-top: 80px; }
 @media (max-width: 1200px) { .pagina--ancha { padding-left: 40px; padding-right: 40px; padding-top: 48px; } }
 @media (max-width: 760px) { .pagina--ancha { padding-left: 16px; padding-right: 16px; padding-top: 24px; } }
+
+/* ---------- Mapa ilustrado del campus (Buscar ubicación) ---------- */
+.campus { display: flex; flex-direction: column; gap: 12px; }
+.campus__titulo { font-size: 18px; line-height: 28px; font-weight: 700; color: var(--primario); }
+.campus__cuerpo { display: grid; grid-template-columns: 220px 1fr; gap: 16px; align-items: start; }
+.campus__lista { max-height: 440px; overflow-y: auto; padding-right: 4px; }
+.campus__grupo { margin: 0 0 10px; }
+.campus__grupo h3 { font-size: 14px; line-height: 20px; font-weight: 700; color: var(--primario); margin: 6px 0 4px; }
+.campus__grupo ul { list-style: none; margin: 0; padding: 0 0 0 10px; border-left: 2px solid #dbe4ea; }
+.campus__item { display: block; width: 100%; min-height: 36px; padding: 6px 10px; border: 0; border-radius: 8px; background: none; color: #314158; font: inherit; font-size: 15px; text-align: left; cursor: pointer; }
+.campus__item:hover { background: #eef4f7; }
+.campus__item[aria-current="true"] { background: #e3eef3; color: var(--primario); font-weight: 700; }
+.campus__item small { color: var(--gris); font-size: 12px; }
+.campus__mapa { position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 6px 20px rgba(2, 83, 115, .15); }
+.campus__mapa img { display: block; width: 100%; height: auto; }
+.campus__capa { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.campus__zona { fill: rgba(242, 206, 94, .35); stroke: #025373; stroke-width: 3; }
+@media (prefers-reduced-motion: no-preference) {
+  .campus__zona { animation: campus-pulso 1.6s ease-in-out infinite; }
+}
+@keyframes campus-pulso { 50% { stroke-width: 6; } }
+@media (max-width: 760px) {
+  .campus__cuerpo { grid-template-columns: 1fr; }
+  .campus__mapa { order: -1; }
+  .campus__lista { max-height: none; }
+}

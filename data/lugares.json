@@ -1,0 +1,193 @@
+[
+  {
+    "id": 1,
+    "nombre": "Bloque A",
+    "categoria": "Bloques",
+    "alias": [],
+    "zona": {
+      "x": 432,
+      "y": 353,
+      "w": 95,
+      "h": 60
+    },
+    "descripcion": ""
+  },
+  {
+    "id": 2,
+    "nombre": "Bloque B",
+    "categoria": "Bloques",
+    "alias": [],
+    "zona": {
+      "x": 437,
+      "y": 243,
+      "w": 155,
+      "h": 60
+    },
+    "descripcion": ""
+  },
+  {
+    "id": 3,
+    "nombre": "Bloque C",
+    "categoria": "Bloques",
+    "alias": [],
+    "zona": {
+      "x": 437,
+      "y": 140,
+      "w": 155,
+      "h": 62
+    },
+    "descripcion": ""
+  },
+  {
+    "id": 4,
+    "nombre": "Bloque D",
+    "categoria": "Bloques",
+    "alias": [],
+    "zona": {
+      "x": 437,
+      "y": 38,
+      "w": 155,
+      "h": 62
+    },
+    "descripcion": ""
+  },
+  {
+    "id": 5,
+    "nombre": "Bloque E",
+    "categoria": "Bloques",
+    "alias": [],
+    "zona": {
+      "x": 593,
+      "y": 38,
+      "w": 64,
+      "h": 205
+    },
+    "descripcion": ""
+  },
+  {
+    "id": 6,
+    "nombre": "Bloque F",
+    "categoria": "Bloques",
+    "alias": [],
+    "zona": null,
+    "descripcion": ""
+  },
+  {
+    "id": 7,
+    "nombre": "Capilla",
+    "categoria": "Hitos",
+    "alias": [],
+    "zona": null,
+    "descripcion": ""
+  },
+  {
+    "id": 8,
+    "nombre": "Gym",
+    "categoria": "Hitos",
+    "alias": [
+      "Gimnasio"
+    ],
+    "zona": null,
+    "descripcion": ""
+  },
+  {
+    "id": 9,
+    "nombre": "Complejo Deportivo",
+    "categoria": "Hitos",
+    "alias": [
+      "Canchas"
+    ],
+    "zona": null,
+    "descripcion": ""
+  },
+  {
+    "id": 10,
+    "nombre": "Cafeterías",
+    "categoria": "Alimentación",
+    "alias": [
+      "Cafeteria",
+      "Zona de comidas"
+    ],
+    "zona": null,
+    "descripcion": ""
+  },
+  {
+    "id": 11,
+    "nombre": "Café Leyenda",
+    "categoria": "Alimentación",
+    "alias": [
+      "Cafe leyenda"
+    ],
+    "zona": {
+      "x": 670,
+      "y": 298,
+      "w": 56,
+      "h": 26
+    },
+    "descripcion": ""
+  },
+  {
+    "id": 12,
+    "nombre": "Aula Máxima",
+    "categoria": "Espacios",
+    "alias": [],
+    "zona": {
+      "x": 232,
+      "y": 40,
+      "w": 103,
+      "h": 90
+    },
+    "descripcion": ""
+  },
+  {
+    "id": 13,
+    "nombre": "Auditorios",
+    "categoria": "Espacios",
+    "alias": [
+      "Auditorio",
+      "Auditorio mayor"
+    ],
+    "zona": {
+      "x": 593,
+      "y": 243,
+      "w": 75,
+      "h": 70
+    },
+    "descripcion": ""
+  },
+  {
+    "id": 14,
+    "nombre": "Plaza Cervantes",
+    "categoria": "Espacios",
+    "alias": [],
+    "zona": {
+      "x": 280,
+      "y": 155,
+      "w": 92,
+      "h": 100
+    },
+    "descripcion": ""
+  },
+  {
+    "id": 15,
+    "nombre": "Hub de Innovación",
+    "categoria": "Espacios",
+    "alias": [
+      "Hub"
+    ],
+    "zona": null,
+    "descripcion": ""
+  },
+  {
+    "id": 16,
+    "nombre": "Acceso",
+    "categoria": "Acceso",
+    "alias": [
+      "Entrada",
+      "Entrada principal",
+      "Porteria"
+    ],
+    "zona": null,
+    "descripcion": ""
+  }
+]

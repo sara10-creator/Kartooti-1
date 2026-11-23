@@ -14,12 +14,13 @@ var KartootiDatos = (function () {
   // Dirección de la API. Vacía = el mismo servidor que sirve la página.
   // Si algún día la API está en otro dominio: window.KARTOOTI_API = 'https://...'
   var API = (window.KARTOOTI_API || '') + '/api/';
-  var DEL_SERVIDOR = ['eventos', 'comidas', 'puntos'];
+  var DEL_SERVIDOR = ['eventos', 'comidas', 'puntos', 'lugares'];
   var cache = {};          // lo que respondió el servidor
   var hayServidor = false;
 
   // Datos de respaldo (los mismos de data/*.json)
   var INICIALES = {
+    lugares: [{"id": 1, "nombre": "Bloque A", "categoria": "Bloques", "alias": [], "zona": {"x": 432, "y": 353, "w": 95, "h": 60}, "descripcion": ""}, {"id": 2, "nombre": "Bloque B", "categoria": "Bloques", "alias": [], "zona": {"x": 437, "y": 243, "w": 155, "h": 60}, "descripcion": ""}, {"id": 3, "nombre": "Bloque C", "categoria": "Bloques", "alias": [], "zona": {"x": 437, "y": 140, "w": 155, "h": 62}, "descripcion": ""}, {"id": 4, "nombre": "Bloque D", "categoria": "Bloques", "alias": [], "zona": {"x": 437, "y": 38, "w": 155, "h": 62}, "descripcion": ""}, {"id": 5, "nombre": "Bloque E", "categoria": "Bloques", "alias": [], "zona": {"x": 593, "y": 38, "w": 64, "h": 205}, "descripcion": ""}, {"id": 6, "nombre": "Bloque F", "categoria": "Bloques", "alias": [], "zona": null, "descripcion": ""}, {"id": 7, "nombre": "Capilla", "categoria": "Hitos", "alias": [], "zona": null, "descripcion": ""}, {"id": 8, "nombre": "Gym", "categoria": "Hitos", "alias": ["Gimnasio"], "zona": null, "descripcion": ""}, {"id": 9, "nombre": "Complejo Deportivo", "categoria": "Hitos", "alias": ["Canchas"], "zona": null, "descripcion": ""}, {"id": 10, "nombre": "Cafeterías", "categoria": "Alimentación", "alias": ["Cafeteria", "Zona de comidas"], "zona": null, "descripcion": ""}, {"id": 11, "nombre": "Café Leyenda", "categoria": "Alimentación", "alias": ["Cafe leyenda"], "zona": {"x": 670, "y": 298, "w": 56, "h": 26}, "descripcion": ""}, {"id": 12, "nombre": "Aula Máxima", "categoria": "Espacios", "alias": [], "zona": {"x": 232, "y": 40, "w": 103, "h": 90}, "descripcion": ""}, {"id": 13, "nombre": "Auditorios", "categoria": "Espacios", "alias": ["Auditorio", "Auditorio mayor"], "zona": {"x": 593, "y": 243, "w": 75, "h": 70}, "descripcion": ""}, {"id": 14, "nombre": "Plaza Cervantes", "categoria": "Espacios", "alias": [], "zona": {"x": 280, "y": 155, "w": 92, "h": 100}, "descripcion": ""}, {"id": 15, "nombre": "Hub de Innovación", "categoria": "Espacios", "alias": ["Hub"], "zona": null, "descripcion": ""}, {"id": 16, "nombre": "Acceso", "categoria": "Acceso", "alias": ["Entrada", "Entrada principal", "Porteria"], "zona": null, "descripcion": ""}],
     eventos: [
       { id: 1, titulo: 'Congreso internacional', categoria: 'Académico', estado: 'Publicado', dia: '25', mes: 'AGO', fecha: '2026-08-25', fechaTexto: '25, 26 y 27 de agosto', hora: '10:00 AM - 12:00 M', lugar: 'Aula máxima', color: 'primario', descripcion: '' },
       { id: 2, titulo: 'Conferencia animar', categoria: 'Cultural', estado: 'Publicado', dia: '19', mes: 'MAY', fecha: '2026-05-19', fechaTexto: 'Contigo desde el primer semestre de septiembre', hora: '1:00 PM', lugar: 'Aula especial XVII', color: 'verde', descripcion: '' },
@@ -137,19 +138,69 @@ var KartootiDatos = (function () {
   }
 
   // Busca un salón tipo "B201": bloque = letra, piso = primer número
-  function ubicarSalon(texto) {
-    var t = String(texto || '').trim().toUpperCase().replace(/\s+/g, '');
-    if (!t) return null;
-    var puntos = leer('puntos');
-    var normal = function (s) { return String(s).toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ''); };
-    var p = puntos.find(function (x) { return normal(x.nombre).indexOf(normal(t)) !== -1; });
-    if (p) return { nombre: p.nombre, edificio: p.edificio, piso: p.piso };
-    var c = leer('comidas').find(function (x) { return normal(x.nombre) === normal(t) && x.edificio; });
-    if (c) return { nombre: c.nombre, edificio: c.edificio, piso: c.piso };
-    var m = t.match(/^([A-Z])(\d)(\d{1,2})$/);
-    if (m) return { nombre: t, edificio: 'Bloque ' + m[1], piso: m[2] };
+  // ---------- Búsqueda de lugares del campus ----------
+  // Quita tildes, espacios de más y mayúsculas para comparar
+  function normalizar(s) {
+    return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ').trim();
+  }
+
+  function lugarPorNombre(nombre) {
+    var n = normalizar(nombre);
+    if (!n) return null;
+    return leer('lugares').find(function (l) {
+      return normalizar(l.nombre) === n || (l.alias || []).some(function (a) { return normalizar(a) === n; });
+    }) || null;
+  }
+
+  // Devuelve { lugar, titulo, piso, detalle } o null.
+  // Entiende: códigos de salón (B201, b-201), nombres de lugares y sus alias,
+  // puntos de interés del admin y restaurantes.
+  function buscarLugar(texto) {
+    var q = normalizar(texto);
+    if (!q) return null;
+    var compacto = q.replace(/[\s-]/g, '');
+
+    // 1) Puntos de interés registrados por el admin (salones, laboratorios…)
+    var punto = leer('puntos').find(function (x) {
+      var n = normalizar(x.nombre).replace(/[\s-]/g, '');
+      return n === compacto || n.replace(/^salon/, '') === compacto;
+    });
+    if (punto) {
+      return { lugar: lugarPorNombre(punto.edificio) || lugarPorNombre(punto.nombre), titulo: punto.nombre,
+        piso: punto.piso, detalle: punto.edificio };
+    }
+
+    // 2) Código de salón: letra del bloque + piso + número
+    var m = compacto.match(/^(?:salon)?([a-z])(\d)(\d{1,2})$/);
+    if (m) {
+      var bloque = lugarPorNombre('Bloque ' + m[1].toUpperCase());
+      if (bloque) return { lugar: bloque, titulo: compacto.toUpperCase().replace(/^SALON/, ''), piso: m[2], detalle: bloque.nombre };
+    }
+
+    // 3) Lugares del campus: exacto, luego que empiece igual, luego que lo contenga
+    var lugares = leer('lugares');
+    var nombres = function (l) { return [l.nombre].concat(l.alias || []).map(normalizar); };
+    var q2 = q.replace(/^bloque\s*/, 'bloque ');
+    if (/^[a-f]$/.test(q)) q2 = 'bloque ' + q;
+    var exacto = lugares.find(function (l) { return nombres(l).indexOf(q2) !== -1; });
+    var empieza = lugares.find(function (l) { return nombres(l).some(function (n) { return n.indexOf(q2) === 0; }); });
+    var contiene = lugares.find(function (l) { return nombres(l).some(function (n) { return n.indexOf(q2) !== -1; }); });
+    var l = exacto || empieza || contiene;
+    if (l) return { lugar: l, titulo: l.nombre, piso: '', detalle: l.categoria };
+
+    // 4) Restaurantes de la sección de comidas
+    var c = leer('comidas').find(function (x) { return normalizar(x.nombre).indexOf(q) !== -1; });
+    if (c) return { lugar: lugarPorNombre(c.edificio) || lugarPorNombre(c.nombre), titulo: c.nombre, piso: c.piso, detalle: c.edificio };
+
     return null;
   }
 
-  return { listo: listo, leer: leer, guardar: guardar, siguienteId: siguienteId, ubicarSalon: ubicarSalon };
+  // Compatibilidad con el código anterior
+  function ubicarSalon(texto) {
+    var r = buscarLugar(texto);
+    return r ? { nombre: r.titulo, edificio: r.lugar ? r.lugar.nombre : r.detalle, piso: r.piso } : null;
+  }
+
+  return { listo: listo, leer: leer, guardar: guardar, siguienteId: siguienteId, ubicarSalon: ubicarSalon,
+    buscarLugar: buscarLugar, lugarPorNombre: lugarPorNombre, normalizar: normalizar };
 })();

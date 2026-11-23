@@ -3,7 +3,7 @@
 //
 // - Sirve la página web (HTML, CSS, JS, imágenes).
 // - Entrega los datos de la carpeta data/ como API:
-//     GET  /api/eventos   GET /api/comidas   GET /api/puntos
+//     GET  /api/eventos   GET /api/comidas   GET /api/puntos   GET /api/lugares
 // - Permite que un ADMIN guarde cambios:
 //     PUT  /api/eventos  (con la sesión de Supabase del admin)
 //
@@ -27,7 +27,7 @@ const SUPABASE_URL = process.env.SUPABASE_URL || 'https://gybfizqkjnttwggnzogz.s
 const SUPABASE_KEY = process.env.SUPABASE_KEY || 'sb_publishable_GdcuaDvL2m4HWGNXtMHPww_qqUPFmye';
 
 // Solo estas colecciones existen en la API
-const COLECCIONES = ['eventos', 'comidas', 'puntos'];
+const COLECCIONES = ['eventos', 'comidas', 'puntos', 'lugares'];
 
 const app = express();
 app.use(express.json({ limit: '1mb' }));
