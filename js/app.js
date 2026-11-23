@@ -96,17 +96,21 @@ var Kartooti = (function () {
     var cont = document.getElementById('pie');
     if (!cont) return;
     var inicio = raiz + 'index.html';
+    var dentroDeLaApp = !!document.getElementById('encabezado');
     cont.className = 'footer';
     cont.innerHTML =
       '<div class="footer__inner">' +
         '<img class="footer__logo" src="' + raiz + 'assets/img/logo.png" alt="">' +
         '<div class="footer__marca"><b>Kartooti</b><small>Contigo desde el primer semestre</small></div>' +
+        // Dentro de la app (invitado, estudiante o admin) no se muestran
+        // los enlaces de la página de presentación
+        (dentroDeLaApp ? '' :
         '<nav class="footer__links" aria-label="Enlaces del pie de página">' +
           '<a href="' + inicio + '#que-es">¿Qué es?</a>' +
           '<a href="' + inicio + '#funciones">Funciones</a>' +
           '<a href="' + inicio + '#como-usarla">Cómo usarla</a>' +
           '<a href="' + inicio + '#acceso">Acceso</a>' +
-        '</nav>' +
+        '</nav>') +
         '<p class="footer__copy">© 2026 Kartooti · Hecho con 💙 por estudiantes</p>' +
       '</div>';
   }

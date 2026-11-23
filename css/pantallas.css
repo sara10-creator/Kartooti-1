@@ -185,11 +185,12 @@ body.mapa-grande { background: #626262; }
 .sugerencias p { text-align: center; font-size: 18px; line-height: 28px; font-weight: 300; color: var(--primario); }
 .sugerencias__lista { display: flex; flex-wrap: wrap; gap: 12px; }
 .sugerencia {
-  width: 116px;
+  min-width: 116px;
   height: 44px;
+  padding: 0 18px;
   border-radius: 999px;
   background: var(--celeste);
-  color: var(--blanco);
+  color: var(--paleta-5); /* texto oscuro: el blanco sobre celeste tenía 1.7:1 */
   font-size: 15px;
   font-weight: 700;
   transition: filter .2s, transform .2s;

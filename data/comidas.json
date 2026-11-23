@@ -4,9 +4,10 @@
     "nombre": "Café leyenda",
     "icono": "☕",
     "horario": "7:00 AM - 7:00 PM",
-    "menu": "menu-no-disponible.jpg",
+    "menu": "menu-cafe-leyenda.jpg",
     "edificio": "Exterior",
-    "piso": "1"
+    "piso": "1",
+    "menuTexto": "Este establecimiento no cuenta con un menú. Acércate al mismo para ver su oferta. Precio promedio: 5k - 10k."
   },
   {
     "id": 2,
@@ -23,15 +24,6 @@
     "icono": "🌮",
     "horario": "12 M - 8:00 PM",
     "menu": "menu-no-disponible.jpg",
-    "edificio": "Zona de comidas",
-    "piso": "1"
-  },
-  {
-    "id": 4,
-    "nombre": "MUY",
-    "icono": "🍽️",
-    "horario": "7:00 AM - 4:00 PM",
-    "menu": "menu-muy.jpg",
     "edificio": "Zona de comidas",
     "piso": "1"
   },

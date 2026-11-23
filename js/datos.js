@@ -42,10 +42,9 @@ var KartootiDatos = (function () {
       { id: 5, nombre: 'Carlos Mejía', correo: 'carlos.mejia@unimilitar.edu.co', codigo: '1100005', rol: 'Estudiante', estado: 'Activo', registro: '28 Ene 2026', acceso: 'Hoy' }
     ],
     comidas: [
-      { id: 1, nombre: 'Café leyenda', icono: '☕', horario: '7:00 AM - 7:00 PM', menu: 'menu-no-disponible.jpg', edificio: 'Exterior', piso: '1' },
+      { id: 1, nombre: 'Café leyenda', icono: '☕', horario: '7:00 AM - 7:00 PM', menu: 'menu-cafe-leyenda.jpg', menuTexto: 'Este establecimiento no cuenta con un menú. Acércate al mismo para ver su oferta. Precio promedio: 5k - 10k.', edificio: 'Exterior', piso: '1' },
       { id: 2, nombre: 'Hamburguesa', icono: '🍔', horario: '1:00 PM - 8:00 PM', menu: 'menu-hamburguesa.jpg', edificio: 'Zona de comidas', piso: '1' },
       { id: 3, nombre: 'Taco más', icono: '🌮', horario: '12 M - 8:00 PM', menu: 'menu-no-disponible.jpg', edificio: 'Zona de comidas', piso: '1' },
-      { id: 4, nombre: 'MUY', icono: '🍽️', horario: '7:00 AM - 4:00 PM', menu: 'menu-muy.jpg', edificio: 'Zona de comidas', piso: '1' },
       { id: 5, nombre: 'Pizzagram', icono: '🍕', horario: '1:00 PM - 7:00 PM', menu: 'menu-pizzagram.jpg', edificio: 'Zona de comidas', piso: '1' },
       { id: 6, nombre: 'Restaurante', icono: '🍴', horario: '7:00 AM - 7:00 PM', menu: 'menu-restaurante.jpg', edificio: 'Bloque central', piso: '1' },
       { id: 7, nombre: 'Carrito de café', icono: '☕', horario: '6:00 AM - 7:00 PM', menu: 'menu-no-disponible.jpg', edificio: 'Entrada principal', piso: '1' }

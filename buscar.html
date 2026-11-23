@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buscar ubicación · Kartooti</title>
+  <link rel="icon" href="assets/img/logo-64.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/pantallas.css">
+  <script src="js/accesibilidad.js"></script>
+</head>
+<body>
+  <header id="encabezado"></header>
+
+  <main class="contenedor pagina">
+    <a class="btn-regresar" href="principal.html"><img src="assets/icons/regresar.svg" width="41" height="15" alt="">Regresar</a>
+
+    <div class="buscar">
+      <div class="buscar__titulo">
+        <h1>Buscar ubicación</h1>
+        <p>Escribe el nombre o código de un salón, laboratorio o lugar del campus.</p>
+      </div>
+
+      <form class="buscar__form" id="form-buscar" role="search" novalidate>
+        <div class="campo">
+          <label for="b-texto">Salón o lugar</label>
+          <input class="input" type="search" id="b-texto" name="q" placeholder="Ejemplo: B201, Aula máxima, Café leyenda" autocomplete="off" aria-describedby="b-ayuda">
+          <small id="b-ayuda" class="sr-only">Los salones se escriben con la letra del bloque, el piso y el número, por ejemplo B201.</small>
+        </div>
+        <div class="buscar__botones">
+          <button class="btn btn--primario" type="submit">Buscar</button>
+          <button class="btn btn--limpiar" type="button" id="b-limpiar">Limpiar</button>
+        </div>
+      </form>
+
+      <div class="resultado" id="resultado">
+        <p class="resultado__texto" id="resultado-texto" role="status" aria-live="polite"></p>
+        <img src="assets/img/mapa-campus.jpg" alt="Mapa general del campus">
+        <a class="btn btn--borde" href="mapa.html" style="align-self:flex-start">Ver el mapa interactivo</a>
+      </div>
+
+      <section class="sugerencias" id="sugerencias" aria-labelledby="sugerencias-titulo">
+        <p id="sugerencias-titulo">Búsquedas frecuentes</p>
+        <div class="sugerencias__lista">
+          <button class="sugerencia" type="button">B201</button>
+          <button class="sugerencia" type="button">C110</button>
+          <button class="sugerencia" type="button">E510</button>
+          <button class="sugerencia" type="button">Aula máxima</button>
+          <button class="sugerencia" type="button">Café leyenda</button>
+        </div>
+      </section>
+
+      <section class="resultado__texto" id="como-funciona" aria-labelledby="como-funciona-titulo">
+        <h2 id="como-funciona-titulo" style="font-size:18px;line-height:28px;font-weight:700">¿Cómo leer un código de salón?</h2>
+        <p>En <b>B201</b>, la <b>B</b> es el bloque, el <b>2</b> es el piso y el <b>01</b> es el número del salón.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer id="pie"></footer>
+  <script src="js/app.js"></script>
+  <script src="js/datos.js"></script>
+  <script src="js/buscar.js"></script>
+</body>
+</html>

@@ -25,8 +25,11 @@ KartootiDatos.listo.then(function () {
     var c = comidas.find(function (x) { return x.id === Number(b.dataset.menu); });
     var img = document.getElementById('menu-img');
     img.src = r + 'img/' + c.menu;
-    img.alt = c.menu.indexOf('no-disponible') !== -1 ? 'Menú no disponible por ahora' : 'Menú de ' + c.nombre;
-    document.getElementById('menu-nombre').textContent = c.menu.indexOf('no-disponible') !== -1 ? c.nombre + ': menú aún no disponible' : 'Menú de ' + c.nombre;
+    var sinMenu = c.menu.indexOf('no-disponible') !== -1;
+    // menuTexto: cuando la imagen es un aviso (por ejemplo "no cuenta con menú"),
+    // su texto completo va en el alt para que lo lean los lectores de pantalla
+    img.alt = c.menuTexto || (sinMenu ? 'Menú no disponible por ahora' : 'Menú de ' + c.nombre);
+    document.getElementById('menu-nombre').textContent = c.menuTexto ? c.nombre : (sinMenu ? c.nombre + ': menú aún no disponible' : 'Menú de ' + c.nombre);
     K.abrirModal('modal-menu');
   });
 });
