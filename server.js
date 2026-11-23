@@ -2,8 +2,8 @@
 // Kartooti — Servidor (backend) para Render
 //
 // - Sirve la página web (HTML, CSS, JS, imágenes).
-// - Eventos, comidas y puntos se guardan en Supabase (tablas del mismo nombre);
-//   lugares y planos siguen en la carpeta data/.
+// - Eventos y puntos se guardan en Supabase (tablas eventos y puntos_interes);
+//   comidas, lugares y planos siguen en la carpeta data/.
 // - Entrega los datos como API:
 //     GET  /api/eventos   GET /api/comidas   GET /api/puntos   GET /api/lugares
 // - Permite que un ADMIN guarde cambios:
@@ -28,13 +28,30 @@ const PUERTO = process.env.PORT || 3000;
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://gybfizqkjnttwggnzogz.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_KEY || 'sb_publishable_GdcuaDvL2m4HWGNXtMHPww_qqUPFmye';
 
-// Colecciones que edita el admin: viven en tablas de Supabase (no se borran con cada deploy).
-// Columnas de cada tabla (en la tabla van con guion_bajo; en la página, enCamello).
+// Colecciones que edita el admin y la tabla de Supabase donde viven.
+// Cada campo de la página puede llamarse distinto en la tabla: se prueban
+// los nombres en orden y se usa el primero que exista en esa tabla.
 const TABLAS = {
-  eventos: ['id', 'titulo', 'categoria', 'estado', 'fecha', 'dia', 'mes', 'fecha_texto', 'hora', 'lugar', 'color', 'descripcion', 'medio'],
-  comidas: ['id', 'nombre', 'icono', 'horario', 'menu', 'menu_texto', 'edificio', 'piso', 'medio'],
-  puntos: ['id', 'nombre', 'tipo', 'edificio', 'piso', 'estado', 'descripcion', 'medio']
+  eventos: {
+    tabla: process.env.TABLA_EVENTOS || 'eventos',
+    campos: {
+      id: ['id'], titulo: ['titulo', 'nombre'], categoria: ['categoria', 'tipo'], estado: ['estado'],
+      fecha: ['fecha'], dia: ['dia'], mes: ['mes'], fechaTexto: ['fecha_texto', 'fechaTexto'],
+      hora: ['hora'], lugar: ['lugar', 'ubicacion'], color: ['color'], descripcion: ['descripcion'],
+      medio: ['medio', 'imagen', 'imagen_url']
+    }
+  },
+  puntos: {
+    tabla: process.env.TABLA_PUNTOS || 'puntos_interes',
+    campos: {
+      id: ['id'], nombre: ['nombre', 'titulo'], tipo: ['tipo', 'categoria'], edificio: ['edificio', 'bloque', 'ubicacion'],
+      piso: ['piso'], estado: ['estado'], descripcion: ['descripcion'], medio: ['medio', 'imagen', 'imagen_url']
+    }
+  }
 };
+const MESES = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
+const MESES_LARGO = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+const COLOR = { 'Académico': 'primario', Cultural: 'amarillo', Deportivo: 'verde', 'Tecnología': 'primario' };
 
 // Solo estas colecciones existen en la API
 const COLECCIONES = ['eventos', 'comidas', 'puntos', 'lugares', 'planos'];
@@ -62,9 +79,6 @@ async function guardarColeccion(coleccion, datos) {
 }
 
 // ---------- Supabase como base de datos ----------
-const aCamello = (s) => s.replace(/_([a-z])/g, (m, l) => l.toUpperCase());
-const aGuion = (s) => s.replace(/[A-Z]/g, (l) => '_' + l.toLowerCase());
-
 function clienteSupabase(token) {
   return createClient(SUPABASE_URL, SUPABASE_KEY, {
     global: token ? { headers: { Authorization: 'Bearer ' + token } } : {},
@@ -72,49 +86,97 @@ function clienteSupabase(token) {
   });
 }
 
-// Fila de la tabla → objeto que usa la página
-function deFila(fila) {
-  const obj = {};
-  for (const [k, v] of Object.entries(fila)) {
-    if (k === 'actualizado_en' || k === 'actualizado_por' || v === null) continue;
-    obj[aCamello(k)] = v;
+// Averigua qué columnas tiene la tabla (una vez por arranque del servidor)
+const columnasCache = {};
+async function columnasDe(coleccion) {
+  const conf = TABLAS[coleccion];
+  if (columnasCache[coleccion]) return columnasCache[coleccion];
+  const sb = clienteSupabase();
+  const candidatas = new Set(['actualizado_en', 'actualizado_por']);
+  Object.values(conf.campos).forEach((lista) => lista.forEach((c) => candidatas.add(c)));
+  const existen = new Set();
+  await Promise.all([...candidatas].map(async (col) => {
+    const { error } = await sb.from(conf.tabla).select(col).limit(1);
+    if (!error) existen.add(col);
+    else if (error.code === 'PGRST205' || error.code === '42P01') throw error; // la tabla no existe
+  }));
+  if (!existen.has('id')) throw new Error('La tabla "' + conf.tabla + '" no tiene columna id');
+  // campo de la página → columna real
+  const mapa = {};
+  for (const [campo, nombres] of Object.entries(conf.campos)) {
+    const col = nombres.find((n) => existen.has(n));
+    if (col) mapa[campo] = col;
   }
+  columnasCache[coleccion] = { mapa, existen };
+  console.log('Tabla "' + conf.tabla + '": campos usados ' + JSON.stringify(mapa));
+  return columnasCache[coleccion];
+}
+
+// Completa lo que la página necesita y la tabla quizá no guarda
+function completar(coleccion, obj) {
+  if (coleccion === 'eventos') {
+    const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(obj.fecha || '');
+    if (m) {
+      obj.fecha = m[0];
+      if (!obj.dia) obj.dia = String(Number(m[3]));
+      if (!obj.mes) obj.mes = MESES[Number(m[2]) - 1];
+      if (!obj.fechaTexto) obj.fechaTexto = Number(m[3]) + ' de ' + MESES_LARGO[Number(m[2]) - 1];
+    }
+    if (!obj.color) obj.color = COLOR[obj.categoria] || 'primario';
+    if (!obj.estado) obj.estado = 'Publicado';
+  }
+  if (coleccion === 'puntos' && !obj.estado) obj.estado = 'Activo';
   return obj;
 }
 
-// Objeto de la página → fila de la tabla (solo columnas que existen)
-function aFila(coleccion, obj, correo) {
-  const fila = {};
-  for (const col of TABLAS[coleccion]) {
-    // Todas las filas llevan todas las columnas, para que nada quede a medias
-    const v = obj[aCamello(col)];
-    fila[col] = v === undefined || (v === '' && col === 'fecha') ? null : v;
-  }
-  fila.actualizado_en = new Date().toISOString();
-  fila.actualizado_por = correo || null;
-  return fila;
-}
-
 async function leerDeSupabase(coleccion) {
-  const { data, error } = await clienteSupabase().from(coleccion).select('*').order('id');
+  const conf = TABLAS[coleccion];
+  const { mapa } = await columnasDe(coleccion);
+  const { data, error } = await clienteSupabase().from(conf.tabla).select('*').order('id');
   if (error) throw error;
-  return data.map(deFila);
+  return data.map((fila) => {
+    const obj = {};
+    for (const [campo, col] of Object.entries(mapa)) {
+      if (fila[col] !== null && fila[col] !== undefined) obj[campo] = fila[col];
+    }
+    return completar(coleccion, obj);
+  });
 }
 
 // Guarda la lista completa: crea o actualiza las que vienen y borra las que ya no están
 async function guardarEnSupabase(coleccion, lista, token, correo) {
+  const conf = TABLAS[coleccion];
+  const { mapa, existen } = await columnasDe(coleccion);
   const sb = clienteSupabase(token);
-  const filas = lista.map((x) => aFila(coleccion, x, correo));
+  const filas = lista.map((x) => {
+    const fila = {};
+    for (const [campo, col] of Object.entries(mapa)) {
+      const v = x[campo];
+      fila[col] = v === undefined || (v === '' && campo === 'fecha') ? null : v;
+    }
+    if (existen.has('actualizado_en')) fila.actualizado_en = new Date().toISOString();
+    if (existen.has('actualizado_por')) fila.actualizado_por = correo || null;
+    return fila;
+  });
   if (filas.some((f) => !Number.isInteger(f.id))) throw new Error('Todos los elementos necesitan un id numérico');
   if (filas.length) {
-    const { error } = await sb.from(coleccion).upsert(filas, { onConflict: 'id' });
+    const { error } = await sb.from(conf.tabla).upsert(filas, { onConflict: 'id' });
     if (error) throw error;
   }
   const ids = filas.map((f) => f.id);
-  let borrar = sb.from(coleccion).delete();
+  let borrar = sb.from(conf.tabla).delete();
   borrar = ids.length ? borrar.not('id', 'in', '(' + ids.join(',') + ')') : borrar.gte('id', -2147483648);
   const { error: errorBorrar } = await borrar;
   if (errorBorrar) throw errorBorrar;
+}
+
+// Explica en español los errores típicos de Supabase
+function explicar(err, tabla) {
+  const m = String((err && err.message) || err);
+  if (err && err.code === '42501') return 'Supabase no deja escribir en "' + tabla + '": falta la regla (RLS) que permita al admin crear, editar y borrar. Ejecuta el SQL de permisos. (' + m + ')';
+  if (err && err.code === '23502') return 'A la tabla "' + tabla + '" le falta un dato obligatorio: ' + m;
+  if (err && err.code === '428C9') return 'La columna id de "' + tabla + '" se genera sola y no acepta ids desde la página: cámbiala a "generated by default". (' + m + ')';
+  return m;
 }
 
 const faltaTabla = (err) => err && (err.code === 'PGRST205' || err.code === '42P01');
@@ -222,8 +284,9 @@ app.put('/api/:coleccion', async (req, res) => {
         return res.json({ ok: true, total: req.body.length, donde: 'supabase' });
       } catch (err) {
         if (!faltaTabla(err)) {
-          console.error('Supabase rechazó el guardado de ' + coleccion + ':', err.message || err);
-          return res.status(500).json({ error: 'Supabase no guardó los cambios: ' + (err.message || err) });
+          const texto = explicar(err, TABLAS[coleccion].tabla);
+          console.error('Supabase rechazó el guardado de ' + coleccion + ' [' + (err.code || '') + ']: ' + texto);
+          return res.status(500).json({ error: texto });
         }
         console.warn('La tabla "' + coleccion + '" no existe en Supabase; guardo en data/' + coleccion + '.json');
       }
