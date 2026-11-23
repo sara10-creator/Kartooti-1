@@ -115,7 +115,11 @@ var KartootiDatos = (function () {
   function guardar(clave, valor) {
     try { localStorage.setItem('kartooti:' + clave, JSON.stringify(valor)); } catch (e) { /* sin almacenamiento */ }
 
-    if (!hayServidor || DEL_SERVIDOR.indexOf(clave) === -1) return Promise.resolve();
+    if (DEL_SERVIDOR.indexOf(clave) === -1) return Promise.resolve();
+    if (!hayServidor) {
+      avisar('Sin conexión con el servidor: el cambio solo quedó en este navegador.');
+      return Promise.resolve();
+    }
 
     cache[clave] = copiar(valor);
     return fetch(API + clave, {
@@ -131,7 +135,17 @@ var KartootiDatos = (function () {
     }).catch(function (err) {
       console.error('Kartooti: no se pudo guardar "' + clave + '" en el servidor:', err);
       avisar('No se pudo guardar en el servidor: ' + err.message);
-    });
+      throw err;
+    }).then(function () {
+      avisar('Guardado en el servidor ✓');
+    }, function () { /* ya se avisó */ });
+  }
+
+  // Pregunta al servidor si la sesión actual puede guardar (lo usa el panel de admin)
+  function verificarAdmin() {
+    return fetch(API + 'yo', { headers: { 'Authorization': 'Bearer ' + tokenSupabase() }, cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .catch(function (err) { return { admin: false, motivo: 'No se pudo conectar con el servidor (' + err.message + ').' }; });
   }
 
   function siguienteId(lista) {
@@ -227,5 +241,5 @@ var KartootiDatos = (function () {
   }
 
   return { listo: listo, leer: leer, guardar: guardar, siguienteId: siguienteId, ubicarSalon: ubicarSalon,
-    buscarLugar: buscarLugar, lugarPorNombre: lugarPorNombre, normalizar: normalizar };
+    buscarLugar: buscarLugar, verificarAdmin: verificarAdmin, lugarPorNombre: lugarPorNombre, normalizar: normalizar };
 })();

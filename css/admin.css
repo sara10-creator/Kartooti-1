@@ -536,3 +536,8 @@ label.chip-oscuro:hover { filter: brightness(1.15); }
   outline: 3px solid var(--primario);
   outline-offset: 3px;
 }
+
+/* Estado de la conexión con el servidor */
+.estado-servidor { margin: 0 0 16px; padding: 12px 16px; border-radius: 10px; background: #eef3f6; color: #314158; font-size: 15px; line-height: 22px; }
+.estado-servidor--ok { background: #e6f4ef; color: #0b5e46; }
+.estado-servidor--error { background: #fdecec; color: #9b1c1c; font-weight: 600; }

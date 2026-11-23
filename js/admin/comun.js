@@ -53,3 +53,23 @@ var Tabla = (function () {
 
   return { estado: estado, acciones: acciones, vacia: vacia, registrar: registrar, medios: medios, validar: validar };
 })();
+
+// Aviso fijo en el panel: ¿los cambios se guardan en el servidor?
+KartootiDatos.listo.then(function () {
+  var main = document.querySelector('.admin-main');
+  if (!main || !KartootiDatos.verificarAdmin) return;
+  var caja = document.createElement('p');
+  caja.className = 'estado-servidor';
+  caja.setAttribute('role', 'status');
+  caja.textContent = 'Comprobando conexión con el servidor…';
+  main.insertBefore(caja, main.firstChild);
+  KartootiDatos.verificarAdmin().then(function (r) {
+    if (r.admin) {
+      caja.classList.add('estado-servidor--ok');
+      caja.textContent = 'Conectado como administrador (' + (r.correo || '') + '): los cambios se guardan en el servidor.';
+    } else {
+      caja.classList.add('estado-servidor--error');
+      caja.textContent = 'Los cambios NO se guardarán en el servidor. Motivo: ' + (r.motivo || 'desconocido');
+    }
+  });
+});

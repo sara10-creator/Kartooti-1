@@ -52,11 +52,12 @@ async function guardarColeccion(coleccion, datos) {
 }
 
 // Comprueba con Supabase que el token pertenece a un usuario con rol "admin"
-// (el mismo rol que revisa el login de admin)
-async function esAdmin(req) {
+// (el mismo rol que revisa el login de admin). Devuelve también el motivo,
+// para que el panel pueda mostrar por qué no se guardó.
+async function verificarAdmin(req) {
   const cabecera = req.get('authorization') || '';
-  const token = cabecera.startsWith('Bearer ') ? cabecera.slice(7) : '';
-  if (!token) { console.warn('esAdmin: la petición llegó sin token de sesión'); return false; }
+  const token = cabecera.startsWith('Bearer ') ? cabecera.slice(7).trim() : '';
+  if (!token) return { admin: false, motivo: 'La petición llegó sin sesión. Cierra sesión en el panel y vuelve a entrar.' };
 
   // Cliente que actúa "como" ese usuario, para respetar las reglas (RLS) de Supabase
   const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
@@ -65,36 +66,47 @@ async function esAdmin(req) {
   });
 
   const { data: usuario, error } = await supabase.auth.getUser(token);
-  if (error || !usuario.user) return false;
+  if (error || !usuario || !usuario.user) {
+    return { admin: false, motivo: 'La sesión venció o no es válida (' + (error ? error.message : 'sin usuario') + '). Vuelve a iniciar sesión.' };
+  }
 
   const id = usuario.user.id;
   const esRolAdmin = (valor) => String(valor || '').trim().toLowerCase() === 'admin';
+  const info = { correo: usuario.user.email, id };
 
   // 1) Tabla que usa hoy el login de admin: "Kartooti registros" (columna rol)
-  const { data: registro, error: errorRegistro } = await supabase
-    .from('Kartooti registros')
-    .select('rol')
-    .eq('user_id', id)
-    .maybeSingle();
-  if (errorRegistro) console.error('esAdmin: no se pudo leer "Kartooti registros":', errorRegistro.message);
-  if (registro && esRolAdmin(registro.rol)) return true;
+  const r1 = await supabase.from('Kartooti registros').select('rol').eq('user_id', id).maybeSingle();
+  info.rolEnRegistros = r1.data ? r1.data.rol : null;
+  if (r1.error) info.errorRegistros = r1.error.message;
+  if (r1.data && esRolAdmin(r1.data.rol)) return { admin: true, ...info };
 
   // 2) Respaldo: la tabla profiles original (columna role)
-  const { data: perfil, error: errorPerfil } = await supabase
-    .from('profiles')
-    .select('role')
-    .eq('id', id)
-    .maybeSingle();
-  if (errorPerfil) console.error('esAdmin: no se pudo leer profiles:', errorPerfil.message);
-  if (perfil && esRolAdmin(perfil.role)) return true;
+  const r2 = await supabase.from('profiles').select('role').eq('id', id).maybeSingle();
+  info.rolEnProfiles = r2.data ? r2.data.role : null;
+  if (r2.error) info.errorProfiles = r2.error.message;
+  if (r2.data && esRolAdmin(r2.data.role)) return { admin: true, ...info };
 
-  console.warn('esAdmin: el usuario ' + id + ' no tiene rol admin en "Kartooti registros" ni en profiles');
-  return false;
+  let motivo;
+  if (r1.error) motivo = 'El servidor no pudo leer la tabla "Kartooti registros": ' + r1.error.message;
+  else if (!r1.data) motivo = 'El servidor no encontró la fila de ' + info.correo + ' en "Kartooti registros" (user_id = ' + id + '). Revisa la regla RLS de lectura de esa tabla.';
+  else motivo = 'En "Kartooti registros" el rol de ' + info.correo + ' es "' + r1.data.rol + '", no "admin".';
+  return { admin: false, motivo, ...info };
 }
 
 // ---------- API ----------
 app.get('/api/salud', (req, res) => {
   res.json({ ok: true, colecciones: COLECCIONES });
+});
+
+// Dice si la sesión que llega es de un admin y, si no, por qué (para el panel)
+app.get('/api/yo', async (req, res) => {
+  res.set('Cache-Control', 'no-store');
+  try {
+    res.json(await verificarAdmin(req));
+  } catch (err) {
+    console.error('Error en /api/yo:', err);
+    res.status(500).json({ admin: false, motivo: 'Error del servidor al consultar Supabase: ' + err.message });
+  }
 });
 
 app.get('/api/:coleccion', async (req, res) => {
@@ -121,10 +133,13 @@ app.put('/api/:coleccion', async (req, res) => {
   }
 
   try {
-    if (!(await esAdmin(req))) {
-      return res.status(403).json({ error: 'Solo un administrador puede guardar cambios' });
+    const v = await verificarAdmin(req);
+    if (!v.admin) {
+      console.warn('PUT /api/' + coleccion + ' rechazado: ' + v.motivo);
+      return res.status(403).json({ error: 'Solo un administrador puede guardar cambios. ' + v.motivo });
     }
     await guardarColeccion(coleccion, req.body);
+    console.log('PUT /api/' + coleccion + ' guardado por ' + v.correo + ' (' + req.body.length + ' elementos)');
     res.json({ ok: true, total: req.body.length });
   } catch (err) {
     console.error('Error guardando ' + coleccion + ':', err);
