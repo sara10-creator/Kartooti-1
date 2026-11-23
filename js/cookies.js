@@ -94,7 +94,7 @@ var KartootiCookies = (function () {
   var CSS = [
     '.cookies{position:fixed;left:50%;bottom:20px;z-index:9990;transform:translateX(-50%);width:min(720px,calc(100vw - 32px));padding:22px 24px;border-radius:20px;background:#fff;color:#1d293d;border:2px solid #025373;box-shadow:0 18px 44px rgba(0,0,0,.25);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}',
     '.cookies[hidden]{display:none}',
-    '.cookies__cabeza{display:flex;align-items:center;gap:12px;margin-bottom:8px}',
+    '.cookies__cabeza{display:flex;align-items:center;gap:12px;margin-bottom:16px}',
     '.cookies__icono{font-size:28px;line-height:1}',
     '.cookies__titulo{margin:0;font-size:20px;line-height:26px;font-weight:800;color:#025373}',
     '.cookies__texto{margin:0 0 6px;font-size:15px;line-height:23px;color:#314158}',
@@ -126,19 +126,10 @@ var KartootiCookies = (function () {
     aviso.id = 'aviso-cookies';
     aviso.setAttribute('role', 'dialog');
     aviso.setAttribute('aria-labelledby', 'cookies-titulo');
-    aviso.setAttribute('aria-describedby', 'cookies-texto');
     aviso.hidden = true;
     aviso.innerHTML =
       '<div class="cookies__cabeza"><span class="cookies__icono" aria-hidden="true">🍪</span>' +
         '<h2 class="cookies__titulo" id="cookies-titulo">Usamos cookies</h2></div>' +
-      '<p class="cookies__texto" id="cookies-texto">Si las aceptas, Kartooti recordará algunos datos de tu inicio de sesión ' +
-        'durante 30 días para que entrar sea más rápido:</p>' +
-      '<ul class="cookies__lista">' +
-        '<li>Tu nombre, para saludarte.</li>' +
-        '<li>Tu correo, para que aparezca ya escrito al iniciar sesión.</li>' +
-        '<li>Tu tipo de cuenta (estudiante, invitado o administrador) y la fecha de tu último acceso.</li>' +
-        '<li><b>Nunca</b> guardamos tu contraseña.</li>' +
-      '</ul>' +
       '<div class="cookies__botones">' +
         '<button class="cookies__btn cookies__btn--aceptar" type="button" id="aceptar-cookies">Aceptar cookies</button>' +
         '<button class="cookies__btn cookies__btn--rechazar" type="button" id="rechazar-cookies">Rechazar</button>' +
