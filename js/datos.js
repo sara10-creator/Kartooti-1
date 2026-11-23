@@ -1,12 +1,24 @@
 // ==========================================================
-// Kartooti — Datos de ejemplo (tomados del Figma) y almacén
-// compartido. El panel de administración y las páginas
-// públicas leen y guardan en el mismo lugar (localStorage),
-// así que si el admin publica un evento, aparece en "Eventos".
-// Cuando exista la base de datos, solo se cambia este archivo.
+// Kartooti — Datos compartidos
+//
+// Eventos, comidas y puntos de interés vienen del servidor
+// (server.js), que los lee de la carpeta data/*.json.
+// Las páginas esperan a KartootiDatos.listo antes de pintar.
+//
+// Si no hay servidor (por ejemplo, abriendo el HTML con doble
+// clic o con Live Server), se usan los datos de respaldo de
+// abajo y los cambios del admin se guardan solo en este navegador.
 // ==========================================================
 
 var KartootiDatos = (function () {
+  // Dirección de la API. Vacía = el mismo servidor que sirve la página.
+  // Si algún día la API está en otro dominio: window.KARTOOTI_API = 'https://...'
+  var API = (window.KARTOOTI_API || '') + '/api/';
+  var DEL_SERVIDOR = ['eventos', 'comidas', 'puntos'];
+  var cache = {};          // lo que respondió el servidor
+  var hayServidor = false;
+
+  // Datos de respaldo (los mismos de data/*.json)
   var INICIALES = {
     eventos: [
       { id: 1, titulo: 'Congreso internacional', categoria: 'Académico', estado: 'Publicado', dia: '25', mes: 'AGO', fecha: '2026-08-25', fechaTexto: '25, 26 y 27 de agosto', hora: '10:00 AM - 12:00 M', lugar: 'Aula máxima', color: 'primario', descripcion: '' },
@@ -50,16 +62,75 @@ var KartootiDatos = (function () {
 
   function copiar(x) { return JSON.parse(JSON.stringify(x)); }
 
+  // ---------- Carga inicial desde el servidor ----------
+  function pedir(clave) {
+    return fetch(API + clave, { cache: 'no-store' }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }).then(function (datos) {
+      cache[clave] = datos;
+    });
+  }
+
+  var listo = Promise.all(DEL_SERVIDOR.map(pedir))
+    .then(function () { hayServidor = true; })
+    .catch(function (err) {
+      cache = {};
+      console.warn('Kartooti: no se pudo conectar con la API, se usan datos locales.', err);
+    });
+
   function leer(clave) {
+    // 1) Lo que dio el servidor (eventos, comidas, puntos)
+    if (hayServidor && cache[clave]) return copiar(cache[clave]);
+    // 2) Lo guardado en este navegador
     try {
       var guardado = localStorage.getItem('kartooti:' + clave);
       if (guardado) return JSON.parse(guardado);
     } catch (e) { /* sin almacenamiento disponible */ }
+    // 3) Datos de respaldo
     return copiar(INICIALES[clave] || []);
   }
 
+  // Token de la sesión de Supabase (lo guarda supabase-js en localStorage)
+  function tokenSupabase() {
+    try {
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (/^sb-.*-auth-token$/.test(k)) {
+          var sesion = JSON.parse(localStorage.getItem(k));
+          if (sesion && sesion.access_token) return sesion.access_token;
+        }
+      }
+    } catch (e) { /* sin almacenamiento */ }
+    return '';
+  }
+
+  function avisar(texto) {
+    if (window.Kartooti && Kartooti.aviso) Kartooti.aviso(texto);
+    else console.warn(texto);
+  }
+
+  // Guarda en el navegador y, si es eventos/comidas/puntos, también en el servidor
   function guardar(clave, valor) {
     try { localStorage.setItem('kartooti:' + clave, JSON.stringify(valor)); } catch (e) { /* sin almacenamiento */ }
+
+    if (!hayServidor || DEL_SERVIDOR.indexOf(clave) === -1) return Promise.resolve();
+
+    cache[clave] = copiar(valor);
+    return fetch(API + clave, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tokenSupabase() },
+      body: JSON.stringify(valor)
+    }).then(function (r) {
+      if (!r.ok) {
+        return r.json().catch(function () { return {}; }).then(function (j) {
+          throw new Error(j.error || ('HTTP ' + r.status));
+        });
+      }
+    }).catch(function (err) {
+      console.error('Kartooti: no se pudo guardar "' + clave + '" en el servidor:', err);
+      avisar('No se pudo guardar en el servidor: ' + err.message);
+    });
   }
 
   function siguienteId(lista) {
@@ -81,5 +152,5 @@ var KartootiDatos = (function () {
     return null;
   }
 
-  return { leer: leer, guardar: guardar, siguienteId: siguienteId, ubicarSalon: ubicarSalon };
+  return { listo: listo, leer: leer, guardar: guardar, siguienteId: siguienteId, ubicarSalon: ubicarSalon };
 })();

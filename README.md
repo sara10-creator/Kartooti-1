@@ -196,3 +196,31 @@ Se requiere [Node.js 22.12 o posterior](https://nodejs.org/en/download) (incluye
 4. Ejecuta `npm run check:auth` para comprobar la sintaxis de los módulos de autenticación.
 
 No abras las páginas con doble clic (`file://`): los módulos JavaScript y Supabase Auth necesitan un servidor HTTP.
+
+## Backend (Render)
+
+El proyecto tiene un servidor en `server.js` que:
+
+- Sirve la página web.
+- Entrega los datos de `data/` como API: `GET /api/eventos`, `GET /api/comidas`, `GET /api/puntos`.
+- Deja que un **administrador** guarde cambios con `PUT /api/eventos` (y comidas/puntos). El servidor comprueba con Supabase que la sesión sea de un usuario con rol `admin`.
+
+El registro y el inicio de sesión siguen en Supabase.
+
+### Correr en local
+
+```
+npm install
+npm start
+```
+
+Abrir http://localhost:3000
+
+### Publicar en Render
+
+1. Subir el proyecto a GitHub.
+2. En Render: **New > Web Service** y elegir el repositorio.
+3. Build Command: `npm install` · Start Command: `npm start` · Instance type: Free.
+4. Crear el servicio y abrir la URL que da Render.
+
+Nota: en el plan gratuito de Render los archivos no son permanentes. Los cambios que haga el admin se guardan en `data/*.json` mientras el servicio está encendido, pero se pierden cuando Render lo reinicia o se vuelve a publicar. Para cambios permanentes, actualizar los JSON en el repositorio o pasar esos datos a una tabla de Supabase.

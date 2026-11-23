@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "nombre": "Café leyenda",
+    "icono": "☕",
+    "horario": "7:00 AM - 7:00 PM",
+    "menu": "menu-no-disponible.jpg",
+    "edificio": "Exterior",
+    "piso": "1"
+  },
+  {
+    "id": 2,
+    "nombre": "Hamburguesa",
+    "icono": "🍔",
+    "horario": "1:00 PM - 8:00 PM",
+    "menu": "menu-hamburguesa.jpg",
+    "edificio": "Zona de comidas",
+    "piso": "1"
+  },
+  {
+    "id": 3,
+    "nombre": "Taco más",
+    "icono": "🌮",
+    "horario": "12 M - 8:00 PM",
+    "menu": "menu-no-disponible.jpg",
+    "edificio": "Zona de comidas",
+    "piso": "1"
+  },
+  {
+    "id": 4,
+    "nombre": "MUY",
+    "icono": "🍽️",
+    "horario": "7:00 AM - 4:00 PM",
+    "menu": "menu-muy.jpg",
+    "edificio": "Zona de comidas",
+    "piso": "1"
+  },
+  {
+    "id": 5,
+    "nombre": "Pizzagram",
+    "icono": "🍕",
+    "horario": "1:00 PM - 7:00 PM",
+    "menu": "menu-pizzagram.jpg",
+    "edificio": "Zona de comidas",
+    "piso": "1"
+  },
+  {
+    "id": 6,
+    "nombre": "Restaurante",
+    "icono": "🍴",
+    "horario": "7:00 AM - 7:00 PM",
+    "menu": "menu-restaurante.jpg",
+    "edificio": "Bloque central",
+    "piso": "1"
+  },
+  {
+    "id": 7,
+    "nombre": "Carrito de café",
+    "icono": "☕",
+    "horario": "6:00 AM - 7:00 PM",
+    "menu": "menu-no-disponible.jpg",
+    "edificio": "Entrada principal",
+    "piso": "1"
+  }
+]
