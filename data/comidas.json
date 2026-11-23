@@ -50,8 +50,9 @@
     "nombre": "Carrito de café",
     "icono": "☕",
     "horario": "6:00 AM - 7:00 PM",
-    "menu": "menu-no-disponible.jpg",
+    "menu": "menu-carrito-cafe.jpg",
     "edificio": "Entrada principal",
-    "piso": "1"
+    "piso": "1",
+    "menuTexto": "Este establecimiento no cuenta con un menú. Acércate al mismo para ver su oferta. Precio promedio: 4k - 8k."
   }
 ]

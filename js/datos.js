@@ -47,7 +47,7 @@ var KartootiDatos = (function () {
       { id: 3, nombre: 'Taco más', icono: '🌮', horario: '12 M - 8:00 PM', menu: 'menu-no-disponible.jpg', edificio: 'Zona de comidas', piso: '1' },
       { id: 5, nombre: 'Pizzagram', icono: '🍕', horario: '1:00 PM - 7:00 PM', menu: 'menu-pizzagram.jpg', edificio: 'Zona de comidas', piso: '1' },
       { id: 6, nombre: 'Restaurante', icono: '🍴', horario: '7:00 AM - 7:00 PM', menu: 'menu-restaurante.jpg', edificio: 'Bloque central', piso: '1' },
-      { id: 7, nombre: 'Carrito de café', icono: '☕', horario: '6:00 AM - 7:00 PM', menu: 'menu-no-disponible.jpg', edificio: 'Entrada principal', piso: '1' }
+      { id: 7, nombre: 'Carrito de café', icono: '☕', horario: '6:00 AM - 7:00 PM', menu: 'menu-carrito-cafe.jpg', menuTexto: 'Este establecimiento no cuenta con un menú. Acércate al mismo para ver su oferta. Precio promedio: 4k - 8k.', edificio: 'Entrada principal', piso: '1' }
     ],
     actividad: [
       { tipo: 'usuario', titulo: 'Nuevo usuario registrado', detalle: 'est.hkshda@unimilitar.edu.co' },
