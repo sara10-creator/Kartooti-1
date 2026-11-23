@@ -6,10 +6,15 @@
     "node": ">=22.12.0"
   },
   "scripts": {
+    "start": "node server.js",
     "dev": "vite --host 127.0.0.1",
     "check:auth": "node --check js/auth-form-guard.js && node --check js/acceso.js && node --check js/estudiante/login.js && node --check js/estudiante/mapa.js && node --check js/admin/login.js && node --check js/admin/guard.js && node --check js/app.js"
   },
   "devDependencies": {
     "vite": "^8.3.8"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.0",
+    "express": "^5.1.0"
   }
 }

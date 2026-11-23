@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "nombre": "Lab. física mecánica",
+    "tipo": "Laboratorio",
+    "edificio": "Sótanos",
+    "piso": "0",
+    "estado": "Activo",
+    "descripcion": ""
+  },
+  {
+    "id": 2,
+    "nombre": "Aula máxima",
+    "tipo": "Auditorio",
+    "edificio": "Exterior",
+    "piso": "1",
+    "estado": "Activo",
+    "descripcion": ""
+  },
+  {
+    "id": 3,
+    "nombre": "C110",
+    "tipo": "Salón",
+    "edificio": "Bloque C",
+    "piso": "1",
+    "estado": "Inactivo",
+    "descripcion": ""
+  },
+  {
+    "id": 4,
+    "nombre": "Café leyenda",
+    "tipo": "Cafetería",
+    "edificio": "Exterior",
+    "piso": "1",
+    "estado": "Activo",
+    "descripcion": ""
+  },
+  {
+    "id": 5,
+    "nombre": "Salón E510",
+    "tipo": "Salón",
+    "edificio": "Bloque E",
+    "piso": "5",
+    "estado": "Pendiente",
+    "descripcion": ""
+  }
+]

@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "titulo": "Congreso internacional",
+    "categoria": "Académico",
+    "estado": "Publicado",
+    "dia": "25",
+    "mes": "AGO",
+    "fecha": "2026-08-25",
+    "fechaTexto": "25, 26 y 27 de agosto",
+    "hora": "10:00 AM - 12:00 M",
+    "lugar": "Aula máxima",
+    "color": "primario",
+    "descripcion": ""
+  },
+  {
+    "id": 2,
+    "titulo": "Conferencia animar",
+    "categoria": "Cultural",
+    "estado": "Publicado",
+    "dia": "19",
+    "mes": "MAY",
+    "fecha": "2026-05-19",
+    "fechaTexto": "Contigo desde el primer semestre de septiembre",
+    "hora": "1:00 PM",
+    "lugar": "Aula especial XVII",
+    "color": "verde",
+    "descripcion": ""
+  },
+  {
+    "id": 3,
+    "titulo": "Festival barranquilla",
+    "categoria": "Cultural",
+    "estado": "Publicado",
+    "dia": "19",
+    "mes": "MAY",
+    "fecha": "2026-05-19",
+    "fechaTexto": "25 de agosto",
+    "hora": "3:00 PM",
+    "lugar": "Plaza Cervantes",
+    "color": "amarillo",
+    "descripcion": ""
+  },
+  {
+    "id": 4,
+    "titulo": "Vitrina científica",
+    "categoria": "Académico",
+    "estado": "Borrador",
+    "dia": "19",
+    "mes": "SEP",
+    "fecha": "2026-09-19",
+    "fechaTexto": "19 de septiembre",
+    "hora": "9:00 AM - 5:00 PM",
+    "lugar": "Auditorio mayor",
+    "color": "primario",
+    "descripcion": "Muestra de proyectos científicos de estudiantes y docentes."
+  },
+  {
+    "id": 5,
+    "titulo": "Torneo de fútbol",
+    "categoria": "Deportivo",
+    "estado": "Pendiente",
+    "dia": "15",
+    "mes": "SEP",
+    "fecha": "2026-09-15",
+    "fechaTexto": "15 de septiembre",
+    "hora": "7:00 AM - 6:00 PM",
+    "lugar": "Cancha norte",
+    "color": "verde",
+    "descripcion": ""
+  }
+]

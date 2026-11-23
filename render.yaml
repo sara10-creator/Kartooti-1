@@ -1,0 +1,11 @@
+# Configuración para Render (opcional: también se puede crear el servicio a mano)
+services:
+  - type: web
+    name: kartooti
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 22.12.0

@@ -1,5 +1,6 @@
 // Kartooti admin — Gestión de usuarios
-(function () {
+// Espera a que lleguen los datos del servidor antes de pintar
+KartootiDatos.listo.then(function () {
   var K = Kartooti, D = KartootiDatos;
   var ROLES = { Estudiante: 'e-celeste', Invitado: 'e-amarillo', Administrador: 'e-azul' };
   var lista = D.leer('usuarios');
@@ -85,4 +86,4 @@
   });
   f.texto.addEventListener('input', pintar); f.rol.addEventListener('change', pintar); f.estado.addEventListener('change', pintar);
   pintar();
-})();
+});

@@ -49,9 +49,9 @@
           <h1>Contigo desde el<br><span class="resalta">primer semestre</span></h1>
           <p class="hero__lead">Kartooti es tu guía digital del campus universitario. Localiza salones, descubre eventos, encuentra dónde comer y nunca más llegues tarde por no saber dónde está el bloque D.</p>
           <ul class="hero__mini">
-            <li>🗺️ Mapa en tiempo real</li>
-            <li>📅 Agenda de eventos</li>
-            <li>🍽️ Servicios del campus</li>
+            <li><span aria-hidden="true">🗺️</span> Mapa en tiempo real</li>
+            <li><span aria-hidden="true">📅</span> Agenda de eventos</li>
+            <li><span aria-hidden="true">🍽️</span> Servicios del campus</li>
           </ul>
           <div class="hero__cta">
             <a class="cta cta--lleno" href="crear-cuenta.html">Crear cuenta estudiantil</a>
@@ -68,10 +68,10 @@
               <small>Visitante</small>
             </div>
             <ul class="mock__lista">
-              <li><a href="invitado/acceso.html"><span class="mock__ico" style="background:#1a7080">🗺️</span><span class="mock__txt"><b>Mapa Interactivo</b><small>Explora el campus</small></span><img src="assets/icons/chevron.svg" width="12" height="15" alt=""></a></li>
-              <li><a href="invitado/acceso.html"><span class="mock__ico" style="background:#1e87a0">🔍</span><span class="mock__txt"><b>Buscar Ubicación</b><small>Salones y espacios</small></span><img src="assets/icons/chevron.svg" width="12" height="15" alt=""></a></li>
-              <li><a href="invitado/acceso.html"><span class="mock__ico" style="background:#f2ce5e">📅</span><span class="mock__txt"><b>Eventos</b><small>Próximos eventos</small></span><img src="assets/icons/chevron.svg" width="12" height="15" alt=""></a></li>
-              <li><a href="invitado/acceso.html"><span class="mock__ico" style="background:#00bc7d">🍽️</span><span class="mock__txt"><b>Comida</b><small>Cafeterías</small></span><img src="assets/icons/chevron.svg" width="12" height="15" alt=""></a></li>
+              <li><a href="invitado/acceso.html"><span class="mock__ico" aria-hidden="true" style="background:#1a7080">🗺️</span><span class="mock__txt"><b>Mapa Interactivo</b><small>Explora el campus</small></span><img src="assets/icons/chevron.svg" width="12" height="15" alt=""></a></li>
+              <li><a href="invitado/acceso.html"><span class="mock__ico" aria-hidden="true" style="background:#1e87a0">🔍</span><span class="mock__txt"><b>Buscar Ubicación</b><small>Salones y espacios</small></span><img src="assets/icons/chevron.svg" width="12" height="15" alt=""></a></li>
+              <li><a href="invitado/acceso.html"><span class="mock__ico" aria-hidden="true" style="background:#f2ce5e">📅</span><span class="mock__txt"><b>Eventos</b><small>Próximos eventos</small></span><img src="assets/icons/chevron.svg" width="12" height="15" alt=""></a></li>
+              <li><a href="invitado/acceso.html"><span class="mock__ico" aria-hidden="true" style="background:#00bc7d">🍽️</span><span class="mock__txt"><b>Comida</b><small>Cafeterías</small></span><img src="assets/icons/chevron.svg" width="12" height="15" alt=""></a></li>
             </ul>
             <span class="mock__mapa">Vista previa del mapa</span>
            </div>
@@ -81,7 +81,8 @@
     </section>
 
     <!-- Funciones -->
-    <section class="funciones" id="funciones">
+    <section class="funciones" id="funciones" aria-labelledby="funciones-titulo">
+      <h2 class="sr-only" id="funciones-titulo">Funciones de Kartooti</h2>
       <div class="funciones__grid">
         <article class="funcion" style="--borde:#a8dde6">
           <img src="assets/icons/feat-mapa.svg" width="64" height="64" alt="">
@@ -165,7 +166,7 @@
         <article class="tipo">
           <div class="tipo__cabeza">
             <span class="tipo__icono" style="background:#1a5f7a" aria-hidden="true">👤</span>
-            <div><h3>Invitado</h3><span class="tipo__pildora" style="background:#5a8fa0">Acceso limitado</span></div>
+            <div><h3>Invitado</h3><span class="tipo__pildora" style="background:#3f6f7f">Acceso limitado</span></div>
           </div>
           <ul class="tipo__lista">
             <li>Vista básica del mapa del campus</li>
@@ -177,8 +178,8 @@
 
         <article class="tipo">
           <div class="tipo__cabeza">
-            <span class="tipo__icono" style="background:#4ea8c0" aria-hidden="true">🛡️</span>
-            <div><h3>Administrador</h3><span class="tipo__pildora" style="background:#4ea8c0">Gestión total</span></div>
+            <span class="tipo__icono" style="background:#2b7f96" aria-hidden="true">🛡️</span>
+            <div><h3>Administrador</h3><span class="tipo__pildora" style="background:#2b7f96">Gestión total</span></div>
           </div>
           <ul class="tipo__lista">
             <li>Panel de administración completo</li>
@@ -186,7 +187,7 @@
             <li>Edición de mapas y puntos de interés</li>
             <li>Publicación y gestión de eventos</li>
           </ul>
-          <a class="tipo__btn" style="background:#4ea8c0;color:#f0f8fa" href="admin/login.html">Acceso administrativo</a>
+          <a class="tipo__btn" style="background:#2b7f96;color:#ffffff" href="admin/login.html">Acceso administrativo</a>
         </article>
       </div>
     </section>

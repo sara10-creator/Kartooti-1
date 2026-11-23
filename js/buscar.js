@@ -1,5 +1,6 @@
 // Kartooti — Buscar ubicación de un salón
-(function () {
+// Espera a que lleguen los datos del servidor antes de pintar
+KartootiDatos.listo.then(function () {
   var K = Kartooti;
   var form = document.getElementById('form-buscar');
   var input = document.getElementById('b-texto');
@@ -12,11 +13,13 @@
     q = String(q || '').trim();
     if (!q) {
       input.classList.add('es-error');
+      input.setAttribute('aria-invalid', 'true');
       input.focus();
       K.aviso('Escribe un salón, por ejemplo B201');
       return;
     }
     input.classList.remove('es-error');
+    input.removeAttribute('aria-invalid');
     var lugar = KartootiDatos.ubicarSalon(q);
     if (lugar) {
       texto.classList.remove('no-encontrado');
@@ -49,4 +52,4 @@
 
   var inicial = new URLSearchParams(location.search).get('q');
   if (inicial) { input.value = inicial; mostrar(inicial); }
-})();
+});

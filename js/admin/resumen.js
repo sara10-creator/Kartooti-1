@@ -1,5 +1,6 @@
 // Kartooti admin — Resumen: indicadores y actividad reciente
-(function () {
+// Espera a que lleguen los datos del servidor antes de pintar
+KartootiDatos.listo.then(function () {
   var K = Kartooti, D = KartootiDatos;
   var r = K.raiz + 'assets/icons/';
   var ICONOS = { usuario: 'act-user.svg', punto: 'act-lugar.svg', evento: 'act-reloj.svg' };
@@ -13,4 +14,4 @@
     return '<li><span class="actividad__icono"><img src="' + r + (ICONOS[a.tipo] || ICONOS.evento) + '" alt=""></span>' +
       '<div><b>' + K.esc(a.titulo) + '</b><span>' + K.esc(a.detalle) + '</span></div></li>';
   }).join('');
-})();
+});

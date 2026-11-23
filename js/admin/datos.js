@@ -1,5 +1,6 @@
 // Kartooti admin — Actualizar datos (puntos de interés)
-(function () {
+// Espera a que lleguen los datos del servidor antes de pintar
+KartootiDatos.listo.then(function () {
   var K = Kartooti, D = KartootiDatos;
   var TIPOS = { Laboratorio: 'e-celeste', Auditorio: 'e-amarillo', 'Salón': 'e-azul', 'Cafetería': 'e-verde', Biblioteca: 'e-celeste' };
   var lista = D.leer('puntos');
@@ -58,4 +59,4 @@
   document.getElementById('btn-nuevo').addEventListener('click', function () { abrir(null); });
   f.texto.addEventListener('input', pintar); f.tipo.addEventListener('change', pintar); f.estado.addEventListener('change', pintar);
   pintar();
-})();
+});

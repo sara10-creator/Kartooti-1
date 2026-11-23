@@ -47,13 +47,13 @@ import { supabase } from '../supabase.js';
     var usuario = autenticacion.data.session.user;
 
     var consulta = await supabase
-      .from('profiles')
-      .select('full_name, role')
-      .eq('id', usuario.id)
+      .from('Kartooti registros')
+      .select('Nombre_estudiante, rol')
+      .eq('user_id', usuario.id)
       .maybeSingle();
     if (consulta.error) throw consulta.error;
 
-    if (!consulta.data || consulta.data.role !== 'admin') {
+    if (!consulta.data || consulta.data.rol !== 'admin') {
       var salida = await supabase.auth.signOut();
       if (salida.error) console.error('No se pudo cerrar la sesión sin permisos administrativos:', salida.error);
       cerrarSesionLocal();

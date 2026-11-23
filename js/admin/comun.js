@@ -39,7 +39,14 @@ var Tabla = (function () {
     for (var i = 0; i < campos.length; i++) {
       var el = form[campos[i]];
       el.classList.remove('es-error');
-      if (!el.value.trim() || (el.type === 'email' && !el.checkValidity())) { el.classList.add('es-error'); el.focus(); return false; }
+      el.removeAttribute('aria-invalid');
+      if (!el.value.trim() || (el.type === 'email' && !el.checkValidity())) {
+        el.classList.add('es-error');
+        el.setAttribute('aria-invalid', 'true'); // el lector de pantalla anuncia que el campo tiene un error
+        el.focus();
+        K.aviso('Completa el campo obligatorio marcado en rojo');
+        return false;
+      }
     }
     return true;
   }

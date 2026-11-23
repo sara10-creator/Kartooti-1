@@ -47,7 +47,7 @@
       });
       if (acceso.error) throw acceso.error;
 
-      var consulta = await supabase
+     var consulta = await supabase
   .from('Kartooti registros')
   .select('Nombre_estudiante, rol')
   .eq('user_id', acceso.data.user.id)
