@@ -420,3 +420,17 @@ body.mapa-grande { background: #626262; }
 @media (max-width: 420px) {
   .tarjetas-lugar { grid-template-columns: 1fr; }
 }
+
+/* ---------- Buscar: del campus al plano del piso ---------- */
+.pasos-ubicacion { display: grid; grid-template-columns: 1fr 1.5fr; gap: 20px; align-items: start; }
+.pasos-ubicacion:not(:has(.paso-ubicacion--plano:not([hidden]))) { grid-template-columns: 1fr; }
+@media (max-width: 860px) { .pasos-ubicacion { grid-template-columns: 1fr; } }
+.paso-ubicacion { margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.paso-ubicacion figcaption { display: flex; align-items: center; gap: 10px; font-size: 16px; line-height: 24px; font-weight: 700; color: var(--primario); }
+.paso-ubicacion__num { display: grid; place-items: center; width: 30px; height: 30px; flex: none; border-radius: 50%; background: var(--paleta-3); color: var(--paleta-5); font-weight: 800; }
+.foto-mapa--plano { background: #fff; }
+.paso-ubicacion--plano .foto-mapa img { max-height: 640px; object-fit: contain; }
+@media (prefers-reduced-motion: no-preference) {
+  .paso-ubicacion--plano:not([hidden]) { animation: ampliar .5s ease-out; }
+}
+@keyframes ampliar { from { opacity: 0; transform: scale(.85); } to { opacity: 1; transform: none; } }

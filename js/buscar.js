@@ -6,7 +6,12 @@ KartootiDatos.listo.then(function () {
   var input = document.getElementById('b-texto');
   var resultado = document.getElementById('resultado');
   var texto = document.getElementById('resultado-texto');
-  var foto = document.getElementById('resultado-mapa');
+  var pasos = document.getElementById('pasos');
+  var pasoPlano = document.getElementById('paso-plano');
+  var planoImg = document.getElementById('plano-img');
+  var planoCapa = document.getElementById('plano-capa');
+  var pasoCampusTexto = document.getElementById('paso-campus-texto');
+  var pasoPlanoTexto = document.getElementById('paso-plano-texto');
   var capa = document.getElementById('resultado-capa');
   var verEnMapa = document.getElementById('ver-en-mapa');
   var sugerencias = document.getElementById('sugerencias');
@@ -32,13 +37,30 @@ KartootiDatos.listo.then(function () {
       if (lugar && D.normalizar(lugar.nombre) !== D.normalizar(r.titulo)) partes += ' está en <b>' + K.esc(lugar.nombre) + '</b>';
       else if (!lugar && r.detalle) partes += ' está en <b>' + K.esc(r.detalle) + '</b>';
       if (r.piso) partes += ', piso <b>' + K.esc(r.piso) + '</b>';
-      texto.innerHTML = partes + '.';
+      partes += '.';
+      if (r.tambien && r.tambien.length) partes += ' También hay en ' + K.esc(r.tambien.join(' y ')) + '.';
+      texto.innerHTML = partes;
     } else {
       texto.classList.add('no-encontrado');
       texto.innerHTML = 'No encontramos <b>' + K.esc(q) + '</b>. Prueba con un código de salón (por ejemplo B201) o el nombre de un lugar.';
     }
-    foto.hidden = !lugar;
+    pasos.hidden = !lugar;
     KartootiMapa.resaltar(capa, lugar);
+    if (lugar) pasoCampusTexto.textContent = r.plano ? 'Llega al ' + lugar.nombre : 'Así lo encuentras en el campus';
+    // Si el salón está en un plano, se amplía al piso con el salón resaltado
+    if (r && r.plano) {
+      var pl = r.plano;
+      planoImg.src = 'assets/planos/' + pl.imagen;
+      planoImg.width = pl.ancho; planoImg.height = pl.alto;
+      planoImg.alt = 'Plano del Bloque ' + pl.bloque + ', piso ' + pl.piso + ', con ' + r.titulo + ' resaltado';
+      planoCapa.setAttribute('viewBox', '0 0 ' + pl.ancho + ' ' + pl.alto);
+      KartootiMapa.resaltarZonas(planoCapa, r.zonas, r.titulo, pl.ancho, pl.alto);
+      pasoPlanoTexto.textContent = (pl.piso === '1' ? 'En el primer piso' : 'Sube al piso ' + pl.piso) + ' y busca ' + r.titulo;
+      pasoPlano.hidden = false;
+    } else {
+      pasoPlano.hidden = true;
+      planoCapa.innerHTML = '';
+    }
     verEnMapa.href = 'mapa.html' + (lugar ? '?lugar=' + encodeURIComponent(lugar.nombre) : '');
     resultado.classList.add('es-visible');
     sugerencias.hidden = true;
@@ -59,6 +81,7 @@ KartootiDatos.listo.then(function () {
   // Autocompletar con lugares y puntos
   D.leer('lugares').map(function (l) { return l.nombre; })
     .concat(D.leer('puntos').map(function (p) { return p.nombre; }))
+    .concat([].concat.apply([], D.leer('planos').map(function (pl) { return pl.espacios.map(function (e) { return e.nombre; }); })))
     .filter(function (n, i, arr) { return arr.indexOf(n) === i; })
     .forEach(function (n) {
       var o = document.createElement('option');

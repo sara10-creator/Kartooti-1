@@ -27,7 +27,7 @@ const SUPABASE_URL = process.env.SUPABASE_URL || 'https://gybfizqkjnttwggnzogz.s
 const SUPABASE_KEY = process.env.SUPABASE_KEY || 'sb_publishable_GdcuaDvL2m4HWGNXtMHPww_qqUPFmye';
 
 // Solo estas colecciones existen en la API
-const COLECCIONES = ['eventos', 'comidas', 'puntos', 'lugares'];
+const COLECCIONES = ['eventos', 'comidas', 'puntos', 'lugares', 'planos'];
 
 const app = express();
 app.use(express.json({ limit: '1mb' }));

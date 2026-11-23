@@ -14,12 +14,13 @@ var KartootiDatos = (function () {
   // Dirección de la API. Vacía = el mismo servidor que sirve la página.
   // Si algún día la API está en otro dominio: window.KARTOOTI_API = 'https://...'
   var API = (window.KARTOOTI_API || '') + '/api/';
-  var DEL_SERVIDOR = ['eventos', 'comidas', 'puntos', 'lugares'];
+  var DEL_SERVIDOR = ['eventos', 'comidas', 'puntos', 'lugares', 'planos'];
   var cache = {};          // lo que respondió el servidor
   var hayServidor = false;
 
   // Datos de respaldo (los mismos de data/*.json)
   var INICIALES = {
+    planos: [{"bloque": "B", "piso": "1", "imagen": "b-1.png", "espacios": [{"nombre": "Departamento de Derecho", "alias": ["Derecho"], "zonas": [{"x": 698, "y": 218, "w": 178, "h": 294}]}, {"nombre": "Departamento de Ciencias Básicas", "alias": ["Ciencias básicas"], "zonas": [{"x": 373, "y": 635, "w": 313, "h": 305}]}, {"nombre": "Aula especial 1-A", "alias": ["Aula especial 1A", "1A"], "zonas": [{"x": 700, "y": 635, "w": 322, "h": 305}]}], "ancho": 1400, "alto": 990}, {"bloque": "B", "piso": "2", "imagen": "b-2.png", "espacios": [{"nombre": "B-201", "alias": [], "zonas": [{"x": 33, "y": 218, "w": 319, "h": 294}]}, {"nombre": "B-203", "alias": [], "zonas": [{"x": 365, "y": 218, "w": 159, "h": 294}]}, {"nombre": "B-205", "alias": [], "zonas": [{"x": 524, "y": 218, "w": 154, "h": 294}]}, {"nombre": "B-207", "alias": [], "zonas": [{"x": 698, "y": 218, "w": 178, "h": 294}]}, {"nombre": "B-209", "alias": [], "zonas": [{"x": 876, "y": 218, "w": 146, "h": 294}]}, {"nombre": "B-202", "alias": [], "zonas": [{"x": 373, "y": 635, "w": 313, "h": 305}]}, {"nombre": "B-204", "alias": [], "zonas": [{"x": 700, "y": 635, "w": 322, "h": 305}]}, {"nombre": "B-206", "alias": [], "zonas": [{"x": 1040, "y": 635, "w": 148, "h": 305}]}, {"nombre": "B-208", "alias": [], "zonas": [{"x": 1190, "y": 635, "w": 195, "h": 305}]}], "ancho": 1400, "alto": 990}, {"bloque": "C", "piso": "1", "imagen": "c-1.png", "espacios": [{"nombre": "Biblioteca", "alias": [], "zonas": [{"x": 805, "y": 515, "w": 435, "h": 187}]}, {"nombre": "Hemeroteca", "alias": [], "zonas": [{"x": 606, "y": 515, "w": 96, "h": 187}, {"x": 702, "y": 515, "w": 103, "h": 187}]}], "ancho": 1400, "alto": 990}, {"bloque": "C", "piso": "2", "imagen": "c-2.png", "espacios": [{"nombre": "C-205", "alias": [], "zonas": [{"x": 930, "y": 236, "w": 128, "h": 206}]}, {"nombre": "C-206", "alias": [], "zonas": [{"x": 1058, "y": 236, "w": 182, "h": 206}]}, {"nombre": "C-203", "alias": [], "zonas": [{"x": 805, "y": 515, "w": 232, "h": 187}]}, {"nombre": "C-204", "alias": [], "zonas": [{"x": 1037, "y": 515, "w": 203, "h": 187}]}], "ancho": 1400, "alto": 990}, {"bloque": "C", "piso": "3", "imagen": "c-3.png", "espacios": [{"nombre": "C-305", "alias": [], "zonas": [{"x": 930, "y": 236, "w": 128, "h": 206}]}, {"nombre": "C-306", "alias": [], "zonas": [{"x": 1058, "y": 236, "w": 182, "h": 206}]}, {"nombre": "C-303", "alias": [], "zonas": [{"x": 805, "y": 515, "w": 232, "h": 187}]}, {"nombre": "C-304", "alias": [], "zonas": [{"x": 1037, "y": 515, "w": 203, "h": 187}]}, {"nombre": "Aula especial 3A", "alias": ["Aula especial 3-A", "3A"], "zonas": [{"x": 118, "y": 515, "w": 190, "h": 187}]}], "ancho": 1400, "alto": 990}, {"bloque": "D", "piso": "1", "imagen": "d-1.png", "espacios": [{"nombre": "Departamento de Tecnologías de la Información", "alias": ["Tecnologías de la información", "Departamento TI", "TI"], "zonas": [{"x": 362, "y": 230, "w": 308, "h": 310}]}, {"nombre": "Hemeroteca", "alias": [], "zonas": [{"x": 680, "y": 648, "w": 323, "h": 307}]}], "ancho": 1400, "alto": 990}, {"bloque": "D", "piso": "2", "imagen": "d-2.png", "espacios": [{"nombre": "D-205", "alias": [], "zonas": [{"x": 38, "y": 230, "w": 227, "h": 310}]}, {"nombre": "D-203", "alias": [], "zonas": [{"x": 362, "y": 230, "w": 308, "h": 310}]}, {"nombre": "Laboratorio de diseño", "alias": ["Lab diseño", "Lab de diseño"], "zonas": [{"x": 680, "y": 230, "w": 205, "h": 310}]}, {"nombre": "Salón de dibujo", "alias": ["Salón dibujo", "Dibujo"], "zonas": [{"x": 887, "y": 230, "w": 188, "h": 310}]}, {"nombre": "Departamento de Humanidades", "alias": ["Humanidades"], "zonas": [{"x": 1077, "y": 230, "w": 273, "h": 310}]}, {"nombre": "D-204", "alias": [], "zonas": [{"x": 365, "y": 648, "w": 313, "h": 307}]}, {"nombre": "D-202", "alias": [], "zonas": [{"x": 680, "y": 648, "w": 323, "h": 307}]}, {"nombre": "D-208", "alias": [], "zonas": [{"x": 1005, "y": 648, "w": 343, "h": 307}]}], "ancho": 1400, "alto": 990}, {"bloque": "D", "piso": "3", "imagen": "d-3.png", "espacios": [{"nombre": "D-306", "alias": [], "zonas": [{"x": 38, "y": 230, "w": 227, "h": 310}]}, {"nombre": "D-305", "alias": [], "zonas": [{"x": 362, "y": 230, "w": 308, "h": 310}]}, {"nombre": "D-303", "alias": [], "zonas": [{"x": 680, "y": 230, "w": 205, "h": 310}]}, {"nombre": "D-301", "alias": [], "zonas": [{"x": 887, "y": 230, "w": 188, "h": 310}]}, {"nombre": "D-304", "alias": [], "zonas": [{"x": 365, "y": 648, "w": 313, "h": 307}]}, {"nombre": "D-302", "alias": [], "zonas": [{"x": 680, "y": 648, "w": 323, "h": 307}]}], "ancho": 1400, "alto": 990}, {"bloque": "E", "piso": "2", "imagen": "e-2.png", "espacios": [{"nombre": "E-201", "alias": [], "zonas": [{"x": 365, "y": 372, "w": 107, "h": 143}]}, {"nombre": "E-202", "alias": [], "zonas": [{"x": 365, "y": 515, "w": 107, "h": 105}]}, {"nombre": "E-204", "alias": [], "zonas": [{"x": 365, "y": 620, "w": 107, "h": 110}]}, {"nombre": "E-205", "alias": [], "zonas": [{"x": 365, "y": 730, "w": 107, "h": 115}]}, {"nombre": "E-203", "alias": [], "zonas": [{"x": 510, "y": 425, "w": 118, "h": 265}]}, {"nombre": "E-206", "alias": [], "zonas": [{"x": 365, "y": 918, "w": 110, "h": 107}, {"x": 512, "y": 820, "w": 120, "h": 200}]}, {"nombre": "E-207", "alias": [], "zonas": [{"x": 365, "y": 1025, "w": 110, "h": 95}]}, {"nombre": "E-209", "alias": [], "zonas": [{"x": 365, "y": 1120, "w": 110, "h": 95}]}, {"nombre": "E-208", "alias": [], "zonas": [{"x": 515, "y": 1020, "w": 118, "h": 98}]}, {"nombre": "Auditorios del Bloque E", "alias": ["Auditorio E"], "zonas": [{"x": 405, "y": 15, "w": 183, "h": 190}, {"x": 250, "y": 170, "w": 190, "h": 175}]}], "ancho": 990, "alto": 1400}],
     lugares: [{"id": 1, "nombre": "Bloque A", "categoria": "Bloques", "alias": [], "zona": {"x": 537, "y": 439, "w": 117, "h": 75}, "descripcion": ""}, {"id": 2, "nombre": "Bloque B", "categoria": "Bloques", "alias": [], "zona": {"x": 539, "y": 301, "w": 195, "h": 75}, "descripcion": ""}, {"id": 3, "nombre": "Bloque C", "categoria": "Bloques", "alias": [], "zona": {"x": 539, "y": 172, "w": 195, "h": 80}, "descripcion": ""}, {"id": 4, "nombre": "Bloque D", "categoria": "Bloques", "alias": [], "zona": {"x": 539, "y": 47, "w": 195, "h": 77}, "descripcion": ""}, {"id": 5, "nombre": "Bloque E", "categoria": "Bloques", "alias": [], "zona": {"x": 734, "y": 47, "w": 83, "h": 252}, "descripcion": ""}, {"id": 6, "nombre": "Gym", "categoria": "Espacios", "alias": ["Gimnasio"], "zona": {"x": 331, "y": 140, "w": 42, "h": 36}, "descripcion": ""}, {"id": 7, "nombre": "Café Leyenda", "categoria": "Alimentación", "alias": ["Cafe leyenda"], "zona": {"x": 838, "y": 372, "w": 67, "h": 32}, "descripcion": ""}, {"id": 8, "nombre": "Restaurante", "categoria": "Alimentación", "alias": [], "zona": {"x": 542, "y": 351, "w": 36, "h": 36}, "descripcion": ""}, {"id": 9, "nombre": "Pizzagram", "categoria": "Alimentación", "alias": ["Pizza"], "zona": {"x": 542, "y": 391, "w": 36, "h": 36}, "descripcion": ""}, {"id": 10, "nombre": "Carrito de café", "categoria": "Alimentación", "alias": ["Carrito", "Tinto"], "zona": {"x": 490, "y": 247, "w": 36, "h": 36}, "descripcion": ""}, {"id": 11, "nombre": "Taco más", "categoria": "Alimentación", "alias": ["Tacos", "Taco mas"], "zona": {"x": 682, "y": 546, "w": 36, "h": 36}, "descripcion": ""}, {"id": 12, "nombre": "Hamburguesa", "categoria": "Alimentación", "alias": ["Hamburguesas", "Burger"], "zona": {"x": 744, "y": 541, "w": 36, "h": 36}, "descripcion": ""}, {"id": 13, "nombre": "Aula Máxima", "categoria": "Espacios", "alias": [], "zona": {"x": 282, "y": 45, "w": 128, "h": 120}, "descripcion": ""}, {"id": 14, "nombre": "Auditorios", "categoria": "Espacios", "alias": ["Auditorio", "Auditorio mayor"], "zona": {"x": 734, "y": 301, "w": 97, "h": 88}, "descripcion": ""}, {"id": 15, "nombre": "Plaza Cervantes", "categoria": "Espacios", "alias": [], "zona": {"x": 334, "y": 192, "w": 125, "h": 129}, "descripcion": ""}],
     eventos: [
       { id: 1, titulo: 'Congreso internacional', categoria: 'Académico', estado: 'Publicado', dia: '25', mes: 'AGO', fecha: '2026-08-25', fechaTexto: '25, 26 y 27 de agosto', hora: '10:00 AM - 12:00 M', lugar: 'Aula máxima', color: 'primario', descripcion: '' },
@@ -152,13 +153,37 @@ var KartootiDatos = (function () {
     }) || null;
   }
 
-  // Devuelve { lugar, titulo, piso, detalle } o null.
+  // Busca en data/planos.json: primero nombre exacto, luego que lo contenga
+  function buscarEnPlanos(compacto) {
+    var exactos = [], parecidos = [];
+    var limpio = function (s) { return normalizar(s).replace(/[\s-]/g, ''); };
+    leer('planos').forEach(function (plano) {
+      (plano.espacios || []).forEach(function (esp) {
+        var nombres = [esp.nombre].concat(esp.alias || []).map(limpio);
+        if (nombres.indexOf(compacto) !== -1) exactos.push({ plano: plano, espacio: esp });
+        else if (compacto.length >= 4 && !/\d/.test(compacto) &&
+          nombres.some(function (n) { return n.indexOf(compacto) !== -1; })) parecidos.push({ plano: plano, espacio: esp });
+      });
+    });
+    return exactos.length ? exactos : parecidos;
+  }
+
+  // Devuelve { lugar, titulo, piso, detalle, plano?, zonas? } o null.
   // Entiende: códigos de salón (B201, b-201), nombres de lugares y sus alias,
   // puntos de interés del admin y restaurantes.
   function buscarLugar(texto) {
     var q = normalizar(texto);
     if (!q) return null;
     var compacto = q.replace(/[\s-]/g, '');
+
+    // 0) Salones y espacios dibujados en los planos de cada piso
+    var enPlano = buscarEnPlanos(compacto);
+    if (enPlano.length) {
+      var r0 = enPlano[0];
+      return { lugar: lugarPorNombre('Bloque ' + r0.plano.bloque), titulo: r0.espacio.nombre, piso: r0.plano.piso,
+        detalle: 'Bloque ' + r0.plano.bloque, plano: r0.plano, zonas: r0.espacio.zonas,
+        tambien: enPlano.slice(1).map(function (x) { return 'Bloque ' + x.plano.bloque + ', piso ' + x.plano.piso; }) };
+    }
 
     // 1) Puntos de interés registrados por el admin (salones, laboratorios…)
     var punto = leer('puntos').find(function (x) {

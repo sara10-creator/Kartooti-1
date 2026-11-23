@@ -1,0 +1,713 @@
+[
+  {
+    "bloque": "B",
+    "piso": "1",
+    "imagen": "b-1.png",
+    "espacios": [
+      {
+        "nombre": "Departamento de Derecho",
+        "alias": [
+          "Derecho"
+        ],
+        "zonas": [
+          {
+            "x": 698,
+            "y": 218,
+            "w": 178,
+            "h": 294
+          }
+        ]
+      },
+      {
+        "nombre": "Departamento de Ciencias Básicas",
+        "alias": [
+          "Ciencias básicas"
+        ],
+        "zonas": [
+          {
+            "x": 373,
+            "y": 635,
+            "w": 313,
+            "h": 305
+          }
+        ]
+      },
+      {
+        "nombre": "Aula especial 1-A",
+        "alias": [
+          "Aula especial 1A",
+          "1A"
+        ],
+        "zonas": [
+          {
+            "x": 700,
+            "y": 635,
+            "w": 322,
+            "h": 305
+          }
+        ]
+      }
+    ],
+    "ancho": 1400,
+    "alto": 990
+  },
+  {
+    "bloque": "B",
+    "piso": "2",
+    "imagen": "b-2.png",
+    "espacios": [
+      {
+        "nombre": "B-201",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 33,
+            "y": 218,
+            "w": 319,
+            "h": 294
+          }
+        ]
+      },
+      {
+        "nombre": "B-203",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 365,
+            "y": 218,
+            "w": 159,
+            "h": 294
+          }
+        ]
+      },
+      {
+        "nombre": "B-205",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 524,
+            "y": 218,
+            "w": 154,
+            "h": 294
+          }
+        ]
+      },
+      {
+        "nombre": "B-207",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 698,
+            "y": 218,
+            "w": 178,
+            "h": 294
+          }
+        ]
+      },
+      {
+        "nombre": "B-209",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 876,
+            "y": 218,
+            "w": 146,
+            "h": 294
+          }
+        ]
+      },
+      {
+        "nombre": "B-202",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 373,
+            "y": 635,
+            "w": 313,
+            "h": 305
+          }
+        ]
+      },
+      {
+        "nombre": "B-204",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 700,
+            "y": 635,
+            "w": 322,
+            "h": 305
+          }
+        ]
+      },
+      {
+        "nombre": "B-206",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 1040,
+            "y": 635,
+            "w": 148,
+            "h": 305
+          }
+        ]
+      },
+      {
+        "nombre": "B-208",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 1190,
+            "y": 635,
+            "w": 195,
+            "h": 305
+          }
+        ]
+      }
+    ],
+    "ancho": 1400,
+    "alto": 990
+  },
+  {
+    "bloque": "C",
+    "piso": "1",
+    "imagen": "c-1.png",
+    "espacios": [
+      {
+        "nombre": "Biblioteca",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 805,
+            "y": 515,
+            "w": 435,
+            "h": 187
+          }
+        ]
+      },
+      {
+        "nombre": "Hemeroteca",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 606,
+            "y": 515,
+            "w": 96,
+            "h": 187
+          },
+          {
+            "x": 702,
+            "y": 515,
+            "w": 103,
+            "h": 187
+          }
+        ]
+      }
+    ],
+    "ancho": 1400,
+    "alto": 990
+  },
+  {
+    "bloque": "C",
+    "piso": "2",
+    "imagen": "c-2.png",
+    "espacios": [
+      {
+        "nombre": "C-205",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 930,
+            "y": 236,
+            "w": 128,
+            "h": 206
+          }
+        ]
+      },
+      {
+        "nombre": "C-206",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 1058,
+            "y": 236,
+            "w": 182,
+            "h": 206
+          }
+        ]
+      },
+      {
+        "nombre": "C-203",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 805,
+            "y": 515,
+            "w": 232,
+            "h": 187
+          }
+        ]
+      },
+      {
+        "nombre": "C-204",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 1037,
+            "y": 515,
+            "w": 203,
+            "h": 187
+          }
+        ]
+      }
+    ],
+    "ancho": 1400,
+    "alto": 990
+  },
+  {
+    "bloque": "C",
+    "piso": "3",
+    "imagen": "c-3.png",
+    "espacios": [
+      {
+        "nombre": "C-305",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 930,
+            "y": 236,
+            "w": 128,
+            "h": 206
+          }
+        ]
+      },
+      {
+        "nombre": "C-306",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 1058,
+            "y": 236,
+            "w": 182,
+            "h": 206
+          }
+        ]
+      },
+      {
+        "nombre": "C-303",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 805,
+            "y": 515,
+            "w": 232,
+            "h": 187
+          }
+        ]
+      },
+      {
+        "nombre": "C-304",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 1037,
+            "y": 515,
+            "w": 203,
+            "h": 187
+          }
+        ]
+      },
+      {
+        "nombre": "Aula especial 3A",
+        "alias": [
+          "Aula especial 3-A",
+          "3A"
+        ],
+        "zonas": [
+          {
+            "x": 118,
+            "y": 515,
+            "w": 190,
+            "h": 187
+          }
+        ]
+      }
+    ],
+    "ancho": 1400,
+    "alto": 990
+  },
+  {
+    "bloque": "D",
+    "piso": "1",
+    "imagen": "d-1.png",
+    "espacios": [
+      {
+        "nombre": "Departamento de Tecnologías de la Información",
+        "alias": [
+          "Tecnologías de la información",
+          "Departamento TI",
+          "TI"
+        ],
+        "zonas": [
+          {
+            "x": 362,
+            "y": 230,
+            "w": 308,
+            "h": 310
+          }
+        ]
+      },
+      {
+        "nombre": "Hemeroteca",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 680,
+            "y": 648,
+            "w": 323,
+            "h": 307
+          }
+        ]
+      }
+    ],
+    "ancho": 1400,
+    "alto": 990
+  },
+  {
+    "bloque": "D",
+    "piso": "2",
+    "imagen": "d-2.png",
+    "espacios": [
+      {
+        "nombre": "D-205",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 38,
+            "y": 230,
+            "w": 227,
+            "h": 310
+          }
+        ]
+      },
+      {
+        "nombre": "D-203",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 362,
+            "y": 230,
+            "w": 308,
+            "h": 310
+          }
+        ]
+      },
+      {
+        "nombre": "Laboratorio de diseño",
+        "alias": [
+          "Lab diseño",
+          "Lab de diseño"
+        ],
+        "zonas": [
+          {
+            "x": 680,
+            "y": 230,
+            "w": 205,
+            "h": 310
+          }
+        ]
+      },
+      {
+        "nombre": "Salón de dibujo",
+        "alias": [
+          "Salón dibujo",
+          "Dibujo"
+        ],
+        "zonas": [
+          {
+            "x": 887,
+            "y": 230,
+            "w": 188,
+            "h": 310
+          }
+        ]
+      },
+      {
+        "nombre": "Departamento de Humanidades",
+        "alias": [
+          "Humanidades"
+        ],
+        "zonas": [
+          {
+            "x": 1077,
+            "y": 230,
+            "w": 273,
+            "h": 310
+          }
+        ]
+      },
+      {
+        "nombre": "D-204",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 365,
+            "y": 648,
+            "w": 313,
+            "h": 307
+          }
+        ]
+      },
+      {
+        "nombre": "D-202",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 680,
+            "y": 648,
+            "w": 323,
+            "h": 307
+          }
+        ]
+      },
+      {
+        "nombre": "D-208",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 1005,
+            "y": 648,
+            "w": 343,
+            "h": 307
+          }
+        ]
+      }
+    ],
+    "ancho": 1400,
+    "alto": 990
+  },
+  {
+    "bloque": "D",
+    "piso": "3",
+    "imagen": "d-3.png",
+    "espacios": [
+      {
+        "nombre": "D-306",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 38,
+            "y": 230,
+            "w": 227,
+            "h": 310
+          }
+        ]
+      },
+      {
+        "nombre": "D-305",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 362,
+            "y": 230,
+            "w": 308,
+            "h": 310
+          }
+        ]
+      },
+      {
+        "nombre": "D-303",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 680,
+            "y": 230,
+            "w": 205,
+            "h": 310
+          }
+        ]
+      },
+      {
+        "nombre": "D-301",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 887,
+            "y": 230,
+            "w": 188,
+            "h": 310
+          }
+        ]
+      },
+      {
+        "nombre": "D-304",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 365,
+            "y": 648,
+            "w": 313,
+            "h": 307
+          }
+        ]
+      },
+      {
+        "nombre": "D-302",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 680,
+            "y": 648,
+            "w": 323,
+            "h": 307
+          }
+        ]
+      }
+    ],
+    "ancho": 1400,
+    "alto": 990
+  },
+  {
+    "bloque": "E",
+    "piso": "2",
+    "imagen": "e-2.png",
+    "espacios": [
+      {
+        "nombre": "E-201",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 365,
+            "y": 372,
+            "w": 107,
+            "h": 143
+          }
+        ]
+      },
+      {
+        "nombre": "E-202",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 365,
+            "y": 515,
+            "w": 107,
+            "h": 105
+          }
+        ]
+      },
+      {
+        "nombre": "E-204",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 365,
+            "y": 620,
+            "w": 107,
+            "h": 110
+          }
+        ]
+      },
+      {
+        "nombre": "E-205",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 365,
+            "y": 730,
+            "w": 107,
+            "h": 115
+          }
+        ]
+      },
+      {
+        "nombre": "E-203",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 510,
+            "y": 425,
+            "w": 118,
+            "h": 265
+          }
+        ]
+      },
+      {
+        "nombre": "E-206",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 365,
+            "y": 918,
+            "w": 110,
+            "h": 107
+          },
+          {
+            "x": 512,
+            "y": 820,
+            "w": 120,
+            "h": 200
+          }
+        ]
+      },
+      {
+        "nombre": "E-207",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 365,
+            "y": 1025,
+            "w": 110,
+            "h": 95
+          }
+        ]
+      },
+      {
+        "nombre": "E-209",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 365,
+            "y": 1120,
+            "w": 110,
+            "h": 95
+          }
+        ]
+      },
+      {
+        "nombre": "E-208",
+        "alias": [],
+        "zonas": [
+          {
+            "x": 515,
+            "y": 1020,
+            "w": 118,
+            "h": 98
+          }
+        ]
+      },
+      {
+        "nombre": "Auditorios del Bloque E",
+        "alias": [
+          "Auditorio E"
+        ],
+        "zonas": [
+          {
+            "x": 405,
+            "y": 15,
+            "w": 183,
+            "h": 190
+          },
+          {
+            "x": 250,
+            "y": 170,
+            "w": 190,
+            "h": 175
+          }
+        ]
+      }
+    ],
+    "ancho": 990,
+    "alto": 1400
+  }
+]

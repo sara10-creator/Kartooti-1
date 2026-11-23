@@ -40,9 +40,21 @@
 
       <div class="resultado" id="resultado">
         <p class="resultado__texto" id="resultado-texto" role="status" aria-live="polite"></p>
-        <div class="foto-mapa" id="resultado-mapa" hidden>
-          <img src="assets/img/mapa-aereo.jpg" alt="Foto aérea del campus con el lugar resaltado" width="1195" height="671">
-          <svg class="foto-mapa__capa" id="resultado-capa" viewBox="0 0 1195 671" aria-hidden="true" focusable="false"></svg>
+        <div class="pasos-ubicacion" id="pasos" hidden>
+          <figure class="paso-ubicacion" id="paso-campus">
+            <figcaption><span class="paso-ubicacion__num" aria-hidden="true">1</span><span id="paso-campus-texto">Ubica el bloque en el campus</span></figcaption>
+            <div class="foto-mapa">
+              <img src="assets/img/mapa-aereo.jpg" alt="Foto aérea del campus con el bloque resaltado" width="1195" height="671">
+              <svg class="foto-mapa__capa" id="resultado-capa" viewBox="0 0 1195 671" aria-hidden="true" focusable="false"></svg>
+            </div>
+          </figure>
+          <figure class="paso-ubicacion paso-ubicacion--plano" id="paso-plano" hidden>
+            <figcaption><span class="paso-ubicacion__num" aria-hidden="true">2</span><span id="paso-plano-texto">Dentro del bloque</span></figcaption>
+            <div class="foto-mapa foto-mapa--plano">
+              <img id="plano-img" src="" alt="" width="1400" height="990">
+              <svg class="foto-mapa__capa" id="plano-capa" viewBox="0 0 1400 990" aria-hidden="true" focusable="false"></svg>
+            </div>
+          </figure>
         </div>
         <a class="btn btn--borde" id="ver-en-mapa" href="mapa.html" style="align-self:flex-start">Ver en el mapa interactivo</a>
       </div>
@@ -50,9 +62,9 @@
         <p id="sugerencias-titulo">Búsquedas frecuentes</p>
         <div class="sugerencias__lista">
           <button class="sugerencia" type="button">B201</button>
-          <button class="sugerencia" type="button">Plaza Cervantes</button>
-          <button class="sugerencia" type="button">E510</button>
-          <button class="sugerencia" type="button">Auditorios</button>
+          <button class="sugerencia" type="button">D301</button>
+          <button class="sugerencia" type="button">Lab diseño</button>
+          <button class="sugerencia" type="button">Biblioteca</button>
           <button class="sugerencia" type="button">Aula máxima</button>
           <button class="sugerencia" type="button">Café leyenda</button>
         </div>
