@@ -13,6 +13,7 @@ KartootiDatos.listo.then(function () {
   var lista = document.getElementById('campus-lista');
   var opciones = document.getElementById('b-opciones');
   var NS = 'http://www.w3.org/2000/svg';
+  var ANCHO = 1195, ALTO = 671; // tamaño de la foto aérea (mapa-aereo.jpg)
   var lugares = D.leer('lugares');
   var ORDEN = ['Acceso', 'Hitos', 'Bloques', 'Alimentación', 'Espacios'];
 
@@ -30,19 +31,19 @@ KartootiDatos.listo.then(function () {
     var z = lugar.zona;
     // Oscurece todo menos el lugar
     capa.appendChild(el('path', {
-      d: 'M0 0H950V537H0Z M' + z.x + ' ' + z.y + 'h' + z.w + 'v' + z.h + 'h' + (-z.w) + 'Z',
+      d: 'M0 0H' + ANCHO + 'V' + ALTO + 'H0Z M' + z.x + ' ' + z.y + 'h' + z.w + 'v' + z.h + 'h' + (-z.w) + 'Z',
       'fill-rule': 'evenodd', fill: 'rgba(15,30,45,.45)'
     }));
     capa.appendChild(el('rect', { x: z.x, y: z.y, width: z.w, height: z.h, rx: 3, class: 'campus__zona' }));
     // Etiqueta encima (o debajo si no cabe)
-    var ancho = Math.max(70, lugar.nombre.length * 11.5 + 30);
-    var cx = Math.min(Math.max(z.x + z.w / 2, ancho / 2 + 6), 950 - ancho / 2 - 6);
+    var ancho = Math.max(70, lugar.nombre.length * 12 + 32);
+    var cx = Math.min(Math.max(z.x + z.w / 2, ancho / 2 + 6), ANCHO - ancho / 2 - 6);
     var arriba = z.y > 52;
     var y = arriba ? z.y - 46 : z.y + z.h + 10;
     var g = el('g', {});
     g.appendChild(el('rect', { x: cx - ancho / 2, y: y, width: ancho, height: 36, rx: 8, fill: '#1d1d1f' }));
     g.appendChild(el('path', { d: arriba ? 'M' + (cx - 6) + ' ' + (y + 36) + 'l7 8l7 -8Z' : 'M' + (cx - 6) + ' ' + y + 'l7 -8l7 8Z', fill: '#1d1d1f' }));
-    g.appendChild(el('text', { x: cx, y: y + 25, 'text-anchor': 'middle', fill: '#fff', 'font-size': 19, 'font-weight': 700, 'font-family': 'Inter, sans-serif' }, lugar.nombre));
+    g.appendChild(el('text', { x: cx, y: y + 25, 'text-anchor': 'middle', fill: '#fff', 'font-size': 20, 'font-weight': 700, 'font-family': 'Inter, sans-serif' }, lugar.nombre));
     capa.appendChild(g);
   }
 

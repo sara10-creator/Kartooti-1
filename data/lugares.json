@@ -5,10 +5,10 @@
     "categoria": "Bloques",
     "alias": [],
     "zona": {
-      "x": 432,
-      "y": 353,
-      "w": 95,
-      "h": 60
+      "x": 537,
+      "y": 439,
+      "w": 117,
+      "h": 75
     },
     "descripcion": ""
   },
@@ -18,10 +18,10 @@
     "categoria": "Bloques",
     "alias": [],
     "zona": {
-      "x": 437,
-      "y": 243,
-      "w": 155,
-      "h": 60
+      "x": 539,
+      "y": 301,
+      "w": 195,
+      "h": 75
     },
     "descripcion": ""
   },
@@ -31,10 +31,10 @@
     "categoria": "Bloques",
     "alias": [],
     "zona": {
-      "x": 437,
-      "y": 140,
-      "w": 155,
-      "h": 62
+      "x": 539,
+      "y": 172,
+      "w": 195,
+      "h": 80
     },
     "descripcion": ""
   },
@@ -44,10 +44,10 @@
     "categoria": "Bloques",
     "alias": [],
     "zona": {
-      "x": 437,
-      "y": 38,
-      "w": 155,
-      "h": 62
+      "x": 539,
+      "y": 47,
+      "w": 195,
+      "h": 77
     },
     "descripcion": ""
   },
@@ -57,10 +57,10 @@
     "categoria": "Bloques",
     "alias": [],
     "zona": {
-      "x": 593,
-      "y": 38,
-      "w": 64,
-      "h": 205
+      "x": 734,
+      "y": 47,
+      "w": 83,
+      "h": 252
     },
     "descripcion": ""
   },
@@ -87,7 +87,12 @@
     "alias": [
       "Gimnasio"
     ],
-    "zona": null,
+    "zona": {
+      "x": 331,
+      "y": 140,
+      "w": 42,
+      "h": 36
+    },
     "descripcion": ""
   },
   {
@@ -119,28 +124,104 @@
       "Cafe leyenda"
     ],
     "zona": {
-      "x": 670,
-      "y": 298,
-      "w": 56,
-      "h": 26
+      "x": 838,
+      "y": 372,
+      "w": 67,
+      "h": 32
     },
     "descripcion": ""
   },
   {
     "id": 12,
-    "nombre": "Aula Máxima",
-    "categoria": "Espacios",
+    "nombre": "Restaurante",
+    "categoria": "Alimentación",
     "alias": [],
     "zona": {
-      "x": 232,
-      "y": 40,
-      "w": 103,
-      "h": 90
+      "x": 542,
+      "y": 351,
+      "w": 36,
+      "h": 36
     },
     "descripcion": ""
   },
   {
     "id": 13,
+    "nombre": "Pizzagram",
+    "categoria": "Alimentación",
+    "alias": [
+      "Pizza"
+    ],
+    "zona": {
+      "x": 542,
+      "y": 391,
+      "w": 36,
+      "h": 36
+    },
+    "descripcion": ""
+  },
+  {
+    "id": 14,
+    "nombre": "Carrito de café",
+    "categoria": "Alimentación",
+    "alias": [
+      "Carrito",
+      "Tinto"
+    ],
+    "zona": {
+      "x": 490,
+      "y": 247,
+      "w": 36,
+      "h": 36
+    },
+    "descripcion": ""
+  },
+  {
+    "id": 15,
+    "nombre": "Taco más",
+    "categoria": "Alimentación",
+    "alias": [
+      "Tacos",
+      "Taco mas"
+    ],
+    "zona": {
+      "x": 682,
+      "y": 546,
+      "w": 36,
+      "h": 36
+    },
+    "descripcion": ""
+  },
+  {
+    "id": 16,
+    "nombre": "Hamburguesa",
+    "categoria": "Alimentación",
+    "alias": [
+      "Hamburguesas",
+      "Burger"
+    ],
+    "zona": {
+      "x": 744,
+      "y": 541,
+      "w": 36,
+      "h": 36
+    },
+    "descripcion": ""
+  },
+  {
+    "id": 17,
+    "nombre": "Aula Máxima",
+    "categoria": "Espacios",
+    "alias": [],
+    "zona": {
+      "x": 282,
+      "y": 45,
+      "w": 128,
+      "h": 120
+    },
+    "descripcion": ""
+  },
+  {
+    "id": 18,
     "nombre": "Auditorios",
     "categoria": "Espacios",
     "alias": [
@@ -148,28 +229,28 @@
       "Auditorio mayor"
     ],
     "zona": {
-      "x": 593,
-      "y": 243,
-      "w": 75,
-      "h": 70
+      "x": 734,
+      "y": 301,
+      "w": 97,
+      "h": 88
     },
     "descripcion": ""
   },
   {
-    "id": 14,
+    "id": 19,
     "nombre": "Plaza Cervantes",
     "categoria": "Espacios",
     "alias": [],
     "zona": {
-      "x": 280,
-      "y": 155,
-      "w": 92,
-      "h": 100
+      "x": 334,
+      "y": 192,
+      "w": 125,
+      "h": 129
     },
     "descripcion": ""
   },
   {
-    "id": 15,
+    "id": 20,
     "nombre": "Hub de Innovación",
     "categoria": "Espacios",
     "alias": [
@@ -179,7 +260,7 @@
     "descripcion": ""
   },
   {
-    "id": 16,
+    "id": 21,
     "nombre": "Acceso",
     "categoria": "Acceso",
     "alias": [
