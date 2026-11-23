@@ -53,7 +53,7 @@ import { supabase } from '../supabase.js';
       .maybeSingle();
     if (consulta.error) throw consulta.error;
 
-    if (!consulta.data || consulta.data.rol !== 'admin') {
+    if (!consulta.data || String(consulta.data.rol || '').trim().toLowerCase() !== 'admin') {
       var salida = await supabase.auth.signOut();
       if (salida.error) console.error('No se pudo cerrar la sesión sin permisos administrativos:', salida.error);
       cerrarSesionLocal();
@@ -63,7 +63,7 @@ import { supabase } from '../supabase.js';
 
     window.Kartooti.iniciarSesion({
       id: usuario.id,
-      nombre: consulta.data.full_name,
+      nombre: consulta.data.Nombre_estudiante,
       correo: usuario.email,
       rol: 'Administrador'
     });

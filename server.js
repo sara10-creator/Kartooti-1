@@ -52,10 +52,11 @@ async function guardarColeccion(coleccion, datos) {
 }
 
 // Comprueba con Supabase que el token pertenece a un usuario con rol "admin"
+// (el mismo rol que revisa el login de admin)
 async function esAdmin(req) {
   const cabecera = req.get('authorization') || '';
   const token = cabecera.startsWith('Bearer ') ? cabecera.slice(7) : '';
-  if (!token) return false;
+  if (!token) { console.warn('esAdmin: la petición llegó sin token de sesión'); return false; }
 
   // Cliente que actúa "como" ese usuario, para respetar las reglas (RLS) de Supabase
   const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
@@ -66,13 +67,29 @@ async function esAdmin(req) {
   const { data: usuario, error } = await supabase.auth.getUser(token);
   if (error || !usuario.user) return false;
 
+  const id = usuario.user.id;
+  const esRolAdmin = (valor) => String(valor || '').trim().toLowerCase() === 'admin';
+
+  // 1) Tabla que usa hoy el login de admin: "Kartooti registros" (columna rol)
+  const { data: registro, error: errorRegistro } = await supabase
+    .from('Kartooti registros')
+    .select('rol')
+    .eq('user_id', id)
+    .maybeSingle();
+  if (errorRegistro) console.error('esAdmin: no se pudo leer "Kartooti registros":', errorRegistro.message);
+  if (registro && esRolAdmin(registro.rol)) return true;
+
+  // 2) Respaldo: la tabla profiles original (columna role)
   const { data: perfil, error: errorPerfil } = await supabase
     .from('profiles')
     .select('role')
-    .eq('id', usuario.user.id)
+    .eq('id', id)
     .maybeSingle();
+  if (errorPerfil) console.error('esAdmin: no se pudo leer profiles:', errorPerfil.message);
+  if (perfil && esRolAdmin(perfil.role)) return true;
 
-  return !errorPerfil && perfil && perfil.role === 'admin';
+  console.warn('esAdmin: el usuario ' + id + ' no tiene rol admin en "Kartooti registros" ni en profiles');
+  return false;
 }
 
 // ---------- API ----------

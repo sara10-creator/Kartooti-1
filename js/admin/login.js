@@ -54,8 +54,11 @@
   .maybeSingle();
 if (consulta.error) throw consulta.error;
 
-if (!consulta.data || consulta.data.rol !== 'admin') {
-  // ... (igual que ahora)
+if (!consulta.data || String(consulta.data.rol || '').trim().toLowerCase() !== 'admin') {
+  var salida = await supabase.auth.signOut();
+  if (salida.error) console.error('No se pudo cerrar la sesión sin permisos administrativos:', salida.error);
+  error('Esta cuenta no tiene permisos de administrador.');
+  return;
 }
 
 Kartooti.iniciarSesion({
