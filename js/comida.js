@@ -1,5 +1,6 @@
 // Kartooti — Servicios de comida y menús
-(function () {
+// Espera a que lleguen los datos del servidor antes de pintar
+KartootiDatos.listo.then(function () {
   var K = Kartooti;
   var lista = document.getElementById('lista-comidas');
   var r = K.raiz + 'assets/';
@@ -27,4 +28,4 @@
     document.getElementById('menu-nombre').textContent = c.menu.indexOf('no-disponible') !== -1 ? c.nombre + ': menú aún no disponible' : 'Menú de ' + c.nombre;
     K.abrirModal('modal-menu');
   });
-})();
+});

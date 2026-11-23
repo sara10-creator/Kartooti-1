@@ -1,5 +1,6 @@
 // Kartooti — Buscar ubicación de un salón
-(function () {
+// Espera a que lleguen los datos del servidor antes de pintar
+KartootiDatos.listo.then(function () {
   var K = Kartooti;
   var form = document.getElementById('form-buscar');
   var input = document.getElementById('b-texto');
@@ -49,4 +50,4 @@
 
   var inicial = new URLSearchParams(location.search).get('q');
   if (inicial) { input.value = inicial; mostrar(inicial); }
-})();
+});

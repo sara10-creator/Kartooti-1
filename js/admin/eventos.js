@@ -1,5 +1,6 @@
 // Kartooti admin — Gestión de eventos (lo publicado aparece en la página "Eventos")
-(function () {
+// Espera a que lleguen los datos del servidor antes de pintar
+KartootiDatos.listo.then(function () {
   var K = Kartooti, D = KartootiDatos;
   var CATEGORIAS = { 'Académico': 'e-celeste', Cultural: 'e-amarillo', Deportivo: 'e-verde', 'Tecnología': 'e-azul' };
   var COLOR = { 'Académico': 'primario', Cultural: 'amarillo', Deportivo: 'verde', 'Tecnología': 'primario' };
@@ -74,4 +75,4 @@
   document.getElementById('btn-nuevo').addEventListener('click', function () { abrir(null); });
   f.texto.addEventListener('input', pintar); f.categoria.addEventListener('change', pintar); f.estado.addEventListener('change', pintar);
   pintar();
-})();
+});

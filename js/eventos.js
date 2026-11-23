@@ -1,5 +1,6 @@
 // Kartooti — Eventos del campus (solo los publicados)
-(function () {
+// Espera a que lleguen los datos del servidor antes de pintar
+KartootiDatos.listo.then(function () {
   var K = Kartooti;
   var COLORES = { primario: '#025373', verde: '#97d3b1', amarillo: '#f2ce5e', celeste: '#4ea8c0' };
   var lista = document.getElementById('lista-eventos');
@@ -25,4 +26,4 @@
       '<a class="evento__info" href="https://umng.edu.co/eventos/" target="_blank" rel="noopener">Más info &gt;</a>' +
     '</article>';
   }).join('');
-})();
+});
