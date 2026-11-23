@@ -373,28 +373,50 @@ body.mapa-grande { background: #626262; }
 @media (max-width: 1200px) { .pagina--ancha { padding-left: 40px; padding-right: 40px; padding-top: 48px; } }
 @media (max-width: 760px) { .pagina--ancha { padding-left: 16px; padding-right: 16px; padding-top: 24px; } }
 
-/* ---------- Mapa ilustrado del campus (Buscar ubicación) ---------- */
-.campus { display: flex; flex-direction: column; gap: 12px; }
-.campus__titulo { font-size: 18px; line-height: 28px; font-weight: 700; color: var(--primario); }
-.campus__cuerpo { display: grid; grid-template-columns: 220px 1fr; gap: 16px; align-items: start; }
-.campus__lista { max-height: 440px; overflow-y: auto; padding-right: 4px; }
-.campus__grupo { margin: 0 0 10px; }
-.campus__grupo h3 { font-size: 14px; line-height: 20px; font-weight: 700; color: var(--primario); margin: 6px 0 4px; }
-.campus__grupo ul { list-style: none; margin: 0; padding: 0 0 0 10px; border-left: 2px solid #dbe4ea; }
-.campus__item { display: block; width: 100%; min-height: 36px; padding: 6px 10px; border: 0; border-radius: 8px; background: none; color: #314158; font: inherit; font-size: 15px; text-align: left; cursor: pointer; }
-.campus__item:hover { background: #eef4f7; }
-.campus__item[aria-current="true"] { background: #e3eef3; color: var(--primario); font-weight: 700; }
-.campus__item small { color: var(--gris); font-size: 12px; }
-.campus__mapa { position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 6px 20px rgba(2, 83, 115, .15); }
-.campus__mapa img { display: block; width: 100%; height: auto; }
-.campus__capa { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-.campus__zona { fill: rgba(242, 206, 94, .35); stroke: #025373; stroke-width: 3; }
+/* ---------- Foto aérea con el lugar resaltado ---------- */
+[hidden] { display: none !important; }
+.foto-mapa { position: relative; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 24px rgba(2, 83, 115, .18); }
+.foto-mapa img, .resultado .foto-mapa img { display: block; width: 100%; height: auto; object-fit: initial; border-radius: 0; }
+.foto-mapa__capa { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.mapa-zona { fill: rgba(242, 206, 94, .3); stroke: #f2ce5e; stroke-width: 4; }
 @media (prefers-reduced-motion: no-preference) {
-  .campus__zona { animation: campus-pulso 1.6s ease-in-out infinite; }
+  .mapa-zona { animation: mapa-pulso 1.6s ease-in-out infinite; }
 }
-@keyframes campus-pulso { 50% { stroke-width: 6; } }
-@media (max-width: 760px) {
-  .campus__cuerpo { grid-template-columns: 1fr; }
-  .campus__mapa { order: -1; }
-  .campus__lista { max-height: none; }
+@keyframes mapa-pulso { 50% { stroke-width: 8; } }
+
+/* ---------- Mapa interactivo: mapa + panel "Explora el campus" ---------- */
+.explorar { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 24px; align-items: start; max-width: 1240px; margin: 20px auto 0; }
+.explorar .mapa { max-width: none; margin: 0; padding: 0; }
+.explorar .mapa__ventana { height: 520px; border-radius: 16px; }
+.mapa__lienzo { position: relative; width: 100%; aspect-ratio: 1195 / 671; transition: width .2s; }
+.mapa__lienzo img { display: block; width: 100%; height: 100%; user-select: none; -webkit-user-drag: none; }
+.mapa__lienzo .foto-mapa__capa { position: absolute; inset: 0; }
+.explorar .mapa__controles { margin-top: 12px; }
+.panel-lugares { display: flex; flex-direction: column; gap: 14px; padding: 20px; border-radius: 20px; background: #fff; box-shadow: 0 8px 24px rgba(2, 83, 115, .12); }
+.panel-lugares h2 { font-size: 20px; line-height: 28px; font-weight: 800; color: var(--primario); }
+.panel-lugares__buscar { position: relative; }
+.panel-lugares__buscar input { width: 100%; height: 44px; padding: 0 14px 0 40px; border: 2px solid var(--paleta-4); border-radius: 22px; font: inherit; font-size: 15px; color: var(--texto); background: #f6fafb; }
+.panel-lugares__buscar input:focus-visible { outline: 3px solid var(--paleta-1); outline-offset: 2px; border-color: var(--primario); }
+.panel-lugares__buscar span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 16px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { min-height: 36px; padding: 0 14px; border: 2px solid var(--paleta-4); border-radius: 18px; background: #fff; color: var(--primario); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--primario); border-color: var(--primario); color: #fff; }
+.tarjetas-lugar { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; max-height: 420px; overflow-y: auto; }
+.tarjeta-lugar { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; border: 2px solid transparent; border-radius: 14px; background: #f3f8fa; font: inherit; text-align: left; cursor: pointer; transition: background-color .15s, border-color .15s; }
+.tarjeta-lugar:hover { background: #e6f1f5; }
+.tarjeta-lugar[aria-current="true"] { border-color: var(--paleta-3); background: #fff8e1; }
+.tarjeta-lugar__icono { display: grid; place-items: center; width: 40px; height: 40px; flex: none; border-radius: 12px; background: #fff; font-size: 20px; }
+.tarjeta-lugar__nombre { display: block; overflow-wrap: anywhere; font-size: 15px; font-weight: 700; color: var(--texto); }
+.tarjeta-lugar__tipo { display: block; font-size: 13px; color: var(--gris); }
+.panel-lugares__vacio { font-size: 14px; color: var(--gris); }
+.detalle-lugar { padding: 14px 16px; border-radius: 14px; background: #eef6f8; border-left: 4px solid var(--paleta-3); font-size: 15px; line-height: 22px; color: var(--texto-2); }
+.detalle-lugar b { color: var(--primario); }
+.detalle-lugar a { color: var(--primario); font-weight: 700; }
+@media (max-width: 960px) {
+  .explorar { grid-template-columns: 1fr; }
+  .explorar .mapa__ventana { height: 320px; }
+  .tarjetas-lugar { max-height: none; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+}
+@media (max-width: 420px) {
+  .tarjetas-lugar { grid-template-columns: 1fr; }
 }

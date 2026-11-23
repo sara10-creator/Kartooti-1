@@ -66,24 +66,8 @@
   },
   {
     "id": 6,
-    "nombre": "Bloque F",
-    "categoria": "Bloques",
-    "alias": [],
-    "zona": null,
-    "descripcion": ""
-  },
-  {
-    "id": 7,
-    "nombre": "Capilla",
-    "categoria": "Hitos",
-    "alias": [],
-    "zona": null,
-    "descripcion": ""
-  },
-  {
-    "id": 8,
     "nombre": "Gym",
-    "categoria": "Hitos",
+    "categoria": "Espacios",
     "alias": [
       "Gimnasio"
     ],
@@ -96,28 +80,7 @@
     "descripcion": ""
   },
   {
-    "id": 9,
-    "nombre": "Complejo Deportivo",
-    "categoria": "Hitos",
-    "alias": [
-      "Canchas"
-    ],
-    "zona": null,
-    "descripcion": ""
-  },
-  {
-    "id": 10,
-    "nombre": "Cafeterías",
-    "categoria": "Alimentación",
-    "alias": [
-      "Cafeteria",
-      "Zona de comidas"
-    ],
-    "zona": null,
-    "descripcion": ""
-  },
-  {
-    "id": 11,
+    "id": 7,
     "nombre": "Café Leyenda",
     "categoria": "Alimentación",
     "alias": [
@@ -132,7 +95,7 @@
     "descripcion": ""
   },
   {
-    "id": 12,
+    "id": 8,
     "nombre": "Restaurante",
     "categoria": "Alimentación",
     "alias": [],
@@ -145,7 +108,7 @@
     "descripcion": ""
   },
   {
-    "id": 13,
+    "id": 9,
     "nombre": "Pizzagram",
     "categoria": "Alimentación",
     "alias": [
@@ -160,7 +123,7 @@
     "descripcion": ""
   },
   {
-    "id": 14,
+    "id": 10,
     "nombre": "Carrito de café",
     "categoria": "Alimentación",
     "alias": [
@@ -176,7 +139,7 @@
     "descripcion": ""
   },
   {
-    "id": 15,
+    "id": 11,
     "nombre": "Taco más",
     "categoria": "Alimentación",
     "alias": [
@@ -192,7 +155,7 @@
     "descripcion": ""
   },
   {
-    "id": 16,
+    "id": 12,
     "nombre": "Hamburguesa",
     "categoria": "Alimentación",
     "alias": [
@@ -208,7 +171,7 @@
     "descripcion": ""
   },
   {
-    "id": 17,
+    "id": 13,
     "nombre": "Aula Máxima",
     "categoria": "Espacios",
     "alias": [],
@@ -221,7 +184,7 @@
     "descripcion": ""
   },
   {
-    "id": 18,
+    "id": 14,
     "nombre": "Auditorios",
     "categoria": "Espacios",
     "alias": [
@@ -237,7 +200,7 @@
     "descripcion": ""
   },
   {
-    "id": 19,
+    "id": 15,
     "nombre": "Plaza Cervantes",
     "categoria": "Espacios",
     "alias": [],
@@ -247,28 +210,6 @@
       "w": 125,
       "h": 129
     },
-    "descripcion": ""
-  },
-  {
-    "id": 20,
-    "nombre": "Hub de Innovación",
-    "categoria": "Espacios",
-    "alias": [
-      "Hub"
-    ],
-    "zona": null,
-    "descripcion": ""
-  },
-  {
-    "id": 21,
-    "nombre": "Acceso",
-    "categoria": "Acceso",
-    "alias": [
-      "Entrada",
-      "Entrada principal",
-      "Porteria"
-    ],
-    "zona": null,
     "descripcion": ""
   }
 ]

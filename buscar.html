@@ -40,18 +40,12 @@
 
       <div class="resultado" id="resultado">
         <p class="resultado__texto" id="resultado-texto" role="status" aria-live="polite"></p>
-        <a class="btn btn--borde" href="mapa.html" style="align-self:flex-start">Ver el mapa interactivo</a>
-      </div>
-      <section class="campus" aria-labelledby="campus-titulo">
-        <h2 class="campus__titulo" id="campus-titulo">Mapa del campus · Sede Calle 100</h2>
-        <div class="campus__cuerpo">
-          <nav class="campus__lista" id="campus-lista" aria-label="Lugares del campus"></nav>
-          <div class="campus__mapa">
-            <img src="assets/img/mapa-aereo.jpg" alt="Foto aérea del campus de la sede Calle 100. El lugar que busques se resalta en el mapa." width="1195" height="671">
-            <svg class="campus__capa" id="campus-capa" viewBox="0 0 1195 671" aria-hidden="true" focusable="false"></svg>
-          </div>
+        <div class="foto-mapa" id="resultado-mapa" hidden>
+          <img src="assets/img/mapa-aereo.jpg" alt="Foto aérea del campus con el lugar resaltado" width="1195" height="671">
+          <svg class="foto-mapa__capa" id="resultado-capa" viewBox="0 0 1195 671" aria-hidden="true" focusable="false"></svg>
         </div>
-      </section>
+        <a class="btn btn--borde" id="ver-en-mapa" href="mapa.html" style="align-self:flex-start">Ver en el mapa interactivo</a>
+      </div>
       <section class="sugerencias" id="sugerencias" aria-labelledby="sugerencias-titulo">
         <p id="sugerencias-titulo">Búsquedas frecuentes</p>
         <div class="sugerencias__lista">
@@ -74,6 +68,7 @@
   <footer id="pie"></footer>
   <script src="js/app.js"></script>
   <script src="js/datos.js"></script>
+  <script src="js/mapa-lugares.js"></script>
   <script src="js/buscar.js"></script>
 </body>
 </html>

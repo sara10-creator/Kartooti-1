@@ -1,7 +1,7 @@
 // Kartooti — Mapa interactivo: acercar, alejar y arrastrar
 (function () {
   var ventana = document.getElementById('mapa-ventana');
-  var img = document.getElementById('mapa-img');
+  var img = document.getElementById('mapa-lienzo') || document.getElementById('mapa-img');
   var valor = document.getElementById('zoom-valor');
   var mas = document.getElementById('zoom-mas');
   var menos = document.getElementById('zoom-menos');
@@ -16,7 +16,7 @@
     var cy = (ventana.scrollTop + ventana.clientHeight / 2) / ventana.scrollHeight;
     zoom = Math.max(MIN, Math.min(MAX, nuevo));
     img.style.width = zoom + '%';
-    img.style.height = zoom + '%';
+    if (img.id === 'mapa-img') img.style.height = zoom + '%';
     valor.textContent = zoom + '%';
     mas.disabled = zoom >= MAX;
     menos.disabled = zoom <= MIN;
@@ -50,6 +50,19 @@
     arrastrando = false;
     ventana.classList.remove('arrastrando');
   });
+
+  // Acerca el mapa y lo centra en un punto (fracciones 0–1 del ancho y alto)
+  window.KartootiZoom = function (nivel, fx, fy) {
+    aplicar(nivel);
+    // Espera a que termine la animación del zoom para medir bien
+    setTimeout(function () {
+      ventana.scrollTo({
+        left: fx * ventana.scrollWidth - ventana.clientWidth / 2,
+        top: fy * ventana.scrollHeight - ventana.clientHeight / 2,
+        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+      });
+    }, 260);
+  };
 
   aplicar(140); // el diseño muestra el mapa al 140 %
 })();
