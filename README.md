@@ -169,19 +169,19 @@ Por ahora el panel usa datos de ejemplo que se guardan en el navegador (localSto
 
 ### Autenticación y perfiles
 
-El registro y el inicio de sesión de estudiantes y administradores usan Supabase Auth. Cada cuenta crea un perfil en `public.profiles` mediante el trigger de la migración `supabase/migrations/20261122162000_profiles.sql`. RLS limita la lectura a la fila propia y solo permite que el usuario actualice su nombre; el rol no es modificable desde el navegador.
+El registro y el inicio de sesión de estudiantes y administradores usan Supabase Auth. La migración `supabase/migrations/20261122162000_profiles.sql` crea `public.profiles`, activa RLS, configura el trigger para cuentas nuevas y crea perfiles para las cuentas que ya existían. RLS limita la lectura a la fila propia y solo permite que el usuario actualice su nombre; el rol no es modificable desde el navegador.
 
 Antes de probar el registro, ejecuta esa migración en el SQL Editor de Supabase y habilita el proveedor **Email**. En **Authentication → URL Configuration**, agrega `http://localhost:5173/login.html` y la URL exacta de producción a **Redirect URLs**. El registro envía el correo de confirmación de vuelta a `login.html`. Define **Site URL** como la URL de producción.
 
-Para conceder acceso administrativo, crea primero la cuenta del administrador mediante el registro y luego ejecuta en SQL Editor, reemplazando el correo:
+Los perfiles existentes se crean con el rol `student`. Para conceder acceso administrativo a una cuenta (nueva o existente), ejecuta en SQL Editor, reemplazando el correo:
 
 ```sql
-update public.profiles
+update public.profiles as p
 set role = 'admin'
-where id = (
-  select id from auth.users
-  where lower(email) = lower('admin@example.com')
-);
+from auth.users as u
+where u.id = p.id
+  and lower(u.email) = lower('admin@example.com')
+returning p.id, p.full_name, p.role;
 ```
 
 El acceso administrativo y sus páginas comprueban ese rol en la base de datos. Los datos que gestiona el panel siguen siendo ejemplos almacenados en `localStorage`; todavía no se escriben en tablas de Supabase. Si se conectan esos datos después, cada tabla necesitará sus propias políticas RLS. Nunca incluyas una clave `service_role` en el navegador.

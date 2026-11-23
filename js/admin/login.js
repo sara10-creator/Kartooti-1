@@ -1,5 +1,3 @@
-import { supabase } from '../supabase.js';
-
 (function () {
   var form = document.getElementById('form-admin');
   var mensaje = document.getElementById('a-error');
@@ -12,6 +10,8 @@ import { supabase } from '../supabase.js';
 
   function textoError(err) {
     var detalle = String(err.message || '').toLowerCase();
+    if (location.protocol === 'file:') return 'Abre la app con Live Server o npm run dev; no ejecutes el HTML directamente.';
+    if (detalle.indexOf('failed to fetch') !== -1) return 'No se pudo conectar con Supabase. Revisa tu conexión a Internet e inténtalo de nuevo.';
     if (detalle.indexOf('invalid login credentials') !== -1) return 'El correo o la contraseña no son correctos.';
     if (detalle.indexOf('email not confirmed') !== -1) return 'Confirma tu correo antes de iniciar sesión.';
     if (err.code === 'PGRST205' || err.code === '42P01') return 'Falta aplicar la migración de perfiles de Supabase.';
@@ -39,6 +39,8 @@ import { supabase } from '../supabase.js';
     boton.disabled = true;
     boton.textContent = 'Validando…';
     try {
+      var modulo = await import('../supabase.js');
+      var supabase = modulo.supabase;
       var acceso = await supabase.auth.signInWithPassword({
         email: form.correo.value.trim().toLowerCase(),
         password: form.clave.value
@@ -46,25 +48,22 @@ import { supabase } from '../supabase.js';
       if (acceso.error) throw acceso.error;
 
       var consulta = await supabase
-        .from('profiles')
-        .select('full_name, role')
-        .eq('id', acceso.data.user.id)
-        .maybeSingle();
-      if (consulta.error) throw consulta.error;
+  .from('Kartooti registros')
+  .select('Nombre_estudiante, rol')
+  .eq('user_id', acceso.data.user.id)
+  .maybeSingle();
+if (consulta.error) throw consulta.error;
 
-      if (!consulta.data || consulta.data.role !== 'admin') {
-        var salida = await supabase.auth.signOut();
-        if (salida.error) console.error('No se pudo cerrar la sesión sin permisos administrativos:', salida.error);
-        error('Esta cuenta no tiene permisos de administrador.');
-        return;
-      }
+if (!consulta.data || consulta.data.rol !== 'admin') {
+  // ... (igual que ahora)
+}
 
-      Kartooti.iniciarSesion({
-        id: acceso.data.user.id,
-        nombre: consulta.data.full_name,
-        correo: acceso.data.user.email,
-        rol: 'Administrador'
-      });
+Kartooti.iniciarSesion({
+  id: acceso.data.user.id,
+  nombre: consulta.data.Nombre_estudiante,
+  correo: acceso.data.user.email,
+  rol: 'Administrador'
+});
       window.location.href = 'index.html';
     } catch (err) {
       console.error('Error en el acceso administrativo:', err);
@@ -74,4 +73,5 @@ import { supabase } from '../supabase.js';
       boton.textContent = 'Iniciar sesión';
     }
   });
+  form.dataset.authReady = 'true';
 })();

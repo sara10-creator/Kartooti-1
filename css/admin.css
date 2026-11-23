@@ -2,7 +2,24 @@
    Kartooti — Panel de administración (página "app")
    ========================================================== */
 
-html.auth-pending body { visibility: hidden; }
+html.auth-pending body > :not(#auth-status) { visibility: hidden; }
+
+.auth-status { display: none; }
+html.auth-pending #auth-status {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 12px;
+  padding: 24px;
+  background: var(--fondo, #f5f8fa);
+  color: #173b4a;
+  font: 500 16px/1.5 Inter, sans-serif;
+  text-align: center;
+}
+.auth-status p { margin: 0; }
+.auth-status a { color: #025373; font-weight: 700; }
 
 body.admin { flex-direction: row; background: var(--fondo); }
 

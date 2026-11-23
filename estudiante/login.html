@@ -14,7 +14,7 @@
     <a href="../index.html#acceso">← Volver</a>
     <h1>Iniciar sesión</h1>
 
-    <form id="form-login">
+    <form id="form-login" method="post" data-auth-form>
       <label for="correo">Correo institucional</label>
       <input type="email" id="correo" name="correo" placeholder="usuario@unimilitar.edu.co" required>
 
@@ -26,6 +26,7 @@
     </form>
   </main>
 
+  <script src="../js/auth-form-guard.js"></script>
   <script type="module" src="../js/estudiante/login.js"></script>
 </body>
 </html>

@@ -48,3 +48,14 @@ revoke all on function public.handle_new_user() from public, anon, authenticated
 create trigger on_auth_user_created
 after insert on auth.users
 for each row execute procedure public.handle_new_user();
+
+insert into public.profiles (id, full_name)
+select
+  u.id,
+  coalesce(
+    nullif(trim(u.raw_user_meta_data ->> 'full_name'), ''),
+    nullif(split_part(coalesce(u.email, ''), '@', 1), ''),
+    'Usuario'
+  )
+from auth.users as u
+on conflict (id) do nothing;

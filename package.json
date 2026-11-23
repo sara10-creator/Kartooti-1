@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "check:auth": "node --check js/acceso.js && node --check js/estudiante/login.js && node --check js/estudiante/mapa.js && node --check js/admin/login.js && node --check js/admin/guard.js && node --check js/app.js"
+    "check:auth": "node --check js/auth-form-guard.js && node --check js/acceso.js && node --check js/estudiante/login.js && node --check js/estudiante/mapa.js && node --check js/admin/login.js && node --check js/admin/guard.js && node --check js/app.js"
   },
   "devDependencies": {
     "vite": "^8.3.8"

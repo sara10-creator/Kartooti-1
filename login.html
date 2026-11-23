@@ -26,7 +26,7 @@
       <p class="acceso-centro__lema">Contigo desde el primer semestre</p>
       <div class="tarjeta-form">
         <h1>Iniciar sesión</h1>
-        <form id="form-login" novalidate>
+        <form id="form-login" method="post" data-auth-form novalidate>
           <label class="sr-only" for="l-correo">Correo</label>
           <input class="input" id="l-correo" name="correo" type="email" placeholder="Correo" autocomplete="email" required>
           <label class="sr-only" for="l-clave">Contraseña</label>
@@ -41,6 +41,7 @@
 
   <footer id="pie"></footer>
   <script src="js/app.js"></script>
+  <script src="js/auth-form-guard.js"></script>
   <script type="module" src="js/acceso.js"></script>
 </body>
 </html>

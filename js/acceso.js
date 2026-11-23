@@ -1,8 +1,10 @@
 // Kartooti — Iniciar sesión, crear cuenta y acceso de invitado
-import { supabase } from './supabase.js';
-
 (function () {
   var K = Kartooti;
+
+  function cargarSupabase() {
+    return import('./supabase.js').then(function (modulo) { return modulo.supabase; });
+  }
 
   function error(id, texto) {
     var el = document.getElementById(id);
@@ -35,6 +37,8 @@ import { supabase } from './supabase.js';
 
   function mensajeDeAutenticacion(err) {
     var mensaje = String(err.message || '').toLowerCase();
+    if (location.protocol === 'file:') return 'Abre la app con Live Server o npm run dev; no ejecutes el HTML directamente.';
+    if (mensaje.indexOf('failed to fetch') !== -1) return 'No se pudo conectar con Supabase. Revisa tu conexión a Internet e inténtalo de nuevo.';
     if (mensaje.indexOf('invalid login credentials') !== -1) return 'El correo o la contraseña no son correctos.';
     if (mensaje.indexOf('email not confirmed') !== -1) return 'Confirma tu correo electrónico antes de iniciar sesión.';
     if (mensaje.indexOf('already registered') !== -1 || mensaje.indexOf('already been registered') !== -1) return 'Ya existe una cuenta con ese correo.';
@@ -68,6 +72,7 @@ import { supabase } from './supabase.js';
       error('l-error', '');
       cambiarEstadoBoton(login, true, 'Iniciando sesión…');
       try {
+        var supabase = await cargarSupabase();
         var resultado = await supabase.auth.signInWithPassword({
           email: correo.value.trim().toLowerCase(),
           password: clave.value
@@ -87,6 +92,7 @@ import { supabase } from './supabase.js';
         cambiarEstadoBoton(login, false);
       }
     });
+    login.dataset.authReady = 'true';
   }
 
   // ---------- Crear cuenta ----------
@@ -103,6 +109,7 @@ import { supabase } from './supabase.js';
       error('r-error', '');
       cambiarEstadoBoton(registro, true, 'Creando cuenta…');
       try {
+        var supabase = await cargarSupabase();
         var resultado = await supabase.auth.signUp({
           email: f.correo.value.trim().toLowerCase(),
           password: f.clave.value,
@@ -132,6 +139,7 @@ import { supabase } from './supabase.js';
         cambiarEstadoBoton(registro, false);
       }
     });
+    registro.dataset.authReady = 'true';
   }
 
   // ---------- Acceso invitado ----------

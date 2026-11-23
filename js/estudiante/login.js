@@ -1,6 +1,4 @@
 // Kartooti — Login de estudiante
-import { supabase } from '../supabase.js';
-
 (function () {
   var DOMINIO = '@unimilitar.edu.co';
   var form = document.getElementById('form-login');
@@ -25,6 +23,8 @@ import { supabase } from '../supabase.js';
     boton.disabled = true;
     boton.textContent = 'Iniciando sesión…';
     try {
+      var modulo = await import('../supabase.js');
+      var supabase = modulo.supabase;
       var resultado = await supabase.auth.signInWithPassword({ email: correo, password: clave });
       if (resultado.error) throw resultado.error;
       var usuario = resultado.data.user;
@@ -41,7 +41,11 @@ import { supabase } from '../supabase.js';
     } catch (err) {
       console.error('Error al iniciar sesión con Supabase:', err);
       var detalle = String(err.message || '').toLowerCase();
-      if (detalle.indexOf('email not confirmed') !== -1) {
+      if (location.protocol === 'file:') {
+        error.textContent = 'Abre la app con Live Server o npm run dev; no ejecutes el HTML directamente.';
+      } else if (detalle.indexOf('failed to fetch') !== -1) {
+        error.textContent = 'No se pudo conectar con Supabase. Revisa tu conexión a Internet e inténtalo de nuevo.';
+      } else if (detalle.indexOf('email not confirmed') !== -1) {
         error.textContent = 'Confirma tu correo electrónico antes de iniciar sesión.';
       } else if (detalle.indexOf('invalid login credentials') !== -1) {
         error.textContent = 'El correo o la contraseña no son correctos.';
@@ -52,4 +56,5 @@ import { supabase } from '../supabase.js';
       boton.textContent = 'Entrar';
     }
   });
+  form.dataset.authReady = 'true';
 })();
