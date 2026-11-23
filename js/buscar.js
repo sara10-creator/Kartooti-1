@@ -13,11 +13,13 @@ KartootiDatos.listo.then(function () {
     q = String(q || '').trim();
     if (!q) {
       input.classList.add('es-error');
+      input.setAttribute('aria-invalid', 'true');
       input.focus();
       K.aviso('Escribe un salón, por ejemplo B201');
       return;
     }
     input.classList.remove('es-error');
+    input.removeAttribute('aria-invalid');
     var lugar = KartootiDatos.ubicarSalon(q);
     if (lugar) {
       texto.classList.remove('no-encontrado');
