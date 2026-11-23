@@ -39,7 +39,9 @@ const TABLAS = {
       fecha: ['fecha'], dia: ['dia'], mes: ['mes'], fechaTexto: ['fecha_texto', 'fechaTexto'],
       hora: ['hora'], lugar: ['lugar', 'ubicacion'], color: ['color'], descripcion: ['descripcion'],
       medio: ['medio', 'imagen', 'imagen_url']
-    }
+    },
+    // Columnas de fecha y hora juntas (timestamp): se llenan con la fecha y la hora del formulario
+    extra: ['inicio', 'fin']
   },
   puntos: {
     tabla: process.env.TABLA_PUNTOS || 'puntos_interes',
@@ -52,6 +54,43 @@ const TABLAS = {
 const MESES = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
 const MESES_LARGO = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
 const COLOR = { 'Académico': 'primario', Cultural: 'amarillo', Deportivo: 'verde', 'Tecnología': 'primario' };
+const ZONA = '-05:00'; // hora de Colombia
+
+// "9:00 AM - 5:00 PM" → ['09:00', '17:00'];  "10:00 AM - 12:00 M" → ['10:00', '12:00']
+function horasDe(texto) {
+  const res = [];
+  const re = /(\d{1,2})(?::(\d{2}))?\s*(a\.?\s*m\.?|p\.?\s*m\.?|m\b)?/gi;
+  let m;
+  while ((m = re.exec(String(texto || ''))) && res.length < 2) {
+    let h = Number(m[1]);
+    const min = m[2] || '00';
+    const suf = (m[3] || '').toLowerCase().replace(/[\s.]/g, '');
+    if (h > 23) continue;
+    if (suf === 'pm' && h < 12) h += 12;
+    if (suf === 'am' && h === 12) h = 0;
+    res.push(String(h).padStart(2, '0') + ':' + min);
+  }
+  return res;
+}
+
+// Fecha (AAAA-MM-DD) y hora a texto ISO con la zona de Colombia
+function aMarcaDeTiempo(fecha, hhmm) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha || '')) return null;
+  return fecha + 'T' + (hhmm || '00:00') + ':00' + ZONA;
+}
+
+// Marca de tiempo → { fecha, hora } en hora de Colombia
+function deMarcaDeTiempo(valor) {
+  const d = new Date(valor);
+  if (isNaN(d)) return null;
+  const local = new Date(d.getTime() - 5 * 3600 * 1000);
+  const fecha = local.toISOString().slice(0, 10);
+  let h = local.getUTCHours();
+  const min = String(local.getUTCMinutes()).padStart(2, '0');
+  const suf = h >= 12 ? 'PM' : 'AM';
+  h = h % 12 || 12;
+  return { fecha, hora: h + ':' + min + ' ' + suf };
+}
 
 // Solo estas colecciones existen en la API
 const COLECCIONES = ['eventos', 'comidas', 'puntos', 'lugares', 'planos'];
@@ -94,6 +133,7 @@ async function columnasDe(coleccion) {
   const sb = clienteSupabase();
   const candidatas = new Set(['actualizado_en', 'actualizado_por']);
   Object.values(conf.campos).forEach((lista) => lista.forEach((c) => candidatas.add(c)));
+  (conf.extra || []).forEach((c) => candidatas.add(c));
   const existen = new Set();
   await Promise.all([...candidatas].map(async (col) => {
     const { error } = await sb.from(conf.tabla).select(col).limit(1);
@@ -139,6 +179,17 @@ async function leerDeSupabase(coleccion) {
     for (const [campo, col] of Object.entries(mapa)) {
       if (fila[col] !== null && fila[col] !== undefined) obj[campo] = fila[col];
     }
+    // Si la tabla guarda inicio/fin como fecha y hora juntas, se separan para la página
+    if (fila.inicio) {
+      const ini = deMarcaDeTiempo(fila.inicio);
+      if (ini) {
+        if (!obj.fecha) obj.fecha = ini.fecha;
+        if (!obj.hora) {
+          const fin = fila.fin ? deMarcaDeTiempo(fila.fin) : null;
+          obj.hora = ini.hora + (fin && fin.hora !== ini.hora ? ' - ' + fin.hora : '');
+        }
+      }
+    }
     return completar(coleccion, obj);
   });
 }
@@ -153,6 +204,16 @@ async function guardarEnSupabase(coleccion, lista, token, correo) {
     for (const [campo, col] of Object.entries(mapa)) {
       const v = x[campo];
       fila[col] = v === undefined || (v === '' && campo === 'fecha') ? null : v;
+    }
+    if (existen.has('inicio') || existen.has('fin')) {
+      const [h1, h2] = horasDe(x.hora);
+      const inicio = aMarcaDeTiempo(x.fecha, h1);
+      if (existen.has('inicio')) fila.inicio = inicio;
+      // Sin hora final, el evento dura 2 horas
+      if (existen.has('fin')) {
+        fila.fin = h2 ? aMarcaDeTiempo(x.fecha, h2)
+          : (inicio ? new Date(new Date(inicio).getTime() + 2 * 3600 * 1000).toISOString() : null);
+      }
     }
     if (existen.has('actualizado_en')) fila.actualizado_en = new Date().toISOString();
     if (existen.has('actualizado_por')) fila.actualizado_por = correo || null;
