@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recuperar contraseña · Kartooti</title>
+  <link rel="icon" href="assets/img/logo-64.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/pantallas.css">
+  <script src="js/accesibilidad.js"></script>
+  <script src="js/cookies.js"></script>
+</head>
+<body>
+  <header class="header header--simple">
+    <a class="marca" href="index.html" aria-label="Kartooti, ir a la página de inicio">
+      <img src="assets/img/logo.png" alt="">
+      <span>Kartooti</span>
+    </a>
+  </header>
+
+  <main class="acceso-pagina">
+    <a class="btn-regresar" href="login.html"><img src="assets/icons/regresar.svg" width="41" height="15" alt="">Regresar</a>
+    <div class="acceso-centro">
+      <p class="acceso-centro__marca">Kartooti</p>
+      <p class="acceso-centro__lema">Contigo desde el primer semestre</p>
+      <div class="tarjeta-form">
+        <h1>¿Olvidaste tu contraseña?</h1>
+        <p class="tarjeta-form__ayuda" id="rec-ayuda">Escribe tu correo institucional y te enviaremos un enlace para crear una contraseña nueva.</p>
+        <form id="form-recuperar" method="post" data-auth-form novalidate>
+          <label class="sr-only" for="rec-correo">Correo</label>
+          <input class="input" id="rec-correo" name="correo" type="email" placeholder="Correo" autocomplete="email" aria-describedby="rec-ayuda" required>
+          <p class="mensaje-error" id="rec-error" role="alert"></p>
+          <p class="mensaje-ok" id="rec-ok" role="status"></p>
+          <button class="btn btn--primario btn--bloque" type="submit">Enviar enlace</button>
+        </form>
+        <a class="enlace-centro" href="login.html">Volver a iniciar sesión</a>
+      </div>
+    </div>
+  </main>
+
+  <footer id="pie"></footer>
+  <script src="js/app.js"></script>
+  <script src="js/auth-form-guard.js"></script>
+  <script type="module" src="js/recuperar.js"></script>
+</body>
+</html>
