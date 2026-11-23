@@ -219,6 +219,8 @@ var KartootiCookies = (function () {
       abrir();
       return;
     }
+    // Cualquier valor distinto de "accepted" (rechazadas o cambiado a mano) borra los datos
+    if (!aceptadas()) { borrarDatos(); return; }
     guardarSesion(sesionActual());
     rellenarLogin();
   }
