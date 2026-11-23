@@ -158,16 +158,39 @@ async function guardarEnSupabase(coleccion, lista, token, correo) {
     if (existen.has('actualizado_por')) fila.actualizado_por = correo || null;
     return fila;
   });
-  if (filas.some((f) => !Number.isInteger(f.id))) throw new Error('Todos los elementos necesitan un id numérico');
-  if (filas.length) {
-    const { error } = await sb.from(conf.tabla).upsert(filas, { onConflict: 'id' });
+  // Ids que ya están en la tabla: esos se actualizan; los demás son nuevos
+  const { data: actuales, error: errorIds } = await sb.from(conf.tabla).select('id');
+  if (errorIds) throw errorIds;
+  const yaExisten = new Set(actuales.map((r) => r.id));
+
+  // La columna id puede generarse sola en Supabase, así que nunca se envía:
+  // se actualiza por id y los nuevos se insertan sin id (Supabase les pone uno).
+  const idsFinales = [];
+  const nuevos = [];
+  for (let i = 0; i < filas.length; i++) {
+    const { id, ...resto } = filas[i];
+    if (Number.isInteger(id) && yaExisten.has(id)) {
+      const { error } = await sb.from(conf.tabla).update(resto).eq('id', id);
+      if (error) throw error;
+      idsFinales[i] = id;
+    } else {
+      nuevos.push({ i, resto });
+    }
+  }
+  if (nuevos.length) {
+    const { data: creados, error } = await sb.from(conf.tabla).insert(nuevos.map((n) => n.resto)).select('id');
+    if (error) throw error;
+    nuevos.forEach((n, k) => { idsFinales[n.i] = creados[k].id; });
+  }
+
+  // Borra lo que el admin eliminó (lo que estaba en la tabla y ya no viene en la lista)
+  const quedan = new Set(idsFinales);
+  const sobran = [...yaExisten].filter((id) => !quedan.has(id));
+  if (sobran.length) {
+    const { error } = await sb.from(conf.tabla).delete().in('id', sobran);
     if (error) throw error;
   }
-  const ids = filas.map((f) => f.id);
-  let borrar = sb.from(conf.tabla).delete();
-  borrar = ids.length ? borrar.not('id', 'in', '(' + ids.join(',') + ')') : borrar.gte('id', -2147483648);
-  const { error: errorBorrar } = await borrar;
-  if (errorBorrar) throw errorBorrar;
+  return idsFinales;
 }
 
 // Explica en español los errores típicos de Supabase
@@ -279,9 +302,9 @@ app.put('/api/:coleccion', async (req, res) => {
     }
     if (TABLAS[coleccion]) {
       try {
-        await guardarEnSupabase(coleccion, req.body, v.token, v.correo);
+        const ids = await guardarEnSupabase(coleccion, req.body, v.token, v.correo);
         console.log('PUT /api/' + coleccion + ' guardado en Supabase por ' + v.correo + ' (' + req.body.length + ' elementos)');
-        return res.json({ ok: true, total: req.body.length, donde: 'supabase' });
+        return res.json({ ok: true, total: req.body.length, donde: 'supabase', ids });
       } catch (err) {
         if (!faltaTabla(err)) {
           const texto = explicar(err, TABLAS[coleccion].tabla);

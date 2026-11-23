@@ -127,11 +127,15 @@ var KartootiDatos = (function () {
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tokenSupabase() },
       body: JSON.stringify(valor)
     }).then(function (r) {
-      if (!r.ok) {
-        return r.json().catch(function () { return {}; }).then(function (j) {
-          throw new Error(j.error || ('HTTP ' + r.status));
-        });
-      }
+      return r.json().catch(function () { return {}; }).then(function (j) {
+        if (!r.ok) throw new Error(j.error || ('HTTP ' + r.status));
+        // Supabase pudo asignar ids nuevos: se copian a la lista para no duplicar en el próximo guardado
+        if (Array.isArray(j.ids) && Array.isArray(valor)) {
+          j.ids.forEach(function (id, i) { if (valor[i] && id !== undefined) valor[i].id = id; });
+          cache[clave] = copiar(valor);
+          try { localStorage.setItem('kartooti:' + clave, JSON.stringify(valor)); } catch (e) { /* nada */ }
+        }
+      });
     }).catch(function (err) {
       console.error('Kartooti: no se pudo guardar "' + clave + '" en el servidor:', err);
       avisar('No se pudo guardar en el servidor: ' + err.message);
